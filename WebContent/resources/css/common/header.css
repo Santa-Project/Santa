@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --text-color: #555555;
+    --main-color: #c5e1a5;
+    --santa-color: #94af76;
+    --point-color: #f8ffd7;
+    --bg-color: rgb(240, 240, 240);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    color: #555555;
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    color: #555555;
+    text-decoration: none;
+}
+
+.top_header {
+    display: flex;
+    width: 100%;
+    height: 150px;
+}
+
+.top_header1 {
+    height: 100%;
+    width: 33.3333%;
+}
+
+.top_header2 {
+    height: 100%;
+    width: 33.3333%;
+    text-align: center;
+}
+
+.logo {
+    padding: 25px;
+}
+
+.logo img {
+    width: 300px;
+    margin-right: 30px;
+}
+
+.top_header3 {
+    display: flex;
+    height: 100%;
+    width: 33.33333%;
+}
+
+.login_wrapper1 {
+    width: 40%;
+    height: 100%;
+}
+
+.login_wrapper2 {
+    display: flex;
+    width: 45%;
+    height: 100%;
+}
+
+.login {
+    width: 40%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.join {
+    width: 20%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.bottom_header {
+    display: flex;
+    width: 100%;
+    height: 60px;
+}
+
+.bottom_header1 {
+    height: 100%;
+    width: 25%;
+}
+
+.bottom_header2 {
+    display: flex;
+    height: 100%;
+    width: 50%;
+}
+
+.nav1 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.nav2 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.nav3 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.bottom_header2 a:hover {
+    color: var(--santa-color);
+    font-weight: bold;
+}
+
+.bottom_header3 {
+    height: 100%;
+    width: 25%;
+}
