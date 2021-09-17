@@ -1,4 +1,4 @@
-package com.kh.santa.community.controller;
+package com.kh.santa.main.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.santa.common.wrapper.RequestWrapper;
 
 /**
- * Servlet implementation class CommunityController
+ * Servlet implementation class MainController
  */
-@WebServlet("/community/*")
-public class CommunityController extends HttpServlet {
+@WebServlet("/main/*")
+public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityController() {
+    public MainController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +32,17 @@ public class CommunityController extends HttpServlet {
 		String[] uriArr = wrappedRequest.getRequestURIArray();
 		
 		switch(uriArr[uriArr.length-1]){
-		case "community" :
-			community(request,response);
+		case "main" :
+			main(request,response);
 			break;
 		default :
 			break;
 		}
 	}
 
-	private void community(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/community/community").forward(request, response);
+	private void main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/main/main").forward(request, response);
+		
 	}
 
 	/**

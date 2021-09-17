@@ -1,0 +1,116 @@
+@charset "UTF-8";
+section{
+	display: flex;
+	width: 100vw;
+	height: 100%;
+	border: 1px solid rgb(122, 37, 202);
+}
+/* 높이 설정 어떻게?? 기본, 스크롤시..*/
+.side{
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	height: 100vh;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.side>div{
+	width: 100%;
+	height: 20%;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.search{
+	display: flex;
+	justify-content: center;
+}
+
+.search>form{
+	position: relative;
+	top: 10vh;
+}
+
+.search input{
+	max-width: 200px;
+	min-width: 150px;
+	width: 17vw;
+	border: 0;
+	border-bottom: thin solid;
+	background-color: transparent;
+}
+
+.main{
+	width: 80vw;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.title{
+	position: relative;
+	top: 2vh;
+	text-align: center;
+	width: 100%;
+	height: 10vh;
+	font-size: 2em;
+	font-weight: bolder;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.map{
+	position: relative;
+	top: 2vh;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 50vh;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+#map{
+	width: 70vw;
+	height: 50vh;
+}
+
+
+.hashtag{
+	position: relative;
+	top: 2vh;
+	width: 100%;
+	height: 10vh;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.hashtag>div{
+	position: relative;
+	left: 5vw;
+	width: 70vw;
+	height: 10vh;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.hashtag>span{
+	font-size: 1.5em;
+}
+
+.mountain_list{
+	position: relative;
+	top: 2vh;
+	width: 100%;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+.mt_list_table{
+	position: relative;
+	left: 5vw;
+	width: 70vw;
+	border: 1px solid rgb(122, 37, 202);
+}
+
+td{	
+	text-align:center;
+	width: 14vw;
+	height: 5vh;
+}
+
+
+
+

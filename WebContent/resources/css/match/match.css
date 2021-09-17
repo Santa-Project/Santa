@@ -1,0 +1,200 @@
+@charset "UTF-8";
+    
+    
+    
+    
+    .photo{
+        overflow: hidden;
+    }
+    .photo .prof{
+        float: right;
+        padding: 20px;
+        font-size: 20px;
+    }
+
+
+    nav{
+        overflow: hidden;
+        background-color: lightseagreen;
+        position: relative;
+        height: 70px;
+        overflow: hidden;
+    }
+    nav .nav_div{
+        float: left;
+        margin-left: 800px;
+        height: 70px;
+        width: 525px;
+    }
+    nav .nav_but{
+        width: 100px;
+        height: 50px;
+        margin: 10px;
+        
+    }
+    .team{
+        background-color: black;
+        height: 70px;
+        overflow: hidden;
+    }
+    .team a{
+        float: left;
+        color: white;
+        padding-top: 30px;
+        padding-left: 200px;
+        font-size: larger;
+    }
+    .bell{
+        float: right;
+    }
+    .bell a{
+        padding-top: 30px;
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+    #list{
+        float: left;
+        margin-left: 500px;
+        width: 1050px;
+        border-collapse: collapse;
+    }
+    #list td, #list th{
+        
+        font-size:12px;
+        padding:3px;
+    }
+    #list th{
+        height: 70px;
+        color: lightseagreen;
+        background-color:rgba(197, 196, 196, 0.678);
+    }
+
+    #list .td1 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+    #list .td2 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+    #list .td3 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+    #list .td4 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+    #list .td5 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+    #list .td6 {
+        height: 70px;
+        width:200px;
+        text-align:center;
+    }
+
+#list .altRow{
+    border-top: 0.5px solid gray;
+    border-bottom: 0.5px solid gray;
+}
+#search{
+    float: left;
+    margin-top: 80px;
+    margin-left: 1330px; 
+    margin-right: 0px;
+}
+#search #search_text{
+    width: 100px;
+}
+#divPaging {
+    clear:both; 
+    margin:0 auto; 
+    width:220px; 
+    height:50px;
+}
+
+#divPaging > div {
+    float:left;
+    width: 30px;
+    margin:0 auto;
+    text-align:center;
+}
+#rightBar{
+    position: relative;
+    float: right;
+    height: 400px;
+    width: 200px;
+}
+#rightBar_span{
+    position: absolute;
+}
+
+
+/*채팅*/
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  width: 200px;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+  width: 200px;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+#chat{
+    float: right;
+    margin-right: 100px;
+}
+#divPaging{
+   width: 1200px;
+   margin-left: 900px;
+}
+#divPaging #openRoomBtn{
+    padding-left: 340px;
+    width: 100px;
+    display: inline;
+}
+#openRoomBtn>button{
+    width: 100px;
+}

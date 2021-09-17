@@ -1,0 +1,237 @@
+/*웹폰트 설정 CSS*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+/*input 안에 돋보기*/
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+
+/*초기화 css*/
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background-color: transparent;
+    color : slategrey;
+}
+
+body {
+    font-family: 'Montserrat', '나눔고딕', '굴림';
+    line-height: 1;
+}
+
+header, .sidenav, section, article, footer {
+    display: block;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline; /*부모요소 기준 수직선*/
+    background-color: transparent;
+    text-decoration: none;
+}
+
+/*allwrap CSS*/
+#allwrap{
+    width:1200px; margin:  0 auto;
+}
+
+/*header영역 CSS*/
+.header {
+    position: relative;
+    padding: 18px 5px;
+}
+.header .logo {
+    float: left;
+    margin-left: 35%
+}
+
+.header .logo a {
+    font-size: 60px;
+}
+.header {
+    position: static;
+    padding: 28px 52px;
+}
+/*sidenav 영역 CSS*/
+.sidenav ul, li {
+    list-style-type: none;
+}
+.sidenav ul {
+    margin-top: 10px;
+}
+.sidenav ul li{
+    display: inline;
+    float: right;
+    margin-right: 6%; 
+}
+
+/*mainnav 영역 CSS*/
+.mainnav .mainnav-ul{
+    margin-left: 33.5%;
+    padding-bottom: 6%;   
+}
+.mainnav-ul li{
+    height: 40px;
+}
+
+.mainnav-section {
+    margin-top: 110px;
+}
+
+.mainnav-section .mainnav-ul li {
+    float: left;
+    /*(175 / 768) * 100 = 23.4375%*/
+    width: 22.7864%;
+    /*(20 / 768) * 100 = 2.60416667%*/
+    margin-left: 2.60416667%;
+    margin-top: 0;            
+}
+.mainnav-section .mainnav-ul li:first-child {
+    margin-left: 0;
+}
+
+/*article1(첫번째 이미지) 영역 CSS*/
+.article1 #mp4{
+    display: block;
+    width: 100%;
+    background-size: cover;
+    left: 0;
+}
+
+/*article2(두번째 이미지)(상단,하단) 영역 CSS*/
+.article2 img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 300px;
+}
+
+/*article2의 돋보기 있는 검색창*/
+input {
+    width: 100%;
+    border-radius: 20px;
+    border: 1.5px solid white;
+    margin: 10px 0;
+    padding: 10px 12px;
+    font-family: fontAwesome;/*돋보기이미지*/
+}
+
+.wrap2 {
+     position: relative;
+}
+/*article2의 검색창*/
+.search{
+    position: absolute;
+     top: 40%;
+     left: 40%;
+}
+
+/*work영역 부분 CSS*/
+.work-section .work-list li {
+    width: 100%
+}
+
+
+.work-section .work-list li a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+/*이미지 절반으로 인라인 만드는 css*/
+.work-section .work-list li {
+    float: left;
+    width: 50%;
+}
+
+
+
+/*work-section, article3 이미지커버*/ 
+.work-section .work-list li a:before, .article3 .article-list2 li a:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    
+    background-color: lightgrey;
+    content: "";
+    opacity: 0.0;
+    transition-property: all;
+    transition-duration: 0.5s;    
+}
+
+.work-section .work-list li a:hover:before, .article3 .article-list2 li a:hover:before {
+    opacity: 0.8;
+}
+
+.work-section .work-list li .info, .article3 .article-list2 li .info2 {
+    position: absolute;
+    top: 0;
+    left: 23px;
+    z-index: 20;
+    opacity: 0.0;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.work-section .work-list li a:hover .info, .article3 .article-list2 li a:hover .info2 {
+    transform: translateY(23px);
+    opacity: 1.0;    
+}
+
+.work-section .work-list li .info h3, .article3 .article-list2 li .info2 h3 {
+    margin-bottom: 8px;
+    font-size: 23px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.work-section .work-list li .info span, .article3 .article-list2 li .info2 span {
+    font-size: 12px;
+    color: #fff;
+}
+
+.work-section .work-list li img {
+    display: block;
+    width: 100%;
+    max-width: 200%;
+    height: 350px;
+}
+
+
+
+/*article3영역 css*/
+.article3 img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 280px;
+}
+
+.article3 .article-list2 li a {
+    clear:both; /*상위 display해제*/
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.article3 .article-list2 li img {
+    display: block;
+    width: 100%;
+    max-width: 200%;
+   
+}
+
+
+
+/*footer영역 css*/
+.footer {
+    margin-top: 105px;
+}
