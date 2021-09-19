@@ -32,7 +32,7 @@ public class MountainInfoController extends HttpServlet {
 		String[] uriArr = wrappedRequest.getRequestURIArray();
 		
 		switch(uriArr[uriArr.length-1]){
-		case "mt_info_main" :
+		case "mtInfoMain" :
 			mtInfoMain(request,response);
 			break;
 		default :

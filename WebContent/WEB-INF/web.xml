@@ -6,21 +6,54 @@
   </welcome-file-list>
   
   <filter>
-	<filter-name>encodingFilter</filter-name>
-  	<filter-class>com.kh.santa.common.filter.EncodingFilter</filter-class>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>com.kh.santa.common.filter.EncodingFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>encodingFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>wrapperFilter</filter-name>
+    <filter-class>com.kh.santa.common.filter.WrapperFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>wrapperFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+   <filter>
+    <filter-name>validatorFilter</filter-name>
+    <filter-class>com.kh.santa.common.filter.ValidatorFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>validatorFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
   
   <filter>
-  	<filter-name>wrapperFilter</filter-name>
-  	<filter-class>com.kh.santa.common.filter.WrapperFilter</filter-class>
+    <filter-name>authorizationFilter</filter-name>
+    <filter-class>com.kh.santa.common.filter.AuthorizationFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>wrapperFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+    <filter-name>authorizationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <error-page>
+ 	<error-code>404</error-code>
+ 	<location>/WEB-INF/views/error/404.jsp</location>
+  </error-page>
+
+  <error-page>
+ 	<exception-type>com.kh.santa.common.exception.PageNotFoundException</exception-type>
+ 	<location>/WEB-INF/views/error/404.jsp</location>
+  </error-page>
+  
+  
+  <error-page>
+ 	<exception-type>com.kh.santa.common.exception.HandlableException</exception-type>
+ 	<location>/exception-handler</location>
+ 	</error-page>
   
 </web-app>
