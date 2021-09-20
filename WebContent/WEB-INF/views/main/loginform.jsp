@@ -53,7 +53,9 @@
 					<li><button><span>Google</span></button></li>
 				</ul>
 				<br>
-	            <a href="santa_missedid.html">아이디/비밀번호 찾기</a>
+	            <a href="">아이디 찾기</a>
+	            <br>
+	            <a href="">비밀번호 찾기</a>
 	            <br>
 	            <a href="santa_signin.html">아직 회원이 아니신가요?</a>  
 			</section>
