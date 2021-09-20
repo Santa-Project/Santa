@@ -9,6 +9,5 @@ public class MountainService {
 	private JDBCTemplate template = JDBCTemplate.getInstance();
 	
 	
-	
 }
 
