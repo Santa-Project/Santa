@@ -35,6 +35,27 @@ public class MountainInfoController extends HttpServlet {
 		case "mtInfoMain" :
 			mtInfoMain(request,response);
 			break;
+		case "mtInfoDetail" :
+			mtInfoDetail(request,response);
+			break;
+		case "searchKeyword" :
+			searchKeyword(request,response);
+			break;
+		case "searchNearby" :
+			mtInfoDetail(request,response);
+			break;
+		case "searchByRegion" :
+			mtInfoMain(request,response);
+			break;
+		case "searchByPopularity" :
+			mtInfoDetail(request,response);
+			break;
+		case "searchByLevelDistance" :
+			searchByLevelDistance(request,response);
+			break;
+		case "searchByHashtag" :
+			searchByHashtag(request,response);
+			break;
 		default :
 			break;
 		}
@@ -42,6 +63,41 @@ public class MountainInfoController extends HttpServlet {
 
 	private void mtInfoMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/mountainInfo/mtInfoMain").forward(request, response);
+		
+	}
+
+	private void mtInfoDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
+		
+	}
+	
+	private void searchKeyword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
+		
+	}
+
+	private void searchNearby(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
+		
+	}
+	
+	private void searchByRegion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
+		
+	}
+
+	private void searchByPopularity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
+		
+	}
+	
+	private void searchByLevelDistance(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
+		
+	}
+
+	private void searchByHashtag(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/mountainInfo/mtInfoMain");
 		
 	}
 

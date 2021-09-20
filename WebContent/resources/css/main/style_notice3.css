@@ -1,0 +1,95 @@
+/*웹폰트 설정 CSS*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+/*CSS초기화*/
+* :not(h1){
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    line-height: 1.5em;
+    color: black;
+}
+aside, footer, header, nav, section {
+    display: block;
+}
+nav ul, li {
+    list-style-type: none; 
+}
+a {
+    text-decoration: none;
+}
+
+
+/*nav 영역 CSS*/
+.nav ul {
+    margin-top: 10px;
+}
+.nav ul li{
+    display: inline;
+    float: right;
+    margin-right: 6%;
+    
+}
+
+.cfixed{
+    margin-top: 0px;
+    width: 1200px;
+    
+}
+
+/*right-side 영역 CSS*/
+.right-side{ 
+    float: left;
+    width: 21.25%;
+    min-width: 200px;
+    max-width: 200px;
+    height: 1500px;
+    padding: 1.5625%;
+    background-color: #f8ffd7;
+}
+.right-side ul {
+    line-height: 4;
+    font-size: 20px;
+    padding-top: 20px;
+    
+}
+.right-side ul li {
+    display: block;
+    margin-top: 30px;
+    
+    
+}
+.right-side ul li a  {
+    font-size: 1em;
+    text-decoration: none;
+}
+
+/*본문내용*/
+.content{
+    float: left;
+    width: 72.5%;
+    height: 1300px;
+    padding: 3%;
+    
+}
+
+h1 {
+    font-size: 150%;
+    color: black;
+    
+}
+
+/*footer영역 css*/
+.footer {
+    clear: both;
+    
+}
+
+
+
+
+
+
+
+
+

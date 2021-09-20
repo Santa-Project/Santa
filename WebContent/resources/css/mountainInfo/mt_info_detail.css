@@ -1,0 +1,244 @@
+@charset "UTF-8";
+section{
+	width: 100vw;
+	height: 100%;
+	min-width: 
+	}
+
+.wrap_search{
+	width: 100vw;
+	height: 50px;
+}
+
+.search{
+	position: relative;
+	top: 2vw;
+	left: 2vw;
+}
+
+.search>input{
+	border: 0;
+	border-bottom: thin solid;
+	background-color: transparent;
+}
+
+.title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 10vw;
+	}
+
+.mt_name>h1{
+	font-weight: bolder;
+}
+
+.like{
+	position: relative;
+	left: 20px;
+	font-size: medium;
+	margin: 0 20px 0 20px;
+}
+
+.content_top{
+	display: flex;
+	width: 100vw;
+}
+
+.text_content{
+	padding: 1.5vw 2vw 1.5vw 2vw;
+	font-size: medium;
+	width: 70vw;
+}
+
+.other_content{
+	padding: 1.5vw 2vw 1.5vw 2vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width: 30vw;
+	height: 50vw;
+}
+
+#mt_photo{
+	background-repeat: no-repeat;
+	background-size:contain;
+	width: 25vw;
+	height: 25vw;
+}
+
+.hashtag{
+	position: relative;
+	top: 2vw;
+	left: 1.5vw;
+	width: 25vw;
+}
+
+.content_bottom{
+	display: flex;
+	width: 100vw;
+	height: 40vw;
+}
+
+
+
+.recommended_trip{
+	display: flex;
+	flex-direction: column;
+	width: 50vw;
+	height: 40vw;
+}
+
+.rt_title{
+	position: relative;
+	top: 1vw;
+	left: 1vw;
+	width: 50vw;
+	height: 5vw;
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+
+.wrap_map{
+	width: 50vw;
+	height: 30vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#map{
+	width: 45vw;
+	height: 27vw;
+}
+
+.photos{
+	width: 50vw;
+	height: 40vw;
+}
+
+.photos_title{
+	position: relative;
+	top: 1vw;
+	left: 1vw;
+	width: 50vw;
+	height: 5vw;
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+
+.photos_contents{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+	width: 48vw;
+	height: 35vw;
+	overflow: hidden;
+}
+
+.wrap_photos_content{
+	display: flex;
+	align-items: center;
+	width: 48vw;
+	height: 15vw;
+}
+
+.wrap_photos_content>div {
+	display: flex;
+	flex-direction: column;
+	margin : 0 0.5vw 0 0.5vw;
+	width: 15vw;
+	height: 18vw;
+}
+
+.wrap_photos_content>div>img{
+	width: 15vw;
+	height: 15vw;
+	object-fit: fill;
+}
+
+.user_id{
+	width: 15vw;
+	height: 3vw;
+}
+
+.modal{
+	position: fixed;
+	top: 25%;
+	left: 20%;
+	z-index: 1000;
+	visibility: hidden;
+}
+
+.modal>div{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60vw;
+	height: 40vw;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.modal img{
+	width: 40vw;
+	height: 40vw;
+	object-fit: fill;
+}
+
+.modal.active{
+	visibility: visible;
+}
+
+
+
+.slide{
+	display: flex;
+	justify-content: space-between;
+	width: 50vw;
+	height: 5vw;
+}
+
+.arrow-left{
+	width: 5vw;
+	height: 5vw;
+}
+
+.arrow-left>i{
+	margin-left : 2vw;
+	font-size: 1.5em;
+}
+
+.btn_slide{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40vw;
+	height: 5vw;
+}
+
+.btn_slide>button{
+	width: 10px;
+	height: 10px;
+	background-color: black;
+	border-radius: 100%;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+.btn_slide>*:first-child{
+	background-color: red;
+}
+
+.arrow-right{
+	width: 5vw;
+	height: 5vw;
+}
+
+.arrow-right>i{
+	margin-right : 2vw;
+	font-size: 1.5em;
+}
+
+
+
