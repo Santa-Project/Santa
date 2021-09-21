@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
 html {
@@ -8,7 +9,7 @@ html {
 :root {
     --text-color: #555555;
     --main-color: #c5e1a5;
-    --santa-color: #94af76;
+    --santa-color: #a1bf4d;
     --point-color: #f8ffd7;
     --bg-color: rgb(240, 240, 240);
 }
@@ -161,14 +162,12 @@ section {
     align-items: center;
     width: 100%;
     height: 50%;
-    /* border: 1.5px solid rgb(235, 221, 36); */
 }
 
 .searchbox2 {
 
     width: 100%;
     height: 50%;
-    /* border: 1.5px solid rgb(235, 221, 36); */
 }
 
 .search {
@@ -217,25 +216,22 @@ section {
     display: flex;
     width: 100%;
     height: 300px;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_user1 {
     width: 10%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_user2 {
     width: 80%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_box_top {
+    padding-top: 5px;
     width: 100%;
     height: 15%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_box_top span {
@@ -247,43 +243,70 @@ section {
     display: flex;
     width: 100%;
     height: 85%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank1 {
     width: 25%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_title {
     width: 100%;
     height: 10%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank_card {
+    position: relative;
     width: 100%;
-    height: 100%;
-    border: 1.5px solid rgb(36, 235, 69);
+    height: 90%;
+    padding-left: 80px;
+    overflow: hidden;
 }
+
+.rank_card .content{
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(to top, rgb(238, 243, 233), transparent);
+    color: #fff;
+    text-align: center;
+    padding-top: 130px;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
+
+.content h3{
+    color: black;
+    font-size: 30px;
+}
+
+.rank_card:hover .content{
+    top: 25px;
+}
+
+.rank_card:hover{
+    transform: translateY(-20px);
+}
+
 
 .rank2 {
     width: 25%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank3 {
     width: 25%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 .rank4 {
     width: 25%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
+    
 }
 
 .rank4 span {
@@ -294,7 +317,6 @@ section {
 .rank_user3 {
     width: 10%;
     height: 100%;
-    border: 1.5px solid rgb(235, 221, 36);
 }
 
 
@@ -315,6 +337,7 @@ section {
 }
 
 .hot_box_top {
+    padding-top: 20px;
     width: 100%;
     height: 15%;
 }
@@ -350,7 +373,6 @@ section {
 .hot3 {
     width: 25%;
     height: 100%;
-    /* border: 1.5px solid rgba(34, 77, 17, 0.37); */
     border-radius: 20px;
     padding: 10px;
 }
@@ -360,7 +382,6 @@ section {
     width: 100%;
     height: 40%;
     background-color:var(--main-color);
-    /* border: 1px solid #000; */
     border-radius: 10px 10px 0 0;
 }
 
@@ -397,7 +418,6 @@ section {
     display: flex;
     width: 100%;
     height: 60%;
-    /* border-radius: 20px; */
     background-color:var(--point-color);
 }
 
@@ -423,7 +443,6 @@ section {
 .hot_user3 {
     width: 10%;
     height: 100%;
-    
 }
 
 .mypage_wrapper {
@@ -444,7 +463,6 @@ section {
     display: flex;
     width: 100%;
     height: 700px;
-
 }
 
 .recent_b1 {
@@ -461,11 +479,9 @@ section {
     padding-top: 20px;
     width: 100%;
     height: 10%;
-
 }
 
 .recent_box_top span {
-
     font-size: 20px;
     font-weight: bold;
 }
@@ -518,7 +534,6 @@ section {
 }
 
 .modal_content {
-    /* border: 1px solid #000; */
     width: 800px;
     height: 500px;
     background-color: #fff;
@@ -538,12 +553,6 @@ section {
     background-size: cover;
 }
 
-.photo2 {
-    flex: 2;
-    background: url('mt2.jpg') no-repeat center center;
-    background-size: cover;
-}
-
 
 .desc {
     flex: 1;
@@ -559,7 +568,6 @@ section {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     outline: none;
-
 }
 
 .desc_content input[type=text]::placeholder {
@@ -572,15 +580,34 @@ section {
     opacity: 0;
 }
 
+.desc_content .button_wrap{
+    display: flex;
+}
+
+.desc_content .button_wrap i{
+    padding-right: 40px;
+    
+}
+
 .desc_content button {
     display: block;
-    width: 100%;
+    width: 80%;
     border: none;
     background-color: var(--main-color);
     color: #fff;
     cursor: pointer;
     padding: 6px;
     outline: none;
+}
+
+.heart .fas.active{
+    color: rgb(243, 89, 89);
+}
+
+.desc_content i{
+    display: block;
+    font-size: 25px;
+    padding-top: 5px;
 }
 
 .overlay {
@@ -601,6 +628,7 @@ section {
     /* pointer-events: all; */
     visibility: visible;
 }
+
 
 .btn_close {
     position: absolute;

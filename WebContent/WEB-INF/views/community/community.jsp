@@ -33,21 +33,36 @@
                             <i class="fas fa-trophy"> 1위</i>
                         </div>
                         <div class="rank_card">
-                            <img src="img/rank1.jpg" alt="">
+                            <img src="/resources/img/community/rank1.jpg" alt="">
                             <div class="content">
-                                <h2>@umhonggil <span>등산가</span></h2>
-                                <p>종로구/ 백두산, 한라산, 설악산</p>
-                                <div class="home">
-                                    <i class="fas fa-home"></i>
-                                </div>
+                                <h3>@umhonggil</h3>
+                                <a href="#"><i class="fas fa-home"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="rank2">
-                        <i class="fas fa-trophy"> 2위</i>
+                        <div class="rank_title">
+                            <i class="fas fa-trophy"> 2위</i>
+                        </div>
+                        <div class="rank_card">
+                            <img src="/resources/img/community/rank1.jpg" alt="">
+                            <div class="content">
+                                <h3>@honggil</h3>
+                                <a href="#"><i class="fas fa-home"></i></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="rank3">
-                        <i class="fas fa-trophy"> 3위</i>
+                        <div class="rank_title">
+                            <i class="fas fa-trophy"> 3위</i>
+                        </div>
+                        <div class="rank_card">
+                            <img src="/resources/img/community/rank1.jpg" alt="">
+                            <div class="content">
+                                <h3>@umhong</h3>
+                                <a href="#"><i class="fas fa-home"></i></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="rank4">
                         <span><i class="fas fa-medal"></i> 4위 user</span>
@@ -76,72 +91,80 @@
                     <div class="hot1">
                         <div class="hot_content_box">
                             <div class="hot_profile">
-                                <img src="mt1.jpg">
+                                <a href=""><img src="/resources/img/community/mt1.jpg"></a>
                             </div>
                             <div class="hot_content">
-                                <h3>등산중독</h3>
+                                <h3>산할아버지</h3>
                                 <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <img src="mt1.jpg">
-                                <img src="mt2.jpg">
-                                <img src="mt3.jpg">
+                                <a href="">
+                                    <img src="/resources/img/community/mt1.jpg">
+                                    <img src="/resources/img/community/mt2.jpg">
+                                    <img src="/resources/img/community/mt3.jpg">
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="hot2">
                         <div class="hot_content_box">
                             <div class="hot_profile">
-                                <img src="mt1.jpg">
+                                <a href=""><img src="/resources/img/community/mt1.jpg"></a>
                             </div>
                             <div class="hot_content">
-                                <h3>등산중독</h3>
+                                <h3>산할아버지</h3>
                                 <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <img src="mt1.jpg">
-                                <img src="mt2.jpg">
-                                <img src="mt3.jpg">
+                                <a href="">
+                                    <img src="/resources/img/community/mt1.jpg">
+                                    <img src="/resources/img/community/mt2.jpg">
+                                    <img src="/resources/img/community/mt3.jpg">
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="hot3">
                         <div class="hot_content_box">
                             <div class="hot_profile">
-                                <img src="mt1.jpg">
+                                <a href=""><img src="/resources/img/community/mt1.jpg"></a>
                             </div>
                             <div class="hot_content">
-                                <h3>등산중독</h3>
+                                <h3>산할아버지</h3>
                                 <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <img src="mt1.jpg">
-                                <img src="mt2.jpg">
-                                <img src="mt3.jpg">
+                                <a href="">
+                                    <img src="/resources/img/community/mt1.jpg">
+                                    <img src="/resources/img/community/mt2.jpg">
+                                    <img src="/resources/img/community/mt3.jpg">
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="hot4">
                         <div class="hot_content_box">
                             <div class="hot_profile">
-                                <img src="mt1.jpg">
+                                <a href=""><img src="/resources/img/community/mt1.jpg"></a>
                             </div>
                             <div class="hot_content">
-                                <h3>등산중독</h3>
+                                <h3>산할아버지</h3>
                                 <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <img src="mt1.jpg">
-                                <img src="mt2.jpg">
-                                <img src="mt3.jpg">
+                                <a href="">
+                                    <img src="/resources/img/community/mt1.jpg">
+                                    <img src="/resources/img/community/mt2.jpg">
+                                    <img src="/resources/img/community/mt3.jpg">
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -158,7 +181,7 @@
                 <div class="recent_box_bottom">
                     <div class="recent_box_bottom_first">
                         <div class="recent1">
-                            <img src="mt1.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt1.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -170,7 +193,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성?1111?</button>
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +201,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent2">
-                            <img src="mt2.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt2.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo2"></div>
@@ -190,7 +213,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성!!22</button>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +221,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent3">
-                            <img src="mt3.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt3.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -210,7 +233,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성하기333</button>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +241,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent4">
-                            <img src="mt4.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt4.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -230,7 +253,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성하기444</button>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +263,7 @@
                     </div>
                     <div class="recent_box_bottom_second">
                         <div class="recent5">
-                            <img src="mt5.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt5.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -252,7 +275,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성하기555</button>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +283,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent6">
-                            <img src="mt6.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt6.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -272,7 +295,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성하666</button>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +303,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent7">
-                            <img src="mt7.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt7.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -292,7 +315,7 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <button>작성7777</button>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +323,7 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent8">
-                            <img src="mt8.jpg" class="btn_open" id="recent_img">
+                            <img src="/resources/img/community/mt8.jpg" class="btn_open" id="recent_img">
                             <div class="modal">
                                 <div class="modal_content">
                                     <div class="photo"></div>
@@ -312,12 +335,15 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성 88</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="overlay"></div>
+                            <div class="overlay8"></div>
                         </div>
                     </div>
                 </div>
@@ -329,6 +355,7 @@
                 <h1>TOP</h1></a>
         </div>
     </section>
+    
 <%@include file= "/WEB-INF/views/common/footer.jsp"%>
 
 	<script>
@@ -338,6 +365,9 @@
 	    $('.btn_close, .overlay').click(function(){
 	        $('.modal, .overlay').removeClass('active')
 	    })
+	    $('.heart .fas').click(function(){
+        $(this).toggleClass('active')
+    })
 	</script>
 </body>
 </html>
