@@ -25,7 +25,7 @@
     <!--해당 영역 중심으로 맞춤-->
 	    <div id="wrap1">
             <header class="header">
-                <h1 class="logo"><a href="santa_main.html">SANTA</a></h1>
+                <h1 class="logo"><a href="/main/main">SANTA</a></h1>
             </header>
      <!--해당 영역 중심으로 맞춤-->
         <div id="wrap2">
@@ -35,19 +35,21 @@
 	
 	
 		<section class="login-section">
-			<div class="login-wrap">
-				<input placeholder="Username" type="text">
-			</div>
-			
-			<div class="login-wrap email-wrap">	
-				<input placeholder="email" type="email">
-			</div>
-			
-			<br>
-			<br>
-			<div class="login-button">
-				<button>search</button>
-			</div>
+			<form action="/main/id_request">
+				<div class="login-wrap">
+					<input placeholder="Username" type="text">
+				</div>
+				
+				<div class="login-wrap email-wrap">	
+					<input placeholder="email" type="email">
+				</div>
+				
+				<br>
+				<br>
+				<div class="login-button">
+					<button>search</button>
+				</div>
+			</from>
 		</section>
 		
 		<br>
@@ -55,7 +57,7 @@
 			
 			<br>
 
-            <a href="santa_signin.html">아직 회원이 아니신가요?</a>  
+            <a href="/main/joinform">아직 회원이 아니신가요?</a>  
 		</section>
 		
 		

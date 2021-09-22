@@ -13,7 +13,7 @@
         <div class="search_wrapper">
             <div class="searchbox1">
                 <div class="search">
-                    <input type="text" placeholder="      검색어를 입력하세요">
+                    <input type="text" placeholder="검색어를 입력하세요">
                     <a href=""><i class="fas fa-search"></i></a>
                 </div>
             </div>
@@ -337,7 +337,7 @@
                                             <input type="text" placeholder="댓글을 입력하세요.">
                                             <div class="button_wrap">
                                                 <div class="heart"><i class="fas fa-heart"></i></div>
-                                                <button>작성 88</button>
+                                                <button>작성하기 88</button>
                                             </div>
                                         </div>
                                     </div>

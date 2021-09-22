@@ -24,7 +24,9 @@
             <img src="/resources/img/main/work11.png" alt="산 이미지"> 
       </article>
             <div class="search">
-                <input class="input1" type="text" placeholder="&#61442;"/>
+            	<form action="/mountainInfo/searchKeyword">
+                	<input class="input1" type="text" placeholder="&#61442;"/>
+                </form>
             </div>
     </div>       
                         
@@ -32,7 +34,7 @@
         <section class="work-section">
             <ul class="work-list">
                 <li>
-                    <a href="santa_desc1.html">
+                    <a href="/main/notice1">
                         <div class="info">
                             <h3>안전사고</h3>
                             <span>페이지 이동</span>
@@ -41,7 +43,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="santa_desc2.html">
+                    <a href="/main/notice2">
                         <div class="info">
                             <h3>등산문화 개선</h3>
                             <span>페이지 이동</span>
@@ -56,7 +58,7 @@
          <article class="article3">
            <ul class="article-list2">
                 <li>
-                    <a href="santa_desc3.html">
+                    <a href="/main/novice_guide">
                         <div class="info2">
                             <h3>초보자 가이드</h3>
                             <span>페이지 이동</span>

@@ -20,9 +20,9 @@
     <div class="cfixed">
         <aside class="right-side">
             <ul>
-               <li><a href="santa_desc1.html"><b>산행 안전 사고</b></a></li>
-               <li><a href="santa_desc2.html"><b>등산 문화 개선</b></a></li>
-               <li><a href="santa_desc3.html"><b>초보자 가이드</b></a></li>
+               <li><a href="/main/notice1"><b>산행 안전 사고</b></a></li>
+               <li><a href="/main/notice2"><b>등산 문화 개선</b></a></li>
+               <li><a href="/main/novice_guide"><b>초보자 가이드</b></a></li>
            </ul>            
         </aside>
 
