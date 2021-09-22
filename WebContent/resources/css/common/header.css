@@ -74,13 +74,13 @@ a {
     height: 100%;
 }
 
-.login {
+.login .mypage {
     width: 40%;
     font-size: 20px;
     margin-top: 30px;
 }
 
-.join {
+.join .user_id {
     width: 20%;
     font-size: 20px;
     margin-top: 30px;

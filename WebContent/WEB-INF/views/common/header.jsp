@@ -7,10 +7,16 @@
             <div class="logo"><a href="/main/main"><img src="/resources/img/Santa_Logo.png" alt=""></a></div>
         </div>
         <div class="top_header3">
-            <div class="login_wrapper1"></div>
+         <div class="login_wrapper1"></div>
             <div class="login_wrapper2">
-                <div class="login"><a href="#">LOGIN</a></div>
-                <div class="join"><a href="#">JOIN</a></div>
+	            <c:if test="${empty authentication}">
+	                <div class="login"><a href="/main/loginform">LOGIN</a></div>
+	                <div class="join"><a href="/main/joinform">JOIN</a></div>
+	            </c:if>
+	            <c:if test="${not empty authentication}">
+	            	<div class="mypage"><a href="/mypage/mypageBoard"><i class="fas fa-user-circle"></i></a></div>
+	                <div class="user_id">${member.userId}</div>
+	            </c:if>
             </div>
         </div>
     </div>

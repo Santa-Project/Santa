@@ -25,7 +25,7 @@
     <!--해당 영역 중심으로 맞춤-->
 	    <div id="wrap1">
             <header class="header">
-                <h1 class="logo"><a href="santa_main.html">SANTA</a></h1>
+                <h1 class="logo"><a href="/main/main">SANTA</a></h1>
             </header>
      <!--해당 영역 중심으로 맞춤-->
         <div id="wrap2">
@@ -35,6 +35,7 @@
 	
 	
 		<section class="login-section">
+			<form action="/main/password_request">
 			<div class="login-wrap email-wrap">	
 				<input placeholder="email" type="email">
 			</div>
@@ -43,12 +44,12 @@
 				<input placeholder="Password" type="password">
 			</div>
 			
-			
 			<br>
 			<br>
 			<div class="login-button">
 				<button>search</button>
 			</div>
+			</form>
 		</section>
 		
 		<br>
@@ -56,7 +57,7 @@
 			
 			<br>
 
-            <a href="santa_signin.html">아직 회원이 아니신가요?</a>  
+            <a href="/main/joinform">아직 회원이 아니신가요?</a>  
 		</section>
 		
 		
