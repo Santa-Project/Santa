@@ -1,7 +1,6 @@
 package com.kh.santa.common.db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,7 +27,7 @@ public class JDBCTemplate {
 			  final String DB_PASSWORD = "Santasanta1234!!";
 			  final String CONN_FACTORY_CLASS_NAME="oracle.jdbc.pool.OracleDataSource";
 			    
-				PoolDataSource pds = PoolDataSourceFactory.getPoolDataSource();
+				pds = PoolDataSourceFactory.getPoolDataSource();
 				pds.setConnectionFactoryClassName(CONN_FACTORY_CLASS_NAME);
 				pds.setURL(DB_URL);
 				pds.setUser(DB_USER);
