@@ -3,21 +3,20 @@ package com.kh.santa.mypage.model.dto;
 import oracle.sql.DATE;
 
 public class MemberBoard {
-	
-	private String memBoardIdx;
+
+	private String boardIdx;
 	private String memberIdx;
-	private String picture;
-	private String tagIdx;
+	private String boardPicture;
 	private int liked;
 	private DATE uploadDatetime;
 	private String mtRegion;
 	private String mtMountain;
-	
-	public String getMemBoardIdx() {
-		return memBoardIdx;
+	private String boardComment;
+	public String getBoardIdx() {
+		return boardIdx;
 	}
-	public void setMemBoardIdx(String memBoardIdx) {
-		this.memBoardIdx = memBoardIdx;
+	public void setBoardIdx(String boardIdx) {
+		this.boardIdx = boardIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -25,17 +24,11 @@ public class MemberBoard {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getPicture() {
-		return picture;
+	public String getBoardPicture() {
+		return boardPicture;
 	}
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-	public String getTagIdx() {
-		return tagIdx;
-	}
-	public void setTagIdx(String tagIdx) {
-		this.tagIdx = tagIdx;
+	public void setBoardPicture(String boardPicture) {
+		this.boardPicture = boardPicture;
 	}
 	public int getLiked() {
 		return liked;
@@ -61,11 +54,17 @@ public class MemberBoard {
 	public void setMtMountain(String mtMountain) {
 		this.mtMountain = mtMountain;
 	}
+	public String getBoardComment() {
+		return boardComment;
+	}
+	public void setBoardComment(String boardComment) {
+		this.boardComment = boardComment;
+	}
 	@Override
 	public String toString() {
-		return "MemberBoard [memBoardIdx=" + memBoardIdx + ", memberIdx=" + memberIdx + ", picture=" + picture
-				+ ", tagIdx=" + tagIdx + ", liked=" + liked + ", uploadDatetime=" + uploadDatetime + ", mtRegion="
-				+ mtRegion + ", mtMountain=" + mtMountain + "]";
+		return "MemberBoard [boardIdx=" + boardIdx + ", memberIdx=" + memberIdx + ", boardPicture=" + boardPicture
+				+ ", liked=" + liked + ", uploadDatetime=" + uploadDatetime + ", mtRegion=" + mtRegion + ", mtMountain="
+				+ mtMountain + ", boardComment=" + boardComment + "]";
 	}
 	
 	
