@@ -34,17 +34,17 @@
 		
 			<section class="login-section">
 				<form action="/main/login" method="post">
-				<div class="login-wrap">
-					<input placeholder="Username" type="text">
-				</div>
-				
-				<div class="login-wrap password-wrap">	
-					<input placeholder="Password" type="password">
-				</div>
-				
-				<div class="login-button">
-					<button>Sign in</button>
-				</div>
+					<div class="login-wrap">
+						<input placeholder="User Id" type="text" name="userId">
+					</div>
+					
+					<div class="login-wrap password-wrap">	
+						<input placeholder="Password" type="password" name="password">
+					</div>
+					
+					<div class="login-button">
+						<button>Sign in</button>
+					</div>
 				</form>
 			</section>
 			

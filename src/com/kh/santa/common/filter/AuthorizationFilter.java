@@ -79,7 +79,14 @@ public class AuthorizationFilter implements Filter {
 		Member member = (Member) session.getAttribute("authentication");
 		
 		// 로그인이 안된 유저
-		if(member == null) return;
+		if(member == null) {
+			
+			if(uriArr[2].equals("logout")) {
+				throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
+			}
+			
+			return;
+		}
 		
 		switch(uriArr[2]) {
 		case "loginform":

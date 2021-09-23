@@ -5,17 +5,17 @@ import java.sql.Date;
 public class Member {
 
 	private String memberIdx;
-	private String memUserid;
-	private String memEmail;
-	private String memPassword;
-	private String memUsername;
-	private String memNickname;
-	private String memPhone;
-	private String memSex;
-	private String memAddress;
-	private Date memRegisterDatetime;
-	private String memProfileContent;
-	private String memPhoto;
+	private String userId;
+	private String email;
+	private String userPassword;
+	private String username;
+	private String nickname;
+	private String phone;
+	private String gender;
+	private String address;
+	private Date registerDatetime;
+	private String profileContent;
+	private String photo;
 	private String socialLogin;
 	private String grade;
 	public String getMemberIdx() {
@@ -24,71 +24,71 @@ public class Member {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getMemUserid() {
-		return memUserid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setMemUserid(String memUserid) {
-		this.memUserid = memUserid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getMemEmail() {
-		return memEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMemEmail(String memEmail) {
-		this.memEmail = memEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getMemPassword() {
-		return memPassword;
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public void setMemPassword(String memPassword) {
-		this.memPassword = memPassword;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
-	public String getMemUsername() {
-		return memUsername;
+	public String getUsername() {
+		return username;
 	}
-	public void setMemUsername(String memUsername) {
-		this.memUsername = memUsername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getMemNickname() {
-		return memNickname;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setMemNickname(String memNickname) {
-		this.memNickname = memNickname;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-	public String getMemPhone() {
-		return memPhone;
+	public String getPhone() {
+		return phone;
 	}
-	public void setMemPhone(String memPhone) {
-		this.memPhone = memPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public String getMemSex() {
-		return memSex;
+	public String getGender() {
+		return gender;
 	}
-	public void setMemSex(String memSex) {
-		this.memSex = memSex;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
-	public String getMemAddress() {
-		return memAddress;
+	public String getAddress() {
+		return address;
 	}
-	public void setMemAddress(String memAddress) {
-		this.memAddress = memAddress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public Date getMemRegisterDatetime() {
-		return memRegisterDatetime;
+	public Date getRegisterDatetime() {
+		return registerDatetime;
 	}
-	public void setMemRegisterDatetime(Date memRegisterDatetime) {
-		this.memRegisterDatetime = memRegisterDatetime;
+	public void setRegisterDatetime(Date registerDatetime) {
+		this.registerDatetime = registerDatetime;
 	}
-	public String getMemProfileContent() {
-		return memProfileContent;
+	public String getProfileContent() {
+		return profileContent;
 	}
-	public void setMemProfileContent(String memProfileContent) {
-		this.memProfileContent = memProfileContent;
+	public void setProfileContent(String profileContent) {
+		this.profileContent = profileContent;
 	}
-	public String getMemPhoto() {
-		return memPhoto;
+	public String getPhoto() {
+		return photo;
 	}
-	public void setMemPhoto(String memPhoto) {
-		this.memPhoto = memPhoto;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	public String getSocialLogin() {
 		return socialLogin;
@@ -104,12 +104,14 @@ public class Member {
 	}
 	@Override
 	public String toString() {
-		return "Member [memberIdx=" + memberIdx + ", memUserid=" + memUserid + ", memEmail=" + memEmail
-				+ ", memPassword=" + memPassword + ", memUsername=" + memUsername + ", memNickname=" + memNickname
-				+ ", memPhone=" + memPhone + ", memSex=" + memSex + ", memAddress=" + memAddress
-				+ ", memRegisterDatetime=" + memRegisterDatetime + ", memProfileContent=" + memProfileContent
-				+ ", memPhoto=" + memPhoto + ", socialLogin=" + socialLogin + ", grade=" + grade + "]";
+		return "Member [memberIdx=" + memberIdx + ", userId=" + userId + ", email=" + email + ", userPassword=" + userPassword
+				+ ", username=" + username + ", nickname=" + nickname + ", phone=" + phone + ", gender=" + gender
+				+ ", address=" + address + ", registerDatetime=" + registerDatetime + ", profileContent="
+				+ profileContent + ", photo=" + photo + ", socialLogin=" + socialLogin + ", grade=" + grade + "]";
 	}
+	
+
+	
 	
 	
 	
