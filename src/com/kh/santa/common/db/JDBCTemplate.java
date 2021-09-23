@@ -27,7 +27,7 @@ public class JDBCTemplate {
 			  final String DB_PASSWORD = "Santasanta1234!!";
 			  final String CONN_FACTORY_CLASS_NAME="oracle.jdbc.pool.OracleDataSource";
 			    
-			  	pds = PoolDataSourceFactory.getPoolDataSource();
+			    pds = PoolDataSourceFactory.getPoolDataSource();
 				pds.setConnectionFactoryClassName(CONN_FACTORY_CLASS_NAME);
 				pds.setURL(DB_URL);
 				pds.setUser(DB_USER);
@@ -70,11 +70,14 @@ public class JDBCTemplate {
 	//JDBCTemplate의 인스턴스 반환받는 용도 메소드
 	public static JDBCTemplate getInstance() {
 		//instance변수가 한번도 생성된적이 없으면,
-		if(instance == null) {
+		if(instance ==null) {
 			instance = new JDBCTemplate();
 		}
 		return instance;
 	}
+	
+	
+	
 	
 	
 	public Connection getConnection() {
@@ -82,7 +85,7 @@ public class JDBCTemplate {
 		Connection conn = null;
 		    
 		try {
-			
+
 			conn =  pds.getConnection();
 			
 			conn.setAutoCommit(false);
@@ -120,7 +123,7 @@ public class JDBCTemplate {
 	public void close(Connection conn) {
 		try {
 			if(conn!=null && !conn.isClosed()) {
-				conn.close();
+			conn.close();
 			}
 			
 		} catch (SQLException e) {
@@ -133,7 +136,7 @@ public class JDBCTemplate {
 		
 		try {
 			if(stmt!=null && !stmt.isClosed()) {
-				stmt.close();
+			stmt.close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -145,7 +148,7 @@ public class JDBCTemplate {
 		
 			try {
 				if(rset!=null && !rset.isClosed()) {
-					rset.close();
+				rset.close();
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -153,22 +156,21 @@ public class JDBCTemplate {
 			}
 	}
 
-	public void close(Statement stmt, Connection conn) {
-		close(stmt);
+	public void close(Connection conn,Statement stmt) {
 		close(conn);
+		close(stmt);
 
 	}
 
-	public void close(ResultSet rset,Statement stmt) {
+	public void close(ResultSet rset, Statement stmt) {
 		close(rset);
 		close(stmt);
 	}
 
-	public void close(ResultSet rset, Statement stmt, Connection conn) {
-
-		close(rset);
-		close(stmt);
+	public void close(Connection conn,Statement stmt,ResultSet rset) {
 		close(conn);
+		close(stmt);
+		close(rset);
 	}
 
 	
