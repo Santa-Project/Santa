@@ -14,8 +14,11 @@
 	                <div class="join"><a href="/main/joinform">JOIN</a></div>
 	            </c:if>
 	            <c:if test="${not empty authentication}">
-	            	<div class="mypage"><a href="/mypage/mypageBoard"><i class="fas fa-user-circle"></i></a></div>
-	                <div class="user_id">${member.userId}</div>
+	            	<div class="wrap_mypage">
+	            		<div class="mypage"><a href="/mypage/mypageBoard"><i class="fas fa-user-circle"></i></a></div>
+	                	<div class="user_id">${authentication.userId}</div>
+	            	</div>
+	            	<div class="logout"><a href="/main/logout">logout</a></div>
 	            </c:if>
             </div>
         </div>

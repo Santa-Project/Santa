@@ -1,13 +1,17 @@
 package com.kh.santa.main.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.santa.common.exception.HandlableException;
+import com.kh.santa.main.model.service.MainService;
+import com.kh.santa.mypage.model.dto.Member;
+
+
 
 /**
  * Servlet implementation class MainController
@@ -15,6 +19,8 @@ import com.kh.santa.common.exception.HandlableException;
 @WebServlet("/main/*")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private MainService mainService = new MainService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -43,6 +49,9 @@ public class MainController extends HttpServlet {
 		case "login":
 			login(request, response);
 			break;
+		case "logout":
+			logout(request, response);
+			break;
 		case "joinform":
 			joinform(request, response);
 			break;
@@ -68,7 +77,6 @@ public class MainController extends HttpServlet {
 		case "novice_guide":
 			request.getRequestDispatcher("/main/novice_guide").forward(request, response);
 
-
 		default:
 			break;
 
@@ -89,13 +97,30 @@ public class MainController extends HttpServlet {
 	private void login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+		
+		// 1. 시스템에서 문제가 생겨서 (DB가 뻗었다던가... 외부 API서버가 죽었다던가...)
+		// 	  예외가 발생하는 경우. => 예외처리를 service 단에서 처리
+		Member member = mainService.memberAuthenticate(userId, password);
+		
 		//로그인 실패
-		if(!false) {
-			request.setAttribute("msg", "로그인에 실패하였습니다.");
-			request.setAttribute("url", "/main/loginform");
-			request.getRequestDispatcher("/WEB-INF/views/common/result.jsp").forward(request, response);
+		// 2. 사용자가 잘못된 아이디나 비밀번호를 입력한 경우.
+		// 	    사용자에게 아이디나 비밀번호가 틀렸음을 알림, login-form으로 redirect
+		if(member == null) {
+			response.sendRedirect("/main/loginform?err=1");
+			return;
 		}
 		
+		request.getSession().setAttribute("authentication", member);
+		response.sendRedirect("/main/main");
+
+	}
+	
+	private void logout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		request.getSession().removeAttribute("authentication");
 		response.sendRedirect("/main/main");
 
 	}
@@ -109,11 +134,14 @@ public class MainController extends HttpServlet {
 	private void join(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		/*
-		 * //회원가입 실패 if(!false) { request.setAttribute("msg", "회원가입에 실패하였습니다.");
-		 * request.setAttribute("url", "/main/joinform");
-		 * request.getRequestDispatcher("/common/result").forward(request, response); }
-		 */
+		
+		//회원가입 실패 
+		if(1> 0) { 
+		request.setAttribute("msg", "회원가입에 실패하였습니다.");
+		request.setAttribute("url", "/main/joinform");
+		request.getRequestDispatcher("/common/result").forward(request, response); 
+		}
+		
 		
 		request.setAttribute("msg", "회원가입에 성공하였습니다.");
 		request.setAttribute("url", "/main/loginform");

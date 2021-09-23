@@ -74,13 +74,36 @@ a {
     height: 100%;
 }
 
-.login .mypage {
-    width: 40%;
+.wrap_mypage{
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+}
+
+.login {
+    width: 100%;
     font-size: 20px;
     margin-top: 30px;
 }
 
-.join .user_id {
+.mypage {
+    width: 100%;
+    font-size: 50px;
+    margin-top: 30px;
+}
+
+.join {
+    width: 20%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.user_id {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.logout {
     width: 20%;
     font-size: 20px;
     margin-top: 30px;
