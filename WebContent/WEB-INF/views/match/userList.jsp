@@ -7,15 +7,14 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/match/main.css">
-
+<link rel="stylesheet" href="${contextPath}/resources/css/match/match.css">
 
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	 <div>
            
-            
+      
             <div class="photo">
                 <a class="prof" href="">산타산타</a>
                 <a class="prof" href="">사진</a>
@@ -32,12 +31,12 @@
         <a href="">팀원모집</a>
         <a href="">유저목록</a>
         <div class="bell">
-             <a id="a_bell" href=""><img id="bell" src="/resources/img/match/bell.jpg" alt=""></a>
-            <a id="a_dots" href=""><img id="dots" src="" alt=""></a>
+          <a id="a_bell" href=""><img id="bell" src="/resources/img/match/bell.jpg" alt=""></a>
+            <a id="a_dots" href=""><img id="dots" src="./resources/img/main/3dots.jpg" alt="">점</a>
         </div>
     </div>
     <div id="search">
-        <input id="search_button" type="button" name="" id="">
+        <input type="button" name="" id="">
         <input id="search_text" type="text" name="" id="">
     </div>
 
@@ -87,14 +86,14 @@
     <li>
         <div id="divPaging">
             <div>◀</div>
-            <div><BUtton></BUtton></div>
-            <div><BUtton></BUtton></div>
-            <div><BUtton></BUtton></div>
-            <div><BUtton></BUtton></div>
-            <div><BUtton></BUtton></div>
+            <div><BUtton>1</BUtton></div>
+            <div><BUtton>2</BUtton></div>
+            <div><BUtton>3</BUtton></div>
+            <div><BUtton>4</BUtton></div>
+            <div><BUtton>5</BUtton></div>
             <div>▶</div> 
             <div id="openRoomBtn">
-             <button><a href="/matching/openRoom">방개설</a></button>
+                <button>방개설</button>
             </div> 
         </div> 
        

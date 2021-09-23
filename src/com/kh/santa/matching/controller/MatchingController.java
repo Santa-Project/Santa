@@ -35,9 +35,24 @@ public class MatchingController extends HttpServlet {
 		case "collectTeam" :
 			collectTeam(request,response);
 			break;
+		case "collectTeam_chat" :
+			collectTeam_chat(request,response);
+			break;
+		case "openRoom" :
+			openRoom(request,response);
+			break;
 		default :
 			break;
 		}
+	}
+
+	private void openRoom(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/match/openRoom").forward(request, response);
+		
+	}
+
+	private void collectTeam_chat(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/match/collectTeam_chat").forward(request, response);
 	}
 
 	private void collectTeam(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
