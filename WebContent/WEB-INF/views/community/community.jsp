@@ -9,11 +9,12 @@
 </head>
 <body>
 <%@include file= "/WEB-INF/views/common/header.jsp"%>
+
 <section>
         <div class="search_wrapper">
             <div class="searchbox1">
                 <div class="search">
-                    <input type="text" placeholder="      검색어를 입력하세요">
+                    <input type="text" placeholder="검색어를 입력하세요">
                     <a href=""><i class="fas fa-search"></i></a>
                 </div>
             </div>
@@ -76,7 +77,7 @@
             </div>
             <div class="rank_user3">
                 <div class="mypage_wrapper">
-                    <a href=""><i class="fas fa-users"></i><span>My Page</span></a>
+                    <a href="/mypage/mypageBoard"><i class="fas fa-users"></i><span>My Page</span></a>
                 </div>
             </div>
 
