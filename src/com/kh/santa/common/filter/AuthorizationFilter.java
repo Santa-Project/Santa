@@ -131,11 +131,15 @@ public class AuthorizationFilter implements Filter {
 			throw new HandlableException(ErrorCode.REDIRECT_LOGIN_PAGE);
 		}
 		
+		if(uriArr.length-1 == 2) {
+			return;
+		}
+		
 		switch(uriArr[2]) {
 		case "collectTeam":
 			collectTeam(httpRequest, httpReponse, uriArr, member);
 			break;
-		case "findingTeam":
+		case "findingMember":
 			findingTeam(httpRequest, httpReponse, uriArr, member);
 			break;
 			
