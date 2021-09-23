@@ -1,6 +1,8 @@
 package com.kh.santa.mypage.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
+import com.kh.santa.mypage.model.dto.Member;
+import com.kh.santa.mypage.model.dto.MemberBoard;
+import com.kh.santa.mypage.model.service.MyBoardService;
+import com.kh.santa.common.file.FileUtil;
+import com.kh.santa.common.file.MultiPartParams;
+
+import oracle.sql.DATE;
+
+import com.kh.santa.common.file.FileDTO;
 
 /**
  * Servlet implementation class MypageController
@@ -15,6 +26,7 @@ import com.kh.santa.common.wrapper.RequestWrapper;
 @WebServlet("/mypage/*")
 public class MypageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	MyBoardService myboardService = new MyBoardService();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,18 +48,82 @@ public class MypageController extends HttpServlet {
 		case "mypageBoard" :
 			mypageBoard(request,response);
 			break;
+		case "mypageWriteBoard" :
+			mypageWriteBoard(request,response);
+			break;
+		case "mypageFollow" :
+			mypageFollow(request,response);
+			break;
+		case "mypageFollower" :
+			mypageFollower(request,response);
+			break;
+		case "mypageMemberEdit" :
+			mypageMemberEdit(request,response);
+			break;
+	
+		case "insertBoard" :
+			insertBoard(request,response);
+			break;
 		default :
 			break;
 		}
 		
+	}
+	
+	//게시글 작성
+	private void insertBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		FileUtil util = new FileUtil();
+		MultiPartParams params = util.fileUpload(request);
+		int res = 0;
+		
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		MemberBoard board = new MemberBoard();
+		board.setMemberIdx(member.getMemberIdx());
+		board.setMtMountain(params.getParameter("writefile"));
+		board.setMtRegion(params.getParameter("region"));
+		board.setBoardComment(params.getParameter("writetext"));
+		board.setBoardPicture(params.getParameter("writefile"));
+		
+		System.out.println(member);
+		System.out.println(board);
+		
+		//List<FileDTO> fileDTOs = params.getFilesInfo(); //service로 넘겨야할 데이터를 다 받아왔습니당
+		res = myboardService.insertBoard(board);
+		if(res==0) {
+			System.out.println("게시글업로드 실패");
+		}else {
+			System.out.println("게시글업로드 성공");
+		}
+		response.sendRedirect("/mypage/mypageBoard");
 		
 	}
 
 	private void mypageBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
-		
+	}
+	
+	private void mypageWriteBoard(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+		request.getRequestDispatcher("/mypage/mypageWriteBoard").forward(request, response);
+	} //이거만 왱 안되죠
+
+	private void mypageFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+		request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
+	}
+	
+	private void mypageFollower(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/mypage/mypageFollower").forward(request, response);
+	}
+	
+	private void mypageMemberEdit(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+		request.getRequestDispatcher("/mypage/mypageMemberEdit").forward(request, response);
 	}
 
+	
+
+
+
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

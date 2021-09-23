@@ -8,7 +8,6 @@ public class MemberBoardComment {
 	private String memBoardIdx;
 	private String memberIdx;
 	private String content;
-	private int liked;
 	private DATE commentDatetime;
 	public String getCommentIdx() {
 		return commentIdx;
@@ -34,12 +33,6 @@ public class MemberBoardComment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getLiked() {
-		return liked;
-	}
-	public void setLiked(int liked) {
-		this.liked = liked;
-	}
 	public DATE getCommentDatetime() {
 		return commentDatetime;
 	}
@@ -49,8 +42,7 @@ public class MemberBoardComment {
 	@Override
 	public String toString() {
 		return "MemberBoardComment [commentIdx=" + commentIdx + ", memBoardIdx=" + memBoardIdx + ", memberIdx="
-				+ memberIdx + ", content=" + content + ", liked=" + liked + ", commentDatetime=" + commentDatetime
-				+ "]";
+				+ memberIdx + ", content=" + content + ", commentDatetime=" + commentDatetime + "]";
 	}
 	
 	

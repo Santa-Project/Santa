@@ -13,7 +13,7 @@
         <div class="search_wrapper">
             <div class="searchbox1">
                 <div class="search">
-                    <input type="text" placeholder="검색어를 입력하세요">
+                    <input type="text" placeholder="      검색어를 입력하세요">
                     <a href=""><i class="fas fa-search"></i></a>
                 </div>
             </div>
@@ -181,10 +181,10 @@
                 <div class="recent_box_bottom">
                     <div class="recent_box_bottom_first">
                         <div class="recent1">
-                            <img src="/resources/img/community/mt1.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt1.jpg" class="btn_open1" id="recent_img">
+                            <div class="modal1">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo1"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -193,7 +193,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성?1111?</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 11</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -201,8 +211,8 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent2">
-                            <img src="/resources/img/community/mt2.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt2.jpg" class="btn_open2" id="recent_img">
+                            <div class="modal2">
                                 <div class="modal_content">
                                     <div class="photo2"></div>
                                     <div class="desc">
@@ -213,7 +223,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성!!22</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 22</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -221,10 +241,10 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent3">
-                            <img src="/resources/img/community/mt3.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt3.jpg" class="btn_open3" id="recent_img">
+                            <div class="modal3">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo3"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -233,7 +253,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기333</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 33</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -241,10 +271,10 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent4">
-                            <img src="/resources/img/community/mt4.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt4.jpg" class="btn_open4" id="recent_img">
+                            <div class="modal4">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo4"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -253,7 +283,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기444</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 44</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -263,10 +303,10 @@
                     </div>
                     <div class="recent_box_bottom_second">
                         <div class="recent5">
-                            <img src="/resources/img/community/mt5.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt5.jpg" class="btn_open5" id="recent_img">
+                            <div class="modal5">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo5"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -275,7 +315,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하기555</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 55</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -283,10 +333,10 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent6">
-                            <img src="/resources/img/community/mt6.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt6.jpg" class="btn_open6" id="recent_img">
+                            <div class="modal6">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo6"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -295,7 +345,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성하666</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 66</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -303,10 +363,10 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent7">
-                            <img src="/resources/img/community/mt7.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt7.jpg" class="btn_open7" id="recent_img">
+                            <div class="modal7">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo7"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -315,7 +375,17 @@
                                         </div>
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
-                                            <button>작성7777</button>
+                                            <div class="button_wrap">
+                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <button>작성하기 77</button>
+                                            </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -323,10 +393,10 @@
                             <div class="overlay"></div>
                         </div>
                         <div class="recent8">
-                            <img src="/resources/img/community/mt8.jpg" class="btn_open" id="recent_img">
-                            <div class="modal">
+                            <img src="/resources/img/community/mt8.jpg" class="btn_open8" id="recent_img">
+                            <div class="modal8">
                                 <div class="modal_content">
-                                    <div class="photo"></div>
+                                    <div class="photo8"></div>
                                     <div class="desc">
                                         <div class="desc_header">
                                             <h3>작성한 제목</h3>
@@ -339,11 +409,18 @@
                                                 <div class="heart"><i class="fas fa-heart"></i></div>
                                                 <button>작성하기 88</button>
                                             </div>
+                                            <div class="comment_wrap">
+                                                <div class="comment" id="1">
+                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="comment_cont">GOOOOOD</div>
+                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="overlay8"></div>
+                            <div class="overlay"></div>
                         </div>
                     </div>
                 </div>
@@ -359,13 +436,42 @@
 <%@include file= "/WEB-INF/views/common/footer.jsp"%>
 
 	<script>
-	    $('.btn_open').click(function(){
-	        $('.modal, .overlay').addClass('active')
-	    })
-	    $('.btn_close, .overlay').click(function(){
-	        $('.modal, .overlay').removeClass('active')
-	    })
-	    $('.heart .fas').click(function(){
+	$('.btn_open1').click(function(){
+        $('.modal1, .overlay').addClass('active')
+    })
+
+    $('.btn_open2').click(function(){
+        $('.modal2, .overlay').addClass('active')
+    })
+
+    $('.btn_open3').click(function(){
+        $('.modal3, .overlay').addClass('active')
+    })
+
+    $('.btn_open4').click(function(){
+        $('.modal4, .overlay').addClass('active')
+    })
+
+    $('.btn_open5').click(function(){
+        $('.modal5, .overlay').addClass('active')
+    })
+
+    $('.btn_open6').click(function(){
+        $('.modal6, .overlay').addClass('active')
+    })
+
+    $('.btn_open7').click(function(){
+        $('.modal7, .overlay').addClass('active')
+    })
+
+    $('.btn_open8').click(function(){
+        $('.modal8, .overlay').addClass('active')
+    })
+
+    $('.btn_close, .overlay').click(function(){
+        $('.modal1, .modal2, .modal3, .modal4, .modal5, .modal6, .modal7, .modal8, .overlay').removeClass('active')
+    })
+    $('.heart .fas, .comment_heart .fas').click(function(){
         $(this).toggleClass('active')
     })
 	</script>
