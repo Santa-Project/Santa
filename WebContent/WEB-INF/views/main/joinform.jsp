@@ -8,7 +8,6 @@
     <title>santa_main</title>
     
     <link rel="stylesheet" href="${contextPath}/resources/css/main/style_join.css">
-    
 </head>
 <body>
 
@@ -17,7 +16,7 @@
     </header>
     
     <content>
-    	<form action="/main/join" method="post">
+    	<form name="form" id="form" action="/main/join" method="post">
 			<!-- ID -->
 	        <div>
 	            <h3 class="join_title">
@@ -91,13 +90,16 @@
 	
 	         <!-- ADDRESS -->
 	        <div>
-	            <h3 class="join_title"><label for="address">주소</label></h3>
+	            <h3 class="join_title"><label for="address">주소</label>
+	            	<input type="button" onClick="goPopup();" value="주소검색">
+	            	<input type="text" id="zipNo" name="zipNo" readonly="readonly">
+	            </h3>
 	            <span class="box">
-	                <input type="text" id="address" class="int" maxlength="100" placeholder="주소 입력">
+					<input type="text" id="roadAddrPart1" class="int" name="roadAddrPart1" placeholder="주소" readonly="readonly">
 	            </span>
 	            <br>
 	            <span class="box">
-	                <input type="text" id="detailaddress" class="int" maxlength="100" placeholder="상세주소 입력">
+	                <input type="text" id="detailaddress" class="int" name="" maxlength="100" placeholder="상세주소" readonly="readonly">
 	            </span>
 	        </div>
 	
@@ -123,5 +125,21 @@
 	        </div>
         </form>  
     </content>  
+    
+<script type="text/javascript">
+	var pop;
+	
+	var goPopup = function(){
+		//경로는 시스템에 맞게 수정하여 사용
+		//호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+		pop = window.open("/main/joinform/address","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+	}
+	var jusoCallBack = function(roadFullAddr,roadAddrPart1,engAddr, jibunAddr, zipNo, addrDetail){
+	 document.form.roadAddrPart1.value = roadAddrPart1;
+	 document.form.zipNo.value = zipNo;
+	 document.form.detailaddress.value = addrDetail;
+ 	 pop.close();
+}
+</script>
 </body>
 </html>

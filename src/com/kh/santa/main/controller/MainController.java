@@ -55,6 +55,9 @@ public class MainController extends HttpServlet {
 		case "joinform":
 			joinform(request, response);
 			break;
+		case "address":
+			address(request, response);
+			break;
 		case "join":
 			join(request, response);
 			break;
@@ -128,7 +131,11 @@ public class MainController extends HttpServlet {
 	private void joinform(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("/main/joinform").forward(request, response);
-
+	}
+	
+	private void address(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("/main/addrPopup").forward(request, response);
 	}
 	
 	private void join(HttpServletRequest request, HttpServletResponse response)
