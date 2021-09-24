@@ -100,10 +100,11 @@
                     </c:if>
                     <c:if test="true">
                     	<div class="board_add">
-                        	<i class="fas fa-plus"></i><a href="/mypage/mypageWriteBoard"> 게시글 작성하기</a>
+                        	<i class="fas fa-plus"></i><a href="/mypage/mypageWriteBoard"> 게시글 작성</a>
                     	</div>
                     </c:if>
-
+					
+					<c:forEach items='${datas}' var='datas'>
                     <div class="board_content_item">
                         <div class="board_content_padding">
                             <div class="board_content_picture">
@@ -113,61 +114,41 @@
                             </div>
                             <div class="board_content_side">
                                 <div class="board_content_side_ment_padding">
-                                    <div id="board_content_side_ment">인왕산...!!
+                                    <div id="board_content_side_ment" >${datas.board.boardComment}
                                     </div>
                                 </div>
                                 <div class="board_content_side_item">
                                 
                                 <c:if test="true">
-                                <button class="board_content_side_item1" style="color:red "><i class="fas fa-heart"></i>100</button>
+                                <button class="board_content_side_item1" style="color:red "><i class="fas fa-heart"></i>${datas.board.liked}</button>
                                    </c:if>
                           		 <c:if test="false">
-                                    <button class="board_content_side_item1" style="color:red "><i class="far fa-heart"></i>100</button>
+                                    <button class="board_content_side_item1" style="color:red "><i class="far fa-heart"></i>${datas.board.liked}</button>
                            		</c:if>
                                 
-                                    <div class="board_content_side_item1">서울특별시 서대문구,</div>
-                                    <div class="board_content_side_item1">인왕산</div>
+                                    <div class="board_content_side_item1">${datas.board.mtRegion}</div>
+                                    <div class="board_content_side_item1">${datas.board.mtMountain}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
-                                    <a class="input_id" style="color:green">You_Ri</a>
+                                    <a class="input_id" style="color:green">${authentication.userId}</a>
                                     <input type="text" id="input_text">
                                     <button id="input_text_submit"> <i class="fas fa-plus"></i></button>
                                 </div>
                                 <div class="board_content_side_rep">
+                                
+                                <%-- <c:forEach items='' var=''> --%>
                                     <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">우와 경치 좋다!</div>
+                                        <a class="input_id">아이디</a>
+                                        <div class="input_content">코멘트</div>
                                     </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">오오</div>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">저기 어디야?</div>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <a class="input_id">chuna</a>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                    </div>
+								<%-- </c:forEach> --%>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    
+                    </c:forEach>
                     
                     
                 </div>
