@@ -20,14 +20,16 @@
     <div class="mypage_header">
         <div class="my_nav_item_margin1"></div>
         <div class="my_nav_item_margin2">
-        <c:if test="true">
-            <div id="my_nav_item1"><a href="/test_st/mypage/mypageBoard">게시물</a></div>
-            <div id="my_nav_item2"><a href="/test_st/mypage/mypageFollow">팔로우</a></div>
-            <div id="my_nav_item3"><a href="/test_st/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/test_st/mypage/mypageMemberEdit">마이페이지 수정</a></div>
-        </c:if>
-        <c:if test="false">
-        </c:if>
+        <c:choose>
+			<c:when test="${empty sessionScope.principal}">
+			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
+            <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
+            <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
+            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
+			</c:when>
+        	<c:otherwise>
+        	</c:otherwise>
+        </c:choose>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -98,7 +100,7 @@
                     </c:if>
                     <c:if test="true">
                     	<div class="board_add">
-                        	<i class="fas fa-plus"></i><a href="/test_st/mypage/mypageWriteBoard"> 게시글 작성하기</a>
+                        	<i class="fas fa-plus"></i><a href="/mypage/mypageWriteBoard"> 게시글 작성하기</a>
                     	</div>
                     </c:if>
 
@@ -166,110 +168,6 @@
                     </div>
                     
                     
-                    <div class="board_content_item">
-                        <div class="board_content_padding">
-                            <div class="board_content_picture">
-                                <div class="board_content_picture_item"></div>
-                                <button></button>
-                                <button></button>
-                            </div>
-                            <div class="board_content_side">
-                                <div class="board_content_side_ment_padding">
-                                    <div id="board_content_side_ment">인왕산...!!
-                                    </div>
-                                </div>
-                                <div class="board_content_side_item">
-                                
-                                <c:if test="true">
-                                <button class="board_content_side_item1" style="color:red "><i class="fas fa-heart"></i></button>
-                                   </c:if>
-                          		 <c:if test="false">
-                                    <button class="board_content_side_item1" style="color:red "><i class="far fa-heart"></i></button>
-                           		</c:if>
-                                
-                                    <div class="board_content_side_item1">서울특별시 서대문구,</div>
-                                    <div class="board_content_side_item1">인왕산</div>
-                                </div>
-                                <div class="board_content_side_rep_input">
-                                    <div class="input_id"><a style="color:green">You_Ri</a></div>
-                                    <input type="text" id="input_text">
-                                    <button id="input_text_submit"> <i class="fas fa-plus"></i></button>
-                                </div>
-                                <div class="board_content_side_rep">
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>chuna</a></div>
-                                        <div class="input_content">우와 경치 좋다!</div>
-		                                 <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>suna</a></div>
-                                        <div class="input_content">오오</div>
-		                                 <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id">una</div>
-                                        <div class="input_content">저기 어디야?</div>
-                                        <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>chuna</a></div>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                        <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>chuna</a></div>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                        <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>chuna</a></div>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                        <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                    <div class="board_content_side_rep_item">
-                                        <div class="input_id"><a>chuna</a></div>
-                                        <div class="input_content">우와 경치 좋다!</div>
-                                        <c:if test="true">
-		                                	<button class="input_liked" style="color:red "><i class="fas fa-heart"></i></button>
-		                                 </c:if>
-		                          		 <c:if test="false">
-		                                    <button class="input_liked" style="color:red "><i class="far fa-heart"></i></button>
-		                           	     </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
                     
                 </div>

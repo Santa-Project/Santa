@@ -19,14 +19,16 @@
     <div class="mypage_header">
         <div class="my_nav_item_margin1"></div>
         <div class="my_nav_item_margin2">
-        <c:if test="true">
-            <div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
+        <c:choose>
+			<c:when test="${empty sessionScope.principal}">
+			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
             <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
-        </c:if>
-        <c:if test="false">
-        </c:if>
+			</c:when>
+        	<c:otherwise>
+        	</c:otherwise>
+        </c:choose>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>

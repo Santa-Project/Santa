@@ -51,7 +51,7 @@ public class FileUtil {
 				}				
 			}
 			
-			res.put("com.kh.toy.files", fileDTOs);
+			res.put("com.kh.santa.files", fileDTOs);
 			
 		} catch (IOException e) {
 			throw new HandlableException(ErrorCode.FAILED_FILE_UPLOAD_ERROR);
