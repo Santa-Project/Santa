@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.kh.santa.common.db.JDBCTemplate;
+import com.kh.santa.common.exception.DataAccessException;
 import com.kh.santa.common.file.FileDTO;
 import com.kh.santa.mypage.model.dto.MemberBoard;
 
@@ -30,8 +31,7 @@ public class MyBoardDao {
 				pstm.executeUpdate(); 
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DataAccessException(e);
 			}finally {
 				template.close(pstm);
 			}
@@ -52,7 +52,7 @@ public class MyBoardDao {
 			pstm.setString(3, fileDTO.getSavePath());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		}finally{
 			template.close(pstm);
 		}

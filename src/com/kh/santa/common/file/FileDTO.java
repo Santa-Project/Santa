@@ -5,7 +5,7 @@ import java.sql.Date;
 public class FileDTO {
 	
 	private String flIdx;
-	private String typeIdx;
+	private String boardIdx;
 	private String originFileName;
 	private String renameFileName;
 	private String savePath;
@@ -24,12 +24,13 @@ public class FileDTO {
 		this.flIdx = flIdx;
 	}
 
-	public String getTypeIdx() {
-		return typeIdx;
+
+	public String getBoardIdx() {
+		return boardIdx;
 	}
 
-	public void setTypeIdx(String typeIdx) {
-		this.typeIdx = typeIdx;
+	public void setBoardIdx(String boardIdx) {
+		this.boardIdx = boardIdx;
 	}
 
 	public String getOriginFileName() {
@@ -78,7 +79,7 @@ public class FileDTO {
 
 	@Override
 	public String toString() {
-		return "FileDTO [flIdx=" + flIdx + ", typeIdx=" + typeIdx + ", originFileName=" + originFileName
+		return "FileDTO [flIdx=" + flIdx + ", boardIdx=" + boardIdx + ", originFileName=" + originFileName
 				+ ", renameFileName=" + renameFileName + ", savePath=" + savePath + ", regDate=" + regDate + ", isDel="
 				+ isDel + "]";
 	}
