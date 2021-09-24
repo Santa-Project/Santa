@@ -15,23 +15,22 @@ public class MyBoardService {
 	private JDBCTemplate template = JDBCTemplate.getInstance();
 	
 
-	public int insertBoard(MemberBoard board) {
+	public void insertBoard(MemberBoard board, List<FileDTO> fileDTOs) {
 		Connection conn =template.getConnection();
-		int res=0;
 		
 		try {
-			res = myboardDao.insertBoard(board,conn);
-			template.commit(conn);
-			System.out.println(res);
+			myboardDao.insertBoard(board,conn);
+			
+			for (FileDTO fileDTO : fileDTOs) {
+				myboardDao.insertFile(fileDTO,conn);
+			}
 		}catch (DataAccessException e) {
 			template.rollback(conn);
 			throw e;
 		}finally {
 			template.close(conn);
 		}
-		return res;
 	}
-	
 	
 	
 	

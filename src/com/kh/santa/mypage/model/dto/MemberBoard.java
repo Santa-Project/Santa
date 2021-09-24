@@ -6,7 +6,6 @@ public class MemberBoard {
 
 	private String boardIdx;
 	private String memberIdx;
-	private String boardPicture;
 	private int liked;
 	private DATE uploadDatetime;
 	private String mtRegion;
@@ -24,12 +23,7 @@ public class MemberBoard {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getBoardPicture() {
-		return boardPicture;
-	}
-	public void setBoardPicture(String boardPicture) {
-		this.boardPicture = boardPicture;
-	}
+
 	public int getLiked() {
 		return liked;
 	}
@@ -62,8 +56,8 @@ public class MemberBoard {
 	}
 	@Override
 	public String toString() {
-		return "MemberBoard [boardIdx=" + boardIdx + ", memberIdx=" + memberIdx + ", boardPicture=" + boardPicture
-				+ ", liked=" + liked + ", uploadDatetime=" + uploadDatetime + ", mtRegion=" + mtRegion + ", mtMountain="
+		return "MemberBoard [boardIdx=" + boardIdx + ", memberIdx=" + memberIdx + 
+				 ", liked=" + liked + ", uploadDatetime=" + uploadDatetime + ", mtRegion=" + mtRegion + ", mtMountain="
 				+ mtMountain + ", boardComment=" + boardComment + "]";
 	}
 	

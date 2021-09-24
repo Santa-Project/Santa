@@ -75,7 +75,6 @@ public class MypageController extends HttpServlet {
 		
 		FileUtil util = new FileUtil();
 		MultiPartParams params = util.fileUpload(request);
-		int res = 0;
 		
 		Member member = (Member) request.getSession().getAttribute("authentication");
 		MemberBoard board = new MemberBoard();
@@ -83,18 +82,12 @@ public class MypageController extends HttpServlet {
 		board.setMtMountain(params.getParameter("writefile"));
 		board.setMtRegion(params.getParameter("region"));
 		board.setBoardComment(params.getParameter("writetext"));
-		board.setBoardPicture(params.getParameter("writefile"));
 		
 		System.out.println(member);
 		System.out.println(board);
 		
-		//List<FileDTO> fileDTOs = params.getFilesInfo(); //service로 넘겨야할 데이터를 다 받아왔습니당
-		res = myboardService.insertBoard(board);
-		if(res==0) {
-			System.out.println("게시글업로드 실패");
-		}else {
-			System.out.println("게시글업로드 성공");
-		}
+		List<FileDTO> fileDTOs = params.getFilesInfo(); 
+		myboardService.insertBoard(board,fileDTOs);
 		response.sendRedirect("/mypage/mypageBoard");
 		
 	}
