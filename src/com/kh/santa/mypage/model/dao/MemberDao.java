@@ -23,7 +23,7 @@ public class MemberDao {
 			String query = "select * from member where user_id = ? and user_password = ? ";
 			
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, userId);;
+			pstm.setString(1, userId);
 			pstm.setString(2, password);
 			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
 			

@@ -49,6 +49,9 @@ public class MainController extends HttpServlet {
 		case "login":
 			login(request, response);
 			break;
+		case "kakaoLogin":
+			kakaoLogin(request, response);
+			break;
 		case "logout":
 			logout(request, response);
 			break;
@@ -117,6 +120,26 @@ public class MainController extends HttpServlet {
 		
 		request.getSession().setAttribute("authentication", member);
 		response.sendRedirect("/main/main");
+
+	}
+	
+	private void kakaoLogin(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		
+		String kakaoLoginId = (String) request.getSession().getAttribute("kakaoLogin_id");
+		
+		System.out.println(kakaoLoginId);
+		
+		/* Member member = mainService.memberAuthenticateKakao(kakaoLoginId); */
+		
+		Member member = new Member();
+		
+		member.setUserId(kakaoLoginId);
+		
+		request.getSession().setAttribute("authentication", member);
+		response.sendRedirect("/main/main");
+		
 
 	}
 	

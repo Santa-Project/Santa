@@ -3,7 +3,6 @@ package com.kh.santa.mypage.model.dto;
 import java.sql.Date;
 
 
-
 public class MemberBoardComment {
 
 	private String commentIdx;
@@ -12,7 +11,6 @@ public class MemberBoardComment {
 	private String content;
 	private Date commentDatetime;
 	private String userId;
-	
 	public String getUserId() {
 		return userId;
 	}
@@ -26,6 +24,12 @@ public class MemberBoardComment {
 		this.commentIdx = commentIdx;
 	}
 	
+	public String getBoardIdx() {
+		return boardIdx;
+	}
+	public void setBoardIdx(String boardIdx) {
+		this.boardIdx = boardIdx;
+	}
 	public String getMemberIdx() {
 		return memberIdx;
 	}

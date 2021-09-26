@@ -2,9 +2,6 @@ package com.kh.santa.mypage.model.dto;
 
 import java.sql.Date;
 
-
-
-
 public class MemberBoard {
 
 	private String boardIdx;
