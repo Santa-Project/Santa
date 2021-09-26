@@ -50,10 +50,10 @@ public class MemberBoardComment {
 	}
 	@Override
 	public String toString() {
-		return "MemberBoardComment [commentIdx=" + commentIdx + ", boardIdx=" + boardIdx + ", memberIdx="
-				+ memberIdx + ", content=" + content + ", commentDatetime=" + commentDatetime + ", userId=" + userId
-				+ "]";
+		return "MemberBoardComment [commentIdx=" + commentIdx + ", boardIdx=" + boardIdx + ", memberIdx=" + memberIdx
+				+ ", content=" + content + ", commentDatetime=" + commentDatetime + ", userId=" + userId + "]";
 	}
+	
 	
 	
 }
