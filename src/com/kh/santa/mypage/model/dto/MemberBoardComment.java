@@ -48,18 +48,12 @@ public class MemberBoardComment {
 	public void setCommentDatetime(Date commentDatetime) {
 		this.commentDatetime = commentDatetime;
 	}
-	public String getBoardIdx() {
-		return boardIdx;
-	}
-	public void setBoardIdx(String boardIdx) {
-		this.boardIdx = boardIdx;
-	}
 	@Override
 	public String toString() {
 		return "MemberBoardComment [commentIdx=" + commentIdx + ", boardIdx=" + boardIdx + ", memberIdx=" + memberIdx
 				+ ", content=" + content + ", commentDatetime=" + commentDatetime + ", userId=" + userId + "]";
 	}
-
+	
 	
 	
 }
