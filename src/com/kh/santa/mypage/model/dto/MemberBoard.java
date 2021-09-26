@@ -2,7 +2,8 @@ package com.kh.santa.mypage.model.dto;
 
 import java.sql.Date;
 
-import oracle.sql.DATE;
+
+
 
 public class MemberBoard {
 
