@@ -3,12 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <link rel="stylesheet" href="${contextPath}/resources/css/main/style_login3.css">
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>Insert title here</title>	
 <style>
     :root{
     --body-background-color: #fff;
@@ -17,6 +14,7 @@
     --naver-green-border-color: #94af76;;
     }
 </style>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 
 <body>                 
@@ -51,8 +49,13 @@
 			<section class="Social-sign-in">
 				<h2>Social sign in</h2>
 				<ul class="Social-button-list">
-					<li><button><span>Kakao</span></button></li>
-					<li><button><span>Google</span></button></li>
+					<!-- 카카오 로그인 -->
+					
+					<li><button onclick='kakaoLogin();'><img src="${contextPath}/resources/img/main/kakao_login.png" width="465px" height="56px"></button></li>
+					
+					<!-- 구글 로그인 -->
+					<li><a href="#">Google</a></li>
+					
 				</ul>
 				<br>
 	            <a href="/main/finding_id">아이디 찾기</a>
@@ -68,5 +71,87 @@
 			</div>
 			</div>
 		</div>
+		
+	
+		
+<script>
+Kakao.init('e86272e6f7ebfc43f0ce43288f6e1280'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+	var form = document.createElement("form");
+
+    form.setAttribute("method", "Post");  //Post 방식
+
+    form.setAttribute("action", "/main/kakaoLogin"); //요청 보낼 주소
+    
+    document.body.appendChild(form);
+	
+	console.log(Kakao);
+	if(!Kakao.Auth.getAccessToken()){
+		
+		Kakao.Auth.login({
+			scope:'profile_nickname,profile_image,account_email,gender',
+		    success: function (response) {
+		    	
+		    	console.log(response);
+		    	
+		    	Kakao.Auth.setAccessToken(response.access_token);
+		    	
+		    	Kakao.API.request({
+		        	url: '/v2/user/me',
+		        	success: function (res) {
+		      			console.log(res);
+		      			var kakao_account = res.kakao_account;
+		      			console.log(kakao_account);
+		      			sessionStorage.setItem("kakaoLogin_id",kakao_account.id);
+		        	}
+		        });
+		    	
+		    	form.submit();
+		    },
+		    fail: function (error) {
+		    	console.log(error);
+		    },
+		})
+	} else {
+		
+		window.Kakao.API.request({
+        	url: '/v2/user/me',
+        	success: function (res) {
+      			console.log(res);
+      			var kakao_account = res.kakao_account;
+      			console.log(kakao_account);
+      			sessionStorage.setItem("kakaoLogin_id",kakao_account.id);
+        	}
+        });
+		
+		form.submit();
+	}
+	
+	
+
+    
+	
+	
+}
+	
+    
+/* //카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  } */  
+</script>
 </body>
 </html>
