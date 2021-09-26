@@ -42,9 +42,6 @@ public class FileUtil {
 					FileDTO fileDTO = createFileDTO(filePart);
 					filePart.writeTo(new File(getSavePath() + fileDTO.getRenameFileName())); //파일저장
 					fileDTOs.add(fileDTO);
-					
-					//4. FileDTO를 fileDTOs에 저장
-					fileDTOs.add(fileDTO);
 				} else {
 					ParamPart paramPart = (ParamPart) part;
 					setParameterMap(paramPart, res);

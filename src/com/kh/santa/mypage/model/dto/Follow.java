@@ -2,14 +2,14 @@ package com.kh.santa.mypage.model.dto;
 
 public class Follow {
 	
-	private String follow_idx;
+	private String followIdx;
 	private String memberIdx;
-	private String follow_id;
-	public String getFollow_idx() {
-		return follow_idx;
+	private String followId;
+	public String getFollowIdx() {
+		return followIdx;
 	}
-	public void setFollow_idx(String follow_idx) {
-		this.follow_idx = follow_idx;
+	public void setFollowIdx(String followIdx) {
+		this.followIdx = followIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -17,17 +17,15 @@ public class Follow {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getFollow_id() {
-		return follow_id;
+	public String getFollowId() {
+		return followId;
 	}
-	public void setFollow_id(String follow_id) {
-		this.follow_id = follow_id;
+	public void setFollowId(String followId) {
+		this.followId = followId;
 	}
 	@Override
 	public String toString() {
-		return "Follow [follow_idx=" + follow_idx + ", memberIdx=" + memberIdx + ", follow_id=" + follow_id + "]";
+		return "Follow [followIdx=" + followIdx + ", memberIdx=" + memberIdx + ", followId=" + followId + "]";
 	}
-	
-	
 	
 }

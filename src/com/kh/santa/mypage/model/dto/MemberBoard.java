@@ -1,13 +1,13 @@
 package com.kh.santa.mypage.model.dto;
 
-import oracle.sql.DATE;
+import java.sql.Date;
 
 public class MemberBoard {
 
 	private String boardIdx;
 	private String memberIdx;
 	private int liked;
-	private DATE uploadDatetime;
+	private Date uploadDatetime;
 	private String mtRegion;
 	private String mtMountain;
 	private String boardComment;
@@ -30,10 +30,10 @@ public class MemberBoard {
 	public void setLiked(int liked) {
 		this.liked = liked;
 	}
-	public DATE getUploadDatetime() {
+	public Date getUploadDatetime() {
 		return uploadDatetime;
 	}
-	public void setUploadDatetime(DATE uploadDatetime) {
+	public void setUploadDatetime(Date uploadDatetime) {
 		this.uploadDatetime = uploadDatetime;
 	}
 	public String getMtRegion() {
