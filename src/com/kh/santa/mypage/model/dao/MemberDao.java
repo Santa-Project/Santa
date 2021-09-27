@@ -60,6 +60,78 @@ public class MemberDao {
 		
 		return member;
 	}
+
+	public Member memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		
+		try {
+			String query = "select * from member where member_idx = (select member_idx from social_member where kakao_id = ?) ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, kakaoId);
+			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
+			
+			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
+			if(rset.next()) {
+				member = convertRowToMember(rset);
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return member;
+	}
+
+	public Member selectMemberById(String userId, Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertSocialLoginKakao(String kakaoId, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "insert into social_member "
+				+ " values(sc_social_idx.nextval,sc_member_idx.currval,?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, kakaoId);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+
+	public void insertMemberWithKakao(Member member, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "insert into member"
+				+ " (MEMBER_IDX,USER_ID,EMAIL,USER_PASSWORD,USERNAME,NICKNAME,PHONE,GENDER,ADDRESS,REGISTER_DATETIME,SOCIAL_LOGIN,GRADE) "
+				+ " values(sc_member_idx.nextval, 'kakao' || sc_kakao_idx.nextval, "
+				+ "	?,'-','-',?,'-',?,'-',sysdate,'Y','US00') ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getEmail());
+			pstm.setString(2, member.getNickname());
+			pstm.setString(3, member.getGender());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
 	
 	
 	

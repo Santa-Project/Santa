@@ -126,16 +126,38 @@ public class MainController extends HttpServlet {
 	private void kakaoLogin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		String kakaoId = request.getParameter("id");
 		
-		String kakaoLoginId = (String) request.getSession().getAttribute("kakaoLogin_id");
+		Member member = mainService.searchByKakaoId(kakaoId);
 		
-		System.out.println(kakaoLoginId);
-		
-		/* Member member = mainService.memberAuthenticateKakao(kakaoLoginId); */
-		
-		Member member = new Member();
-		
-		member.setUserId(kakaoLoginId);
+		//회원이 아닌 경우
+		if(member == null) {
+			//회원추가 진행
+			//회원추가 시 에러 발생 코드 생성?
+			member = new Member();
+			member.setNickname(request.getParameter("nickname")); // 필수
+			System.out.println(request.getParameter("nickname"));
+			if(request.getParameter("email") != null) {
+				member.setEmail(request.getParameter("email"));
+			} else {
+				member.setEmail("-");
+			}
+			if(request.getParameter("gender") != null) {
+				String gender = request.getParameter("gender").substring(0, 1).toUpperCase();
+				System.out.println(gender);
+				member.setGender(gender);
+			} else {
+				member.setGender("-");
+			}
+			/* 카카오 프로필 사진은 url로 넘어옴(데이터베이스에 사진 type은 blob)
+			 * if(request.getParameter("photo") != null) {
+			 * member.setPhoto(request.getParameter("photo")); } else {
+			 * member.setPhoto("-"); }
+			 */
+			mainService.createMemberWithKakao(member, kakaoId);
+			//추가 후 memberDTO 받아오기
+			member = mainService.searchByKakaoId(kakaoId);
+		};
 		
 		request.getSession().setAttribute("authentication", member);
 		response.sendRedirect("/main/main");
