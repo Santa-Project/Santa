@@ -3,80 +3,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file = "/WEB-INF/views/include/head.jsp" %>
-<link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <link rel="stylesheet" href="${contextPath}/resources/css/main/style_main.css">
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SANTA</title>
+<!-- fontawesome cdn -->
+<script src="https://kit.fontawesome.com/6fd6b71dc1.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 
-<!-- <header> -->
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<div class="container">
+		<div class="video-frame">
+			<!-- <video src="images/video-path.mp4" autoplay muted loop poster="images/placeholder-path.JPG"></video> -->
+			<video src="/resources/img/main/newmain/video-path.mp4" autoplay muted poster="/resources/img/main/newmain/placeholder-path.JPG" id="video1"></video>
+		</div>
+		<div class="logo">
+			<img src="/resources/img/main/newmain/logo.png">
+		</div>
+		
+	    <c:if test="${empty authentication}">
+		    <div class="login_wrapper">
+		        <a class="btn-login" href="/main/loginform">LOGIN</a>
+		        <a class="btn-join" href="/main/joinform">JOIN</a>
+		    </div>
+	    </c:if>
+	    <c:if test="${not empty authentication}">
+	        <div class="mypage_wrapper">
+		        <a class="btn-mypage" href="/mypage/mypageBoard"><i class="fas fa-user-circle"></i></a>
+		        <a class="btn-userid">${authentication.userId}</a>
+		        <a class="btn-logout" href="/main/logout">LOGOUT</a>
+	    	</div>
+	    </c:if>
+		
+		<div class="heading">
+			<h1><span>등산의 모든 것</span> 한 번에 쉽게!</h1>
+			<p>
+				우리는 등산 정보도 제공하고, 매칭도 해주고 커뮤니티에서 소통도 할수있다 등등 어쩌구저쩌구
+				우리는 등산 정보도 제공하고, 매칭도 해주고 커뮤니티에서 소통도 할수있다 등등 어쩌구저쩌구
+				우리는 등산 정보도 제공하고, 매칭도 해주고 커뮤니티에서 소통도 할수있다 등등 어쩌구저쩌구
+				우리는 등산 정보도 제공하고, 매칭도 해주고 커뮤니티에서 소통도 할수있다 등등 어쩌구저쩌구
+			</p>
+			<a class="btn-1" href="/main/notice1">안전사고 예방</a>
+			<a class="btn-2" href="/main/notice2">등산문화</a>
+			<a class="btn-2" href="/main/novice_guide">초보자 가이드</a>
+		</div>
 
-<div id="allwrap">
-        <article class="article1">
-            <video id="mp4" src="/resources/img/main/mountain2.mp4" muted autoplay loop></video>
-        </article>
-     <div class="wrap2">   
-      <article class="article2">
-            <img src="/resources/img/main/work11.png" alt="산 이미지"> 
-      </article>
-            <div class="search">
-            	<form action="/mountainInfo/searchKeyword">
-                	<input class="input1" type="text" placeholder="&#61442;"/>
-                </form>
-            </div>
-    </div>       
-                        
-<!--work영역-->        
-        <section class="work-section">
-            <ul class="work-list">
-                <li>
-                    <a href="/main/notice1">
-                        <div class="info">
-                            <h3>안전사고</h3>
-                            <span>페이지 이동</span>
-                        </div>
-                        <img src="/resources/img/main/work12.png" alt="안전사고 이미지">
-                    </a>
-                </li>
-                <li>
-                    <a href="/main/notice2">
-                        <div class="info">
-                            <h3>등산문화 개선</h3>
-                            <span>페이지 이동</span>
-                        </div>
-                        <img src="/resources/img/main/work02.png" alt="등산문화 이미지">
-                    </a>
-                </li>
-            </ul>            
-        </section>
-        
-        
-         <article class="article3">
-           <ul class="article-list2">
-                <li>
-                    <a href="/main/novice_guide">
-                        <div class="info2">
-                            <h3>초보자 가이드</h3>
-                            <span>페이지 이동</span>
-                        </div>
-                        <img src="/resources/img/main/next_mountain.png" alt="초보자 이미지">
-                    </a>
-                </li>
-            </ul>
-        </article>
+		<div class="trigger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<div class="modal-gnb">
+			<div class="gnb">
+				<a href="/mountainInfo/mtInfoMain">등산정보</a>
+				<a href="/matching/collectTeam">등산매칭</a>
+				<a href="/community/community">커뮤니티</a>
+			</div>
+		</div>
+	</div>
 
-   </div>
+	<script>
+		// Trigger
+		$('.trigger').click(function(){
+			$(this).toggleClass('active')
+			$('.modal-gnb').fadeToggle() 
+		})
 
+		//다음 video 연속 재생
+		// $(function(){
+		// 	$("#video2").bind("ended", function() {
+    	// document.getElementById("video1").play();
+    	// });
 
+    	// 	$("#video1").bind("ended", function() {
+    	// document.getElementById("video2").play();
+    	// });
+    	// });
 
-<!-- <footer> -->
-<%@ include file="/WEB-INF/views/common/footer.jsp" %> 
-
-
+		$("#video1").on("ended", function() {
+			$("#video1").attr("src", "/resources/img/main/newmain/video-tree.mp4");{
+				$("#video1").on("ended", function() {
+					$("#video1").attr("src", "/resources/img/main/newmain/video-river.mp4");
+			})}
+		});
+	</script>
 
 </body>
 </html>
