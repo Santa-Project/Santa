@@ -132,6 +132,37 @@ public class MemberDao {
 		}
 		
 	}
+
+	public Member[] selectMemberTop10(Connection conn) {
+		
+		Member[] memberArr = new Member[9];
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		
+		try {
+			String query = "select * from member "
+					+ "join (select member_idx, count(follower_id) as cnt "
+					+ "from follower group by member_idx order by cnt desc)  "
+					+ "using(member_idx) where rownum < 10 ";
+			
+			
+			pstm = conn.prepareStatement(query);
+			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
+			
+			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
+			for (int i = 0; i < memberArr.length; i++) {
+				if(rset.next()) {
+					memberArr[i] = convertRowToMember(rset);
+				}
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return memberArr;
+	}
 	
 	
 	

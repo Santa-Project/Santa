@@ -85,9 +85,10 @@ a {
 .heading h1 {
   font-size: 60px;
   margin: 0;
+  display: block;
 }
 .heading h1 span {
-  display: block;
+  
   color: rgb(70, 153, 77);
 }
 .heading p {

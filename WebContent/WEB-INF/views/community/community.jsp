@@ -29,50 +29,32 @@
                     <span>명예의 전당</span>
                 </div>
                 <div class="rank_box_bottom">
+                <c:forEach items='${memberArr}' var='member' varStatus="status">
+               <c:if test="${status.index < 3}">
                     <div class="rank1">
                         <div class="rank_title">
-                            <i class="fas fa-trophy"> 1위</i>
+                            <i class="fas fa-trophy"> ${status.count}위</i>
                         </div>
                         <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
+                            <%-- <img src="${member.photo}" alt=""> --%>
+                            <img src="${contextPath}/resources/img/community/rank1.jpg" alt="">
+                        
                             <div class="content">
-                                <h3>@umhonggil</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
+                                <h3>${member.userId}</h3>
+                                <a href="?userid=${member.userId}"><i class="fas fa-home"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="rank2">
-                        <div class="rank_title">
-                            <i class="fas fa-trophy"> 2위</i>
-                        </div>
-                        <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
-                            <div class="content">
-                                <h3>@honggil</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rank3">
-                        <div class="rank_title">
-                            <i class="fas fa-trophy"> 3위</i>
-                        </div>
-                        <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
-                            <div class="content">
-                                <h3>@umhong</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rank4">
-                        <span><i class="fas fa-medal"></i> 4위 user</span>
-                        <span><i class="fas fa-medal"></i> 5위 user</span>
-                        <span><i class="fas fa-medal"></i> 6위 user</span>
-                        <span><i class="fas fa-medal"></i> 7위 user</span>
-                        <span><i class="fas fa-medal"></i> 8위 user</span>
-                        <span><i class="fas fa-medal"></i> 9위 user</span>
-                    </div>
+                    </c:if>
+                 </c:forEach>
+                 	<div class="rank4">
+	                <c:forEach items='${memberArr}' var='member' varStatus='status'>
+	                <c:if test='${status.index >= 3 }'>
+	                	<span><i class="fas fa-medal"></i><a href="?userid=${member.userId}">${status.count}위 ${member.userId}</a></span>
+	                </c:if>
+	             </c:forEach>
+	                </div>
+
                 </div>
             </div>
             <div class="rank_user3">
