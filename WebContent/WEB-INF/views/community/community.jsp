@@ -96,7 +96,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -116,7 +116,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -136,7 +136,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -156,7 +156,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -195,14 +195,20 @@
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
                                             <div class="button_wrap">
-                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <div class="heart">
+                                                
+                                                <!-- 로그인되었을 때만 하트 보이게 처리 -->
+                                                	<c:if test = "${not empty authentication}">
+                                                		<i class="fas fa-heart"></i>
+                                                	</c:if>
+                                                
+                                                </div>
                                                 <button>작성하기 11</button>
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
                                                     <div class="userID"><a href="#"> yoonzam</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,6 +481,45 @@
     $('.heart .fas, .comment_heart .fas').click(function(){
         $(this).toggleClass('active')
     })
+    
+    /* 하트 클릭시 좋아요 추가 또는 제거 */
+    /* $(function(){
+    	$("#rec_update").click(function(){
+    		$.ajax({
+    			url: "/expro/RecUpdate.do",
+    			type: "POST",
+    			data: {
+    				no: ${content.board_no},
+    				id: '${id}'
+    			},
+    			success: function (){
+    				recCount();
+    			},
+    		})
+    	}) */
+    	
+    	/* 좋아요 수 카운트*/
+    	/* function recCount() {
+    		$.ajax({
+    			url: "expro/RecCount.do",
+    			type: "POST",
+    			data: {
+    				no: ${content.board_no}
+    			},
+    			success: function(count){
+    				$(".rec_count").html(count);
+    			},
+    		})
+    	};
+    	recCount();  */
+    	/* 처음 시작했을 때 실행되도록 해당 함수 호출 */
+
+  /*   }) */
+    
+    
+    
+    
+    
 	</script>
 </body>
 </html>
