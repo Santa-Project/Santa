@@ -31,4 +31,9 @@ public class MainService {
 		return null;
 	}
 
+	public Member memberAuthenticateKakao(String kakaoLoginId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
