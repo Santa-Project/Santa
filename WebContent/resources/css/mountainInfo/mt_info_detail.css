@@ -41,6 +41,15 @@ section{
 	margin: 0 20px 0 20px;
 }
 
+#redHeart{
+   font-size: 18px;
+   color: rgb(243, 89, 89);
+}
+
+#blackHeart{
+   font-size: 18px;
+}
+
 .content_top{
 	display: flex;
 	width: 100vw;

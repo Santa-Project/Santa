@@ -187,10 +187,14 @@ button{
 .mypage_board{
   width: 800px;
   height: 1000px;
+  overflow-y:scroll;
 }
 .mypage_board2{
   width: 1000px;
   height: 1100px;
+  overflow-y:scroll;
+  border-color: red;
+  
 }
 
 .board_write_title{

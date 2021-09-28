@@ -10,13 +10,8 @@ public class MemberBoardComment {
 	private String memberIdx;
 	private String content;
 	private Date commentDatetime;
-	private String userId;
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	private String nickname;
+	
 	public String getCommentIdx() {
 		return commentIdx;
 	}
@@ -48,12 +43,17 @@ public class MemberBoardComment {
 	public void setCommentDatetime(Date commentDatetime) {
 		this.commentDatetime = commentDatetime;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	@Override
 	public String toString() {
 		return "MemberBoardComment [commentIdx=" + commentIdx + ", boardIdx=" + boardIdx + ", memberIdx=" + memberIdx
-				+ ", content=" + content + ", commentDatetime=" + commentDatetime + ", userId=" + userId + "]";
+				+ ", content=" + content + ", commentDatetime=" + commentDatetime + ", nickname=" + nickname + "]";
 	}
-	
 	
 	
 }

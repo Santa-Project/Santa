@@ -20,16 +20,10 @@
     <div class="mypage_header">
         <div class="my_nav_item_margin1"></div>
         <div class="my_nav_item_margin2">
-        <c:choose>
-			<c:when test="${empty sessionScope.principal}">
 			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
             <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
-			</c:when>
-        	<c:otherwise>
-        	</c:otherwise>
-        </c:choose>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -45,18 +39,11 @@
                         </div>
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
-                            <div id="my_introduce_id"><a href="">You_Ri</a></div>
-                            <c:if test="true">
-                            	<c:if test="true">
-                            	<button style="color:green">follow/언팔</button>
-                            	</c:if>
-                            </c:if>
-                           <c:if test="false">
+                           <div id="my_introduce_id">${member.nickname}(${member.userId})</div>
                             <button class="hidden1" id="my_introduce_edite" >edit</button>
                             <button class="hidden1" id="my_introduce_edite" >저장</button>
-                            </c:if>
                             </div>
-                            <div id="my_introduce_comment">상쾌한 북한산~♡ 아 좋당~~~   최대 30글자 허용</div>
+                            <div id="my_introduce_comment">${member.profileContent}</div>
                         </div>
                 </div>
                 

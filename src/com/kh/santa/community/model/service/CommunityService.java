@@ -2,8 +2,8 @@ package com.kh.santa.community.model.service;
 
 import java.sql.Connection;
 
+
 import com.kh.santa.common.db.JDBCTemplate;
-import com.kh.santa.mypage.model.dao.FollowerDao;
 import com.kh.santa.mypage.model.dao.MemberDao;
 import com.kh.santa.mypage.model.dto.Member;
 
