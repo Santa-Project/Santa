@@ -1,10 +1,7 @@
 package com.kh.santa.mypage.model.service;
 
 import java.sql.Connection;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.mypage.model.dao.MyBoardDao;
@@ -21,12 +18,12 @@ public class MyBoardService {
 
    public void insertBoard(MemberBoard board, List<FileDTO> fileDTOs) {
       Connection conn =template.getConnection();
-      
+      int res = 0;
       try {
          myboardDao.insertBoard(board,conn);
          for (FileDTO fileDTO : fileDTOs) {
-            myboardDao.insertFile(fileDTO,conn);
-            System.out.println(fileDTO);
+        	 res=  myboardDao.insertFile(fileDTO,conn);
+            System.out.println(res);
          }
          template.commit(conn);
       }catch (DataAccessException e) {
@@ -37,6 +34,19 @@ public class MyBoardService {
       }
    }
    
+	public void insertComment(MemberBoardComment comment) {
+		Connection conn =template.getConnection();
+	   
+	    try {
+	      myboardDao.insertComment(comment,conn);
+	       template.commit(conn);
+	    }catch (DataAccessException e) {
+	       template.rollback(conn);
+	       throw e;
+	    }finally {
+	       template.close(conn);
+	    }
+	}
    
    public List<MemberBoard> selectBoardDetail(String memberIdx) {
       
@@ -82,6 +92,7 @@ public class MyBoardService {
       }
       return comment;
    }
+
    
    
 }
