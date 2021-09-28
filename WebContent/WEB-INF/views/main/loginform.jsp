@@ -93,10 +93,11 @@ function kakaoLogin() {
 		Kakao.Auth.login({
 			scope:'profile_nickname,profile_image,account_email,gender',
 		    success: async function (response) {
-		    	
+		    	console.log("success_login");
 		    	await Kakao.API.request({
 		        	url: '/v2/user/me',
 		        	success: function (res) {
+		        		console.log("success_request");
 		      			console.log(res);
 		      			
 		      			let id = document.createElement("input");
@@ -112,6 +113,7 @@ function kakaoLogin() {
 		      			nickname.setAttribute('value',kakao_nickname);
 		      			nickname.setAttribute('type','hidden');
 		      			form.appendChild(nickname);
+		      			console.dir(kakao_nickname);
 		      			
 		      			// 성별
 		      			let kakao_gender;
@@ -146,10 +148,8 @@ function kakaoLogin() {
 			      			form.appendChild(photo);
 		      			} */
 		      			
-		      			
-		      			
 		        	}
-		        });
+		        });	
 		    	
 		    	
 		    	form.submit();
@@ -160,40 +160,53 @@ function kakaoLogin() {
 		})
 	} else {
 		// 카카오 로그인 이력이 있는 경우
-		(async function(){
+		//access token 유효
+		(async function (){
 			await Kakao.API.request({
-				url: '/v2/user/me',
-	        	success: function (res) {
-	        		let id = document.createElement("input");
-	      			id.name = "id";
-	      			id.setAttribute('value',res.id);
-	      			id.setAttribute('type','hidden');
-	      			form.appendChild(id);
-	        	}
-	        });
-			
+		       	url: '/v2/user/me',
+		       	success: function (res) {
+		     			console.log(res);
+		     			
+		     			let id = document.createElement("input");
+		     			id.name = "id";
+		     			id.setAttribute('value',res.id);
+		     			id.setAttribute('type','hidden');
+		     			form.appendChild(id);
+	     			
+	       		},
+		       	fail: function(error){
+		       		console.error(error);
+		       		//access token 만료
+		       		Kakao.Auth.logout(function() {
+		 				  console.log(Kakao.Auth.getAccessToken());
+		 			});
+	 				Kakao.Auth.login({
+		  			    success: function (response) {
+		  			    	
+		  			    	Kakao.API.request({
+		  			        	url: '/v2/user/me',
+		  			        	success: function (res) {
+		  			      			console.log(res);
+		  			      			
+		  			      			let id = document.createElement("input");
+		  			      			id.name = "id";
+		  			      			id.setAttribute('value',res.id);
+		  			      			id.setAttribute('type','hidden');
+		  			      			form.appendChild(id);
+		  			      			
+		  			        	}
+		  			        });	
+		  			    }	
+	 				})
+		       	}
+	   		});
+	
 			form.submit();
 		})();
-        	
-	}
+			
+	};
 }
-	
-    
-/* //카카오로그아웃  
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  } */  
+  
 </script>
 </body>
 </html>
