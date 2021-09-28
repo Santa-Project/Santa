@@ -26,14 +26,51 @@ public class MainService {
 		return member;
 	}
 
-	public Object selectMemberById(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member searchByKakaoId(String kakaoId) {
+
+		Member member = null;
+		Connection conn = template.getConnection();
+		
+		try {
+			member = memberDao.memberAuthenticateByKakaoId(kakaoId, conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return member;
 	}
 
-	public Member memberAuthenticateKakao(String kakaoLoginId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void createMemberWithKakao(Member member, String kakaoId) {
+		
+		Connection conn = template.getConnection();
+		
+		try {
+			//회원 테이블에 instance추가
+			memberDao.insertMemberWithKakao(member, conn);
+			//소셜로그인 테이블에 instance추가
+			memberDao.insertSocialLoginKakao(kakaoId, conn);
+			
+			template.commit(conn);
+		} catch(Exception e){
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+
+	public Member selectMemberById(String userId) {
+		
+		Member member = null;
+		Connection conn = template.getConnection();
+		
+		try {
+			member = memberDao.selectMemberById(userId, conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return member;
 	}
 
 }

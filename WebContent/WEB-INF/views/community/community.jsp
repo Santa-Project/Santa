@@ -29,50 +29,32 @@
                     <span>명예의 전당</span>
                 </div>
                 <div class="rank_box_bottom">
+                <c:forEach items='${memberArr}' var='member' varStatus="status">
+               <c:if test="${status.index < 3}">
                     <div class="rank1">
                         <div class="rank_title">
-                            <i class="fas fa-trophy"> 1위</i>
+                            <i class="fas fa-trophy"> ${status.count}위</i>
                         </div>
                         <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
+                            <%-- <img src="${member.photo}" alt=""> --%>
+                            <img src="${contextPath}/resources/img/community/rank1.jpg" alt="">
+                        
                             <div class="content">
-                                <h3>@umhonggil</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
+                                <h3>${member.userId}</h3>
+                                <a href="?userid=${member.userId}"><i class="fas fa-home"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="rank2">
-                        <div class="rank_title">
-                            <i class="fas fa-trophy"> 2위</i>
-                        </div>
-                        <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
-                            <div class="content">
-                                <h3>@honggil</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rank3">
-                        <div class="rank_title">
-                            <i class="fas fa-trophy"> 3위</i>
-                        </div>
-                        <div class="rank_card">
-                            <img src="/resources/img/community/rank1.jpg" alt="">
-                            <div class="content">
-                                <h3>@umhong</h3>
-                                <a href="#"><i class="fas fa-home"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rank4">
-                        <span><i class="fas fa-medal"></i> 4위 user</span>
-                        <span><i class="fas fa-medal"></i> 5위 user</span>
-                        <span><i class="fas fa-medal"></i> 6위 user</span>
-                        <span><i class="fas fa-medal"></i> 7위 user</span>
-                        <span><i class="fas fa-medal"></i> 8위 user</span>
-                        <span><i class="fas fa-medal"></i> 9위 user</span>
-                    </div>
+                    </c:if>
+                 </c:forEach>
+                 	<div class="rank4">
+	                <c:forEach items='${memberArr}' var='member' varStatus='status'>
+	                <c:if test='${status.index >= 3 }'>
+	                	<span><i class="fas fa-medal"></i><a href="?userid=${member.userId}">${status.count}위 ${member.userId}</a></span>
+	                </c:if>
+	             </c:forEach>
+	                </div>
+
                 </div>
             </div>
             <div class="rank_user3">
@@ -96,7 +78,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -116,7 +98,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -136,7 +118,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -156,7 +138,7 @@
                             </div>
                             <div class="hot_content">
                                 <h3>산할아버지</h3>
-                                <span>#매주등산 #등산후막걸리 <hr> #등린이 #등산친구구함</span>
+                                <span>#매주등산 #등산후막걸리 #등린이 #등산친구구함</span>
                             </div>
                         </div>
                         <div class="hot_photo">
@@ -195,14 +177,20 @@
                                         <div class="desc_content">
                                             <input type="text" placeholder="댓글을 입력하세요.">
                                             <div class="button_wrap">
-                                                <div class="heart"><i class="fas fa-heart"></i></div>
+                                                <div class="heart">
+                                                
+                                                <!-- 로그인되었을 때만 하트 보이게 처리 -->
+                                                	<c:if test = "${not empty authentication}">
+                                                		<i class="fas fa-heart"></i>
+                                                	</c:if>
+                                                
+                                                </div>
                                                 <button>작성하기 11</button>
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
                                                     <div class="userID"><a href="#"> yoonzam</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,6 +463,45 @@
     $('.heart .fas, .comment_heart .fas').click(function(){
         $(this).toggleClass('active')
     })
+    
+    /* 하트 클릭시 좋아요 추가 또는 제거 */
+    /* $(function(){
+    	$("#rec_update").click(function(){
+    		$.ajax({
+    			url: "/expro/RecUpdate.do",
+    			type: "POST",
+    			data: {
+    				no: ${content.board_no},
+    				id: '${id}'
+    			},
+    			success: function (){
+    				recCount();
+    			},
+    		})
+    	}) */
+    	
+    	/* 좋아요 수 카운트*/
+    	/* function recCount() {
+    		$.ajax({
+    			url: "expro/RecCount.do",
+    			type: "POST",
+    			data: {
+    				no: ${content.board_no}
+    			},
+    			success: function(count){
+    				$(".rec_count").html(count);
+    			},
+    		})
+    	};
+    	recCount();  */
+    	/* 처음 시작했을 때 실행되도록 해당 함수 호출 */
+
+  /*   }) */
+    
+    
+    
+    
+    
 	</script>
 </body>
 </html>
