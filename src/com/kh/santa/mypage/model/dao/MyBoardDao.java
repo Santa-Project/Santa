@@ -61,6 +61,25 @@ public class MyBoardDao {
       return res;
    }
    
+   public void insertComment(MemberBoardComment comment, Connection conn) {
+		
+	   PreparedStatement pstm = null;
+	      
+	      String sql = "INSERT INTO member_board_comment(comment_idx, board_idx, content, nickname, member_idx) VALUES(sc_comment_idx.nextval,?,?,?,?)";
+	      
+	         try {
+	            pstm =conn.prepareStatement(sql);
+	            pstm.setString(1, comment.getBoardIdx());
+	            pstm.setString(2, comment.getContent());
+	            pstm.setString(3, comment.getNickname());
+	            pstm.setString(4, comment.getMemberIdx());
+	            pstm.executeUpdate(); 
+	         } catch (SQLException e) {
+	            throw new DataAccessException(e);
+	         }finally {
+	            template.close(pstm);
+	         }
+	}
    
    //게시판조회
    public List<MemberBoard> selectBoardDetail(String memberIdx, Connection conn) {
@@ -69,7 +88,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       ResultSet rset =null;
       
-      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by board_idx";
+      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by board_idx desc";
       
       try {
          pstm =conn.prepareStatement(sql);
@@ -117,16 +136,16 @@ public class MyBoardDao {
       return file;
    }
    
-   //게시판댓글작성
+   //게시판댓글뿌려줌
    public List<MemberBoardComment> selectBoardComent(String boardIdx, Connection conn) {
 
       List<MemberBoardComment> comments = new ArrayList<MemberBoardComment>();
       PreparedStatement pstm = null;
       ResultSet rset =null;
-      String columns ="userid,content";
+      String columns ="nickname,content";
       
       String sql ="SELECT " +columns
-            + " FROM member_board_comment WHERE board_idx=? "; 
+            + " FROM member_board_comment WHERE board_idx=? order by COMMENT_DATETIME desc"; 
       
       try {
          pstm =conn.prepareStatement(sql);
@@ -192,9 +211,10 @@ public class MyBoardDao {
        case "member_idx": comment.setMemberIdx(rset.getString("member_idx"));break;
        case "content": comment.setContent(rset.getString("content"));break;
        case "comment_datetime": comment.setCommentDatetime(rset.getDate("comment_datetime"));break;
-       case "userid": comment.setUserId(rset.getString("userid"));break;
+       case "nickname": comment.setNickname(rset.getString("nickname"));break;
          }
       }
       return comment;
    }
+
 }

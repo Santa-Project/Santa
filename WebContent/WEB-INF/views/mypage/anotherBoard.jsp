@@ -19,12 +19,7 @@
 
     <div class="mypage_header">
         <div class="my_nav_item_margin1"></div>
-        <div class="my_nav_item_margin2">
-			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
-            <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
-            <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
-        </div>
+        <div class="my_nav_item_margin2"></div>
         <div class="my_nav_item_margin3"></div>
     </div>
 
@@ -39,11 +34,35 @@
                         </div>
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
-                           <div id="my_introduce_id">${member.nickname}(${member.userId})</div>
-                            <button class="hidden1" id="my_introduce_edite" >edit</button>
-                            <button class="hidden1" id="my_introduce_edite" >저장</button>
+                            <div id="my_introduce_id">You_Ri</div>
+
+                            	<c:if test="true">
+                            	<button style="color:green" id='following'>follow</button>
+                            	</c:if>
+                            	<c:if test="false">
+                            	<button style="color:red"  id='unfollowing'>unfollow</button>
+                            	</c:if>
+                            	<script type="text/javascript">
+                            	
+	                            	$('#following').click(function(){  
+	    	                			var memberIdx = $('#unfollow_button').val();
+	    	                			$.ajax({
+	    	                				type:'post',   
+	    	                				url:'/mypage/insertFollow',   
+	    	                				data: memberIdx,  
+	    	                				success : function(data){   
+	    	                					
+	    	                				},error : function(XMLHttpRequest, textStatus, errorThrown){
+	    	                                    alert("팔로잉취소에 실패하였습니다");
+	    	                                }
+	    	                			});
+	    	                		
+	    	                		});
+                            	
+                            	</script>
+                            	
                             </div>
-                            <div id="my_introduce_comment">${member.profileContent}</div>
+                            <div id="my_introduce_comment">상쾌한 북한산~♡ 아 좋당~~~   최대 30글자 허용</div>
                         </div>
                 </div>
                 
@@ -58,21 +77,6 @@
                                 <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>지리산<button style="margin-left: 10px;"><i class="far fa-minus-square"></i></button></li>
                             </ul>
                         </div>
-                    <c:if test="false">
-                     </c:if>
-                     <c:if test="true">
-                         <form action ="/마운틴인포에서 db찾으러감 a_서블릿/쿠키 참고" id="my_wish_input"  class="hidden1" >
-                                <input type="text" name="search" id="search" list="lang" style="width: 100px;height:20px ;">
-                                <datalist id='mountain_name'>
-                                    <option value="지리산"/>
-                                    <option value="어쩌고"/>
-                                    <option value="저쩌고"/>
-                                    <option value="블라블라"/>
-                                    <option value="등등등"/>
-                                </datalist>
-                                <button type="submit"id="search_button">+</button>
-                            </form>
-                        </c:if>
 					</div> 
                 </div> 
             </div>
@@ -83,15 +87,8 @@
                 <div class="board_write_title2">
                     <div id="board_write_title_item">게시글</div></div>
                 <div class="board_write_content2">
-                    <c:if test="false">
-                    </c:if>
-                    <c:if test="true">
-                    	<div class="board_add">
-                        	<i class="fas fa-plus"></i><a href="/mypage/mypageWriteBoard"> 게시글 작성</a>
-                    	</div>
-                    </c:if>
 					
-					<c:forEach items='${res}' var='objectArr' varStatus="status">
+					<c:forEach items='${others}' var='objectArr' varStatus="status"> <!-- 다른사람 게시판 -->
                     <div class="board_content_item">
                         <div class="board_content_padding">
                             <div class="board_content_picture">
@@ -116,7 +113,7 @@
                                     <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
-                                    <a class="input_id" style="color:green">${authentication.nickname}</a>
+                                <a class="input_id" style="color:green">${authentication.nickname}</a><!-- 내닉네임 -->
                                 <form action="/mypage/insertComment" method="post">
                                     <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
                                     <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
@@ -124,16 +121,13 @@
                                 </div>
                                 <div class="board_content_side_rep">
                                 
-                                <c:forEach items='${objectArr[2]}' var='comment'>
+                                 <c:forEach items='${objectArr[2]}' var='comment'>
                                     <div class="board_content_side_rep_item">
                                     	<c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
-	                                        <form action="/mypage/anotherBoard" method="post">
-		                                        <a class="input_id">
-		                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">${comment.nickname}</a>
-	                                        </form>
+                                        <a class="input_id" href="mypage/anotherBoard">${comment.nickname}</a>
                                         </c:if>
                                         <c:if test="${comment.nickname == sessionScope.userId}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
-                                        	<a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
+                                        <a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
                                         </c:if>
                                         <div class="input_content">${comment.content}</div>
                                     </div>
