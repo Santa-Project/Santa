@@ -112,19 +112,24 @@
 	                    <option value="F">여자</option>
 	                </select>  
 	            </span>
+	            <span id="genderCheck" class="valid-msg"></span>
 	        </div>
 	
 	        <!-- MOBILE -->
 	        <div>
 	            <h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
 	            <span class="box">
-	                <input type="tel" id="mobile" name="mobile" class="int" maxlength="16" placeholder="전화번호 입력" 
+	                <input type="text" id="mobile" name="mobile" class="int" maxlength="16" placeholder="전화번호 입력" 
 	                <c:if test="${not empty param.err}">
                 		value="${joinForm.mobile}"
                 	</c:if>
 	                required/>
 	            </span> 
-	            
+	            <span id="mobileCheck" class="valid-msg">
+	            <c:if test="${not empty param.err and not empty joinValid.mobile}">
+	              	전화번호는 '-'을 포함하지 않은 숫자(9~11) 조합입니다.
+	            </c:if>
+	            </span>
 	        </div>
 	
 	        <!-- EMAIL -->
@@ -136,6 +141,11 @@
                 		value="${joinForm.email}"
                 	</c:if>
 	                required/>
+	            </span>
+	            <span id="emailCheck" class="valid-msg">
+	            <c:if test="${not empty param.err and not empty joinValid.email}">
+	              	유효한 이메일을 입력해주세요.
+	            </c:if>
 	            </span>
 	        </div>
 	
@@ -164,7 +174,6 @@
                 	</c:if>
 	                >
 	            </span>
-	            <span id="addrCheck" class="valid-msg"></span>
 	        </div>
 	
 	        <!-- 즐겨찾는 산/가고싶은 산(선택) -->
@@ -181,7 +190,7 @@
 	       
 	        <!-- join-btn -->
 	        <div class="join-btn">
-	            <button type="submit" id="btnJoin">
+	            <button id="btnJoin">
 	                <span>가입하기</span>
 	            </button>
 	        </div>
@@ -231,17 +240,42 @@
 	});
 	
 	//제출   
-	document.querySelector("#btnJoin").addEventListener('submit', function(e){
+	document.querySelector("#btnJoin").addEventListener('click', function(e){
+		
+		let flg = true;
+		
+		document.querySelector('#idCheck').innerHTML = "";
+		document.querySelector('#pwCheck').innerHTML = "";
+		document.querySelector('#vpwCheck').innerHTML = "";
+		document.querySelector('#nameCheck').innerHTML = "";
+		document.querySelector('#nicknameCheck').innerHTML = "";
+		document.querySelector('#genderCheck').innerHTML = "";
+		document.querySelector('#mobileCheck').innerHTML = "";
+		document.querySelector('#emailCheck').innerHTML = "";
 		
 		let userId = document.querySelector('#id').value;
-		
+		console.dir(confirmId);
+		console.dir(userId);
 		if(confirmId != userId){
 			e.preventDefault();
 			document.querySelector("#idCheck").style.color = "red";
 			document.querySelector('#idCheck').innerHTML = "아이디 중복 검사를 하지 않았습니다.";
 			document.querySelector('#id').focus();
+			flg = false;
+		}
+		
+		let gender = document.querySelector('#gender').value;
+		if(!gender){
+			document.querySelector("#genderCheck").style.color = "red";
+			document.querySelector('#genderCheck').innerHTML = "성별을 선택하세요.";
+			flg = false;
+		}
+		
+		if(!flg){
 			return;
 		}
+		
+		document.querySelector("#form").submit();
 		
 	})
 		

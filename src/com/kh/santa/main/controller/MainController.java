@@ -237,17 +237,17 @@ public class MainController extends HttpServlet {
 		
 		String[] mtIdxArr = request.getParameterValues("preference");
 		/* String mtName = request.getParameter("산이름"); */
-		
-		
-		for (String mtIdx : mtIdxArr) {
-			Mountain mountain = mountainService.searchMountain(mtIdx);
-			mountainList.add(mountain);
+		if(mtIdxArr!=null) {
+			for (String mtIdx : mtIdxArr) {
+				Mountain mountain = mountainService.searchMountain(mtIdx);
+				mountainList.add(mountain);
+			}
+			request.getSession().setAttribute("persistPreperence", mountainList);
 		}
 		
 		
 		String persistToken = UUID.randomUUID().toString();
 		request.getSession().setAttribute("persistUser", member);
-		request.getSession().setAttribute("persistPreperence", mountainList);
 		request.getSession().setAttribute("persist-token", persistToken);
 		
 		mainService.authenticateEmail(member, persistToken);
@@ -262,9 +262,13 @@ public class MainController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		Member member = (Member)session.getAttribute("persistUser");
-		List<Mountain> mountainList = (List<Mountain>)session.getAttribute("persistPreperence");
 		
-		mainService.insertMemberAndPreperence(member, mountainList);
+		if(session.getAttribute("persistPreperence") != null) {
+			List<Mountain> mountainList = (List<Mountain>)session.getAttribute("persistPreperence");
+			mainService.insertMemberAndPreperence(member, mountainList);
+		}
+		
+		mainService.insertMember(member);
 		
 		
 		// 같은 persistUser값이 두 번 DB에 입력되지 않도록 사용자 정보와 인증을 만료시킴

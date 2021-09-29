@@ -41,7 +41,7 @@ public class JoinForm {
 		
 		boolean isFailed = false;
 		
-		// 사용자 아이디가 DB에 이미 존재하는 지 확인
+		// 아이디가 영문 또는 숫자 조합의 문자열인지
 		if(!Pattern.matches(".*[a-zA-Z0-9]{1,}", id)) {
 			failedValidation.put("id",id);
 			isFailed = true;
@@ -70,7 +70,15 @@ public class JoinForm {
 		}
 		
 		
-		if(!Pattern.matches("\\d{9,11}", mobile)) { failedValidation.put("mobile", mobile); isFailed = true; }
+		if(!Pattern.matches("\\d{9,11}", mobile)) { 
+			failedValidation.put("mobile", mobile); 
+			isFailed = true; 
+		}
+		
+		if(!Pattern.matches("^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$", email)) { 
+			failedValidation.put("email", email); 
+			isFailed = true; 
+		}
 		
 		
 		if(isFailed) {

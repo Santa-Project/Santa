@@ -10,7 +10,6 @@ import com.kh.santa.common.http.RequestParams;
 import com.kh.santa.common.mail.MailSender;
 import com.kh.santa.mountainInfo.model.dao.MountainDao;
 import com.kh.santa.mountainInfo.model.dto.Mountain;
-import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
 import com.kh.santa.mypage.model.dao.MemberDao;
 import com.kh.santa.mypage.model.dto.Member;
 
@@ -124,6 +123,23 @@ public class MainService {
 			// 회원가입 이후 자동 로그인처리(안함)
 			// dao를 통해 사용자 정보를 받아서 해당 정보로 로그인 처리 진행
 			// System.out.println(member.getUserId() + "의 로그인처리 로직이 동작했습니다.");
+			
+			template.commit(conn);
+			
+		} catch(Exception e){
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+		
+	}
+
+	public void insertMember(Member member) {
+		Connection conn = template.getConnection();
+		try {
+			// 회원가입처리
+			memberDao.insertMember(member, conn);
 			
 			template.commit(conn);
 			
