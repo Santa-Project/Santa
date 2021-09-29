@@ -187,13 +187,10 @@ button{
 .mypage_board{
   width: 800px;
   height: 1000px;
-  overflow-y:scroll;
 }
 .mypage_board2{
   width: 1000px;
   height: 1100px;
-  overflow-y:scroll;
-  border-color: red;
   
 }
 
@@ -335,9 +332,11 @@ margin-left:20px;
    margin-left:22px;
    margin-top: 5px;
    height:25px;
+   border: 1px solid green;
 }
 .input_content{
   width:200px;
+   border: 1px solid red;
 }
 .input_liked{    /*댓글좋아요.*/
 

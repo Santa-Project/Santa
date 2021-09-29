@@ -34,33 +34,21 @@
                         </div>
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
+                            <c:set var='others'/>
                             <div id="my_introduce_id">You_Ri</div>
 
                             	<c:if test="true">
-                            	<button style="color:green" id='following'>follow</button>
+                            		<form>
+                            			<button style="color:green" id='following'>follow</button>
+                            			<input type='hidden' name='insertfollow' value='상대방idx'>
+                            		</form>
                             	</c:if>
                             	<c:if test="false">
-                            	<button style="color:red"  id='unfollowing'>unfollow</button>
+		                           	<form>
+		                            	<button style="color:red"  id='unfollowing'>unfollow</button>
+		                            	<input type='hidden' name='deletefollow' value='상대방idx'>
+		                           	</form>
                             	</c:if>
-                            	<script type="text/javascript">
-                            	
-	                            	$('#following').click(function(){  
-	    	                			var memberIdx = $('#unfollow_button').val();
-	    	                			$.ajax({
-	    	                				type:'post',   
-	    	                				url:'/mypage/insertFollow',   
-	    	                				data: memberIdx,  
-	    	                				success : function(data){   
-	    	                					
-	    	                				},error : function(XMLHttpRequest, textStatus, errorThrown){
-	    	                                    alert("팔로잉취소에 실패하였습니다");
-	    	                                }
-	    	                			});
-	    	                		
-	    	                		});
-                            	
-                            	</script>
-                            	
                             </div>
                             <div id="my_introduce_comment">상쾌한 북한산~♡ 아 좋당~~~   최대 30글자 허용</div>
                         </div>
@@ -113,7 +101,7 @@
                                     <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
-                                <a class="input_id" style="color:green">${authentication.nickname}</a><!-- 내닉네임 -->
+                                <div class="input_id" style="color:green">${authentication.nickname}</div><!-- 내닉네임 -->
                                 <form action="/mypage/insertComment" method="post">
                                     <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
                                     <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
@@ -123,13 +111,13 @@
                                 
                                  <c:forEach items='${objectArr[2]}' var='comment'>
                                     <div class="board_content_side_rep_item">
-                                    	<c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
+                                    	<%-- <c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
                                         <a class="input_id" href="mypage/anotherBoard">${comment.nickname}</a>
                                         </c:if>
                                         <c:if test="${comment.nickname == sessionScope.userId}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
                                         <a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
                                         </c:if>
-                                        <div class="input_content">${comment.content}</div>
+                                        <div class="input_content">${comment.content}</div> --%>
                                     </div>
 								</c:forEach>
                                     

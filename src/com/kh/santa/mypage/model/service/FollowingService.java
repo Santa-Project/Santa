@@ -41,7 +41,19 @@ public class FollowingService {
 	      }
 	      return followerList;
 	   }
-
+	 
+	   
+   public void insertFollow(Follow follow) {
+		
+		Connection conn = template.getConnection();
+	      try {
+	    	  followingDao.insertFollow(follow,conn);
+	    	  followingDao.insertFollower(follow,conn);
+	    	  template.commit(conn);
+	      }finally {
+	         template.close(conn);
+	      }
+	}
 	   
 	public void deleteFollow(Follow follow) {
 		

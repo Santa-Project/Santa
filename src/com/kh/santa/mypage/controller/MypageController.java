@@ -73,8 +73,14 @@ public class MypageController extends HttpServlet {
       case "insertBoard" :
          insertBoard(request,response);
          break;
+      case "deleteBoard" :
+    	  deleteBoard(request,response);
+          break;
       case "insertComment" :
     	  insertComment(request,response);
+          break;
+      case "deleteComment" :
+    	  deleteComment(request,response);
           break;
       case "insertFollow" :
     	  insertFollow(request,response);
@@ -90,6 +96,7 @@ public class MypageController extends HttpServlet {
       }
       
    }
+
 
 //게시글 작성
    private void insertBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -110,6 +117,14 @@ public class MypageController extends HttpServlet {
       
    }
    
+
+	private void deleteBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String boardIdx =request.getParameter("deleteboard");
+		myboardService.deleteBoard(boardIdx);
+		 request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
+	}
+   
    //댓글 작성
    private void insertComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
    	
@@ -125,6 +140,12 @@ public class MypageController extends HttpServlet {
 	   mypageBoard(request,response);
    }
 
+   //댓글 삭제
+	private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String commentIdx =request.getParameter("deletecomment");
+		myboardService.deleteBoard(commentIdx);
+		mypageBoard(request,response);
+	}
    
    //게시판뿌리기
    private void mypageBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -183,7 +204,7 @@ public class MypageController extends HttpServlet {
 	   request.setAttribute("member", member);
 	   Follow follow = new Follow();
 	   follow.setMemberIdx(member.getMemberIdx());			//내 member_idx랑 
-	   follow.setFollowId(request.getParameter("delete"));	//follow_idx가지고옴
+	   follow.setFollowId(request.getParameter("deletefollow"));	//follow_idx가지고옴
 	   followingService.deleteFollow(follow);
 	   request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
    }
@@ -192,6 +213,11 @@ public class MypageController extends HttpServlet {
 	private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  Member member = (Member) request.getSession().getAttribute("authentication");
 	  request.setAttribute("member", member);
+	  Follow follow = new Follow();
+	  follow.setFollowId(request.getParameter("상대방idx"));
+	  follow.setMemberIdx(member.getMemberIdx());
+	  followingService.insertFollow(follow);
+	  request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
 	}
 
    

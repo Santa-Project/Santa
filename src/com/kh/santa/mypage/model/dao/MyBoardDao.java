@@ -61,6 +61,65 @@ public class MyBoardDao {
       return res;
    }
    
+   //댓글,사진,게시판 삭제
+   public void deleteBoard(String boardIdx,Connection conn) {
+	   
+	   PreparedStatement pstm = null;
+		
+		try {
+			String query = "DELETE FROM member_board WHERE board_idx = ? "; 
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, boardIdx);
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+          throw new DataAccessException(e);
+		}finally {
+			template.close(pstm);
+		}
+   }
+   
+	//사진 삭제
+	public void deleteFile(String boardIdx, Connection conn) {
+		
+		   PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM file_info WHERE board_idx = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, boardIdx);
+				pstm.executeUpdate();
+				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+		
+	}
+	
+   //댓글 삭제
+	public void deleteComment(String boardIdx, Connection conn) {
+		 
+		PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM member_board_comment WHERE board_idx = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, boardIdx);
+				pstm.executeUpdate();
+				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+	}
+
+
+   
+   
+   //댓글 추가
    public void insertComment(MemberBoardComment comment, Connection conn) {
 		
 	   PreparedStatement pstm = null;
@@ -88,7 +147,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       ResultSet rset =null;
       
-      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by board_idx desc";
+      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by UPLOAD_DATETIME desc";
       
       try {
          pstm =conn.prepareStatement(sql);

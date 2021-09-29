@@ -87,44 +87,18 @@
                             <div id="follow_member_selfie"><!-- img로 변경 ,경로 urc= ${f.userId} --></div>
                          </div>
                          <div class="follow_member2">
-                        <div class="follow_member_id_padding">
-                         <button id="follow_member_id">${f.nickname} (${f.userId})</button>
-                        </div>
-                         <button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}" value='${f.memberIdx}'>unfollow</button>
+	                        <div class="follow_member_id_padding">
+	                         	<form>
+	                         		<button id="follow_member_id">${f.nickname} (${f.userId})</button>
+	                        	</form>
+	                        </div>
+	                        <form>
+	                        	<button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}" value='${f.memberIdx}'>unfollow</button>
+                       		</form>
                        </div>
                      </div>
                  </c:forEach>
                  
-                 <script type="text/javascript">
-                 
-	                		$('#unfollow_button').click(function(){  
-	                			var memberIdx = $('#unfollow_button').val();
-	                			$.ajax({
-	                				type:'post',   
-	                				url:'/mypage/deleteFollow',   
-	                				data: memberIdx,  
-	                				success : function(data){   
-	                					
-	                				},error : function(XMLHttpRequest, textStatus, errorThrown){
-	                                    alert("팔로잉취소에 실패하였습니다");
-	                                }
-	                			});
-	                		});
-                 
-			                 $('#follow_member_id').click(function(){  
-			         			var memberIdx = $('#follow_member_id').val();
-			         			$.ajax({
-			         				type:'post',   
-			         				url:'/mypage/anotherBoard',   
-			         				data: memberIdx,  
-			         				success : function(data){   
-			         					alert("이동합니다");
-			         				}
-			         			});
-			         		});
-	                		
-                 
-                 </script>
                      
                 </div>
             </div>
