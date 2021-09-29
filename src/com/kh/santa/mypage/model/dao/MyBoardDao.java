@@ -97,18 +97,32 @@ public class MyBoardDao {
 			}
 		
 	}
-	
-   //댓글 삭제
-	public void deleteComment(String boardIdx, Connection conn) {
+	//댓글삭제 (게시판 전체삭제용) 어...이거는 게시판삭제..
+	public void deleteBoardToComment(String boardidx, Connection conn) {
 		 
 		PreparedStatement pstm = null;
 			
 			try {
 				String query = "DELETE FROM member_board_comment WHERE board_idx = ? "; 
 				pstm = conn.prepareStatement(query);
-				pstm.setString(1, boardIdx);
+				pstm.setString(1, boardidx);
 				pstm.executeUpdate();
-				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+	}
+   //댓글 삭제
+	public void deleteComment(Connection conn,String commentIdx) {
+		 
+		PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM member_board_comment WHERE COMMENT_IDX = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, commentIdx);
+				pstm.executeUpdate();
 			} catch (SQLException e) {
 	          throw new DataAccessException(e);
 			}finally {

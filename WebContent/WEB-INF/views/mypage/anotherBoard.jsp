@@ -109,17 +109,30 @@
                                 </div>
                                 <div class="board_content_side_rep">
                                 
-                                 <c:forEach items='${objectArr[2]}' var='comment'>
-                                    <div class="board_content_side_rep_item">
-                                    	<%-- <c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
-                                        <a class="input_id" href="mypage/anotherBoard">${comment.nickname}</a>
-                                        </c:if>
-                                        <c:if test="${comment.nickname == sessionScope.userId}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
-                                        <a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
-                                        </c:if>
-                                        <div class="input_content">${comment.content}</div> --%>
-                                    </div>
-								</c:forEach>
+                                <c:forEach items='${objectArr[2]}' var='comment'>
+	                                    <div class="board_content_side_rep_item">
+	                                    
+	                                    	<c:if test="${comment.nickname != sessionScope.nickname}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
+		                                        <form id="idForm" action="/mypage/anotherBoard" method="post">
+			                                        <label>
+			                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">
+													<button type="submit" class="input_id">${comment.nickname}</button>
+													</label>
+		                                        </form>
+	                                        </c:if>
+	                                        <c:if test="${comment.nickname == sessionScope.nickname}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
+	                                        	<a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
+	                                        </c:if>
+	                                        
+		                                    <div class="input_content">${comment.content}</div>
+		                                    <c:if test="${comment.nickname == sessionScope.nickname}" > <!-- 내가 쓴 댓글 삭제 -->
+		                                        <form action="/mypage/deleteComment" method="post">
+			                                        <a style="color:red; margin-left: 10px;" class="far fa-minus-square" onclick="if(!confirm('댓글을 삭제하시겠습니까?')){return false;}"></a>
+			                                        <input type="hidden" name="deletecomment" value="${comment.commentIdx}">
+		                                    	</form>
+	                                    	</c:if>
+	                                    </div>
+									</c:forEach>
                                     
                                 </div>
                             </div>

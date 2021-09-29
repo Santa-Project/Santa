@@ -88,17 +88,18 @@
                          </div>
                          <div class="follow_member2">
 	                        <div class="follow_member_id_padding">
-	                         	<form>
-	                         		<button id="follow_member_id">${f.nickname} (${f.userId})</button>
-	                        	</form>
+                         		<form id="idForm" action="/mypage/anotherBoard" method="post">
+			                         <input type="hidden" name="anotherIdx" value="${f.memberIdx}">
+			                         <button type="submit" id="follow_member_id" >${f.nickname} (${f.userId})</button> 
+                         		</form>
 	                        </div>
-	                        <form>
-	                        	<button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}" value='${f.memberIdx}'>unfollow</button>
+	                        <form action="/mypage/deleteFollow" method="post">
+	                        	<button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}">unfollow</button>
+                       			<input type="hidden" value='${f.memberIdx}' name="deletefollow">
                        		</form>
                        </div>
                      </div>
                  </c:forEach>
-                 
                      
                 </div>
             </div>

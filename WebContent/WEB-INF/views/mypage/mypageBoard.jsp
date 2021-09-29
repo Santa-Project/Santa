@@ -39,11 +39,11 @@
                         </div>
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
-                           <div id="my_introduce_id">${member.nickname}(${member.userId})</div>
-                            <button class="hidden1" id="my_introduce_edite" >edit</button>
-                            <button class="hidden1" id="my_introduce_edite" >저장</button>
+                           <div id="my_introduce_id">${authentication.nickname}(${authentication.userId})</div>
+                            <button id="my_introduce_edite" >edit</button>
+                            <button id="my_introduce_edite" >저장</button>
                             </div>
-                            <div id="my_introduce_comment">${member.profileContent}</div>
+                            <div id="my_introduce_comment">${authentication.profileContent}</div>
                         </div>
                 </div>
                 
@@ -131,22 +131,29 @@
 	                                <c:forEach items='${objectArr[2]}' var='comment'>
 	                                    <div class="board_content_side_rep_item">
 	                                    
-	                                    	<c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
-		                                        <form action="/mypage/anotherBoard" method="post">
-			                                        <a class="input_id">
-			                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">${comment.nickname}</a>
+	                                    	<c:if test="${comment.nickname != authentication.nickname}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
+		                                        <form id="idForm" action="/mypage/anotherBoard" method="post">
+			                                        <label>
+			                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">
+													<button type="submit" class="input_id">${comment.nickname}</button>
+													</label>
 		                                        </form>
 	                                        </c:if>
-	                                        <c:if test="${comment.nickname == sessionScope.userId}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
-	                                        	<a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
+	                                        <c:if test="${comment.nickname == authentication.nickname}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
+	                                        	<a class="input_id" href="/mypage/mypageBoard">${comment.nickname}</a>
 	                                        </c:if>
 	                                        
-	                                        <form action="/mypage/deleteComment" method="post">
-		                                        <div class="input_content">${comment.content}</div>
-		                                        <span style='width:30px;border-color:black;' ><a style="color:red;margin-left: 10px;" class="far fa-minus-square"></a></span>
-		                                        <input type="hidden" name="deletecomment" value="${comment.commentIdx}">
-	                                    	</form>
-	                                    	
+		                                    <div class="input_content">${comment.content}${comment.commentIdx}</div>
+		                                    <c:if test="${comment.nickname == authentication.nickname}" > <!-- 내가 쓴 댓글 삭제 -->
+			                                        <form action="/mypage/deleteComment" method="post" >
+			                                         <label>
+			                                       	 	<input type="hidden" name="commentIdx" value="${comment.commentIdx}">
+			                                       	 	${comment.commentIdx}
+														<button style="color:red; margin-left: 10px;" type="submit" id="delete" >
+														 <i class="far fa-minus-square" ></i></button>
+			                                        </label>
+			                                        </form>
+	                                    	</c:if>
 	                                    </div>
 									</c:forEach>
                                     
@@ -161,6 +168,18 @@
         </div>
          </div>
 </section>
+
+<script type="text/javascript">
+
+document.querySelector("#delete").addEventListener('submit', function(e){
+	if(!confirm('댓글을 삭제하시겠습니까?여기도안먹네여')){
+		return;
+	}
+})
+
+
+
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
