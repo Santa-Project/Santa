@@ -1,14 +1,20 @@
 package com.kh.santa.main.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.santa.main.model.service.MainService;
+import com.kh.santa.mountainInfo.model.dto.Mountain;
+import com.kh.santa.mountainInfo.model.service.MountainService;
 import com.kh.santa.mypage.model.dto.Member;
 
 
@@ -21,6 +27,7 @@ public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private MainService mainService = new MainService();
+	private MountainService mountainService = new MountainService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -58,11 +65,17 @@ public class MainController extends HttpServlet {
 		case "joinform":
 			joinform(request, response);
 			break;
+		case "id-check":
+			idCheck(request, response);
+			break;
 		case "address":
 			address(request, response);
 			break;
 		case "join":
 			join(request, response);
+			break;
+		case "joinImpl":
+			joinImpl(request, response);
 			break;
 		case "finding_id":
 			finding_id(request, response);
@@ -175,7 +188,21 @@ public class MainController extends HttpServlet {
 	
 	private void joinform(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		List<Mountain> mountainList = mountainService.searchAllMtIdxAndMtName();
+		request.setAttribute("mountainList", mountainList);
 		request.getRequestDispatcher("/main/joinform").forward(request, response);
+	}
+	
+	private void idCheck(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String userId = request.getParameter("id");
+		System.out.println(userId);
+		
+		if(!mainService.checkMemberById(userId)) {
+			response.getWriter().print("available");
+		} else {
+			response.getWriter().print("disable");
+		}
 	}
 	
 	private void address(HttpServletRequest request, HttpServletResponse response)
@@ -186,21 +213,67 @@ public class MainController extends HttpServlet {
 	private void join(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+		String name = request.getParameter("name");
+		String nickname = request.getParameter("nickname");
+		String gender = request.getParameter("gender");
+		String mobile = request.getParameter("mobile");
+		String email = request.getParameter("email");
+		String address = "(" + request.getParameter("zipNo") + ")" + request.getParameter("roadAddrPart1") + request.getParameter("detailaddress");
+		System.out.println(address);
+		Member member = new Member();
+		member.setUserId(id);
+		member.setUserPassword(password);
+		member.setUsername(name);
+		member.setNickname(nickname);
+		member.setGender(gender);
+		member.setPhone(mobile);
+		member.setEmail(email);
+		member.setAddress(address);
 		
-		//회원가입 실패 
-		if(1> 0) { 
-		request.setAttribute("msg", "회원가입에 실패하였습니다.");
-		request.setAttribute("url", "/main/joinform");
-		request.getRequestDispatcher("/common/result").forward(request, response); 
+		
+		List<Mountain> mountainList = new ArrayList<Mountain>();
+		
+		String[] mtIdxArr = request.getParameterValues("preference");
+		/* String mtName = request.getParameter("산이름"); */
+		
+		
+		for (String mtIdx : mtIdxArr) {
+			Mountain mountain = mountainService.searchMountain(mtIdx);
+			mountainList.add(mountain);
 		}
 		
 		
-		request.setAttribute("msg", "회원가입에 성공하였습니다.");
+		String persistToken = UUID.randomUUID().toString();
+		request.getSession().setAttribute("persistUser", member);
+		request.getSession().setAttribute("persistPreperence", mountainList);
+		request.getSession().setAttribute("persist-token", persistToken);
+		
+		mainService.authenticateEmail(member, persistToken);
+		
+		request.setAttribute("msg", "회원가입을 위한 이메일이 발송되었습니다.");
 		request.setAttribute("url", "/main/loginform");
-		request.getRequestDispatcher("/common/result").forward(request, response);
-
+		request.getRequestDispatcher("/common/result").forward(request,response);
 	}
-
+	
+	private void joinImpl(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
+		Member member = (Member)session.getAttribute("persistUser");
+		List<Mountain> mountainList = (List<Mountain>)session.getAttribute("persistPreperence");
+		
+		mainService.insertMemberAndPreperence(member, mountainList);
+		
+		
+		// 같은 persistUser값이 두 번 DB에 입력되지 않도록 사용자 정보와 인증을 만료시킴
+		session.removeAttribute("persistPreperence");
+		session.removeAttribute("persistUser");
+		session.removeAttribute("persist-token");
+		response.sendRedirect("/main/loginform");
+	}
+	
 	private void finding_id(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("/main/finding_id").forward(request, response);

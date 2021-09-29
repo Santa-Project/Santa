@@ -45,6 +45,17 @@ h3 {
     position: relative;
 }
 
+.box_2 {
+    display: block;
+    width: 100%;
+    height: 90px;
+    border: solid 1px #dadada;
+    padding: 10px 14px 10px 14px;
+    box-sizing: border-box;
+    background: #fff;
+    position: relative;
+}
+
 /*int 입력란*/
 .int {
     display: block;
@@ -58,7 +69,7 @@ h3 {
 /*성별 화살표이미지*/
 select {
     width: 100%;
-    height: 29px;
+    height: 70px;
     font-size: 15px;
     background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
     background-size: 20px 8px;
@@ -69,11 +80,21 @@ select {
     cursor: default; 
 }
 
+#btnIdCheck{
+	background-color: green;
+	color: white;
+	border-radius: 20px;
+}
+
 #zipNo{
 	width: 50px;
     height: 20px;
     background: #fff;
     font-size: 15px;
+}
+
+.valid-msg{
+	color:red;
 }
 
 /* join-btn css */
