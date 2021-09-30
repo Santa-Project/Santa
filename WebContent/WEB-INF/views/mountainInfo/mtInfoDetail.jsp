@@ -6,85 +6,198 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mt_info_detail.css">
+<script src="${contextPath}/resources/js/imageslider.js"></script>
+<meta charset="UTF-8">
+<title>산정보 상세정보</title>
 
-<!-- 지도 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e86272e6f7ebfc43f0ce43288f6e1280"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e86272e6f7ebfc43f0ce43288f6e1280&libraries=services,clusterer,drawing"></script>
+<!-- 이미지 슬라이더 스크립트 -->
+<script>
+ $(document).ready(function() {
+	 
+		var $imageSlider = $("#imageSlider1").imageSlider({
+			startIndex : 4
+		});	
 
+		$imageSlider.on("change", function(event){
+			console.log("event.oldIndex : " + event.oldIndex + ", event.newIndex : " + event.newIndex);
+		});
+	});	
+</script>
 
 </head>
 <body>
-<!-- <header> -->
-<!-- <header id="header"></header>
-<script type="text/javascript">   
-$(document).ready( function() {
-	$("#header").load("/header.html");  //헤더 인클루드
-								});
-</script> -->
+
 
 <%@ include file="/WEB-INF/views/common/header.jsp"  %>
 
 <section>
 	<div class="wrap_search">
-		<form class="search">
+		<form class="search" action="/mountainInfo/mtInfoDetail" method="get">	
 			<input type="text" placeholder="산 또는 키워드 입력입력하세요.">
 			<button><i class="fas fa-search"></i></button>
 		</form>
 	</div>
+	
+<%@include file="dbconn.jsp" %>
+<% String searchinput = request.getParameter("searchinput");
+			if(searchinput == null) {
+					searchinput = "개화산";
+				}
+		%>
+		
+		<%
+			ResultSet rs = null;   
+			PreparedStatement pstmt = null;
+			
+			String mname = null;	
+			String mmap = null;
+			String mlevel = null;
+			String mhigh = null;
+			String info = null;
+			String dinfo = null;
+			String traffic = null;
+			String trip = null;
+			String img = null;
+			String rimg1 = null;
+			String rimg2 = null;
+			String rimg3 = null;
+			String rimg4 = null;
+			
+			String[] hashtagcategory = new String[100]; //mhashcategory카테고리
+			int cnt = 0;
+			 
+			try{
+				//mhashtag에 산테이블의 mname 기본값으로 들어가야함(db에서 지우지 말 것)
+				String sql = "select  *  from MOUNTAIN a full outer join mhashtag b on a.MNAME = b.MNAME where a.MNAME=b.MNAME and a.MNAME='" + searchinput + "'"; 
+				pstmt = connection.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					mname = rs.getString("MNAME");
+					mmap = rs.getString("MMAP");
+					mlevel = rs.getString("MLEVEL");	
+					mhigh = rs.getString("MHIGH");
+					info = rs.getString("INFO");	
+					dinfo = rs.getString("DETAILINFO");
+					traffic = rs.getString("TRAFFIC");	
+					trip = rs.getString("TRIP");	
+					img = rs.getString("IMG");	
+					rimg1 = rs.getString("RIMG1");
+					rimg2 = rs.getString("RIMG2");
+					rimg3 = rs.getString("RIMG3");
+					rimg4 = rs.getString("RIMG4");
+					
+					hashtagcategory[cnt] = rs.getString("HASHTAG");
+					cnt++;
+		%>
+			
+		<%
+				}
+				
+			}catch(SQLException e){
+				out.println("MOUNTAIN테이블 select오류가 발생했습니다.");
+				out.println("SQLException : " + e.getMessage());
+				e.printStackTrace();
+			}finally{
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(connection != null) connection.close();				
+			}
+			
+			for(int i=0;i<hashtagcategory.length;i++) {
+				if(hashtagcategory[i] == null){
+				hashtagcategory[i] = "";
+				}
+			} 
+		%>	
+
+
 	<div class="title">
 		<div class="mt_name"><h1>${mountain.mountainName}</h1></div>
       
       	<div class="like">
         <c:if test="${not empty authentication}">
-        <!-- 
-        click event 발생 시 ♡ 또는 ♥ 로 변경
-        /mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
-            <c:if test="${!sessionScope.like}">
-               <i class="far fa-heart" id="blackHeart" ></i>
-            </c:if>
-            <c:if test="${sessionScope.like}">
-               <i class="fas fa-heart" id="redHeart"></i>
-            </c:if>
+        <!-- click event 발생 시 ♡ 또는 ♥ 로 변경 /mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
+        <c:if test="${!sessionScope.like}">
+        <i class="far fa-heart" id="blackHeart" ></i>
         </c:if>
-      </div>
+        <c:if test="${sessionScope.like}">
+           <i class="fas fa-heart" id="redHeart"></i>
+        </c:if>
+        </c:if>
+   		</div>
 		
 	</div>
 	<div class="content_top">
-		<div class="text_content">
-		<p><b>등산로 코스 정보</b> :  
-		청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이
-		풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 
-		것은 거친 모래뿐일 것이다낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상!
-		청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이
-		풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 
-		것은 거친 모래뿐일 것이다낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상!
-		청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이
-		풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 
-		것은 거친 모래뿐일 것이다낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상!</p>
-		<p><b>접근</b> : 
-		길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 
-		그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게
-		길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 
-		그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으며 그들의 그림자는 천고에 사라지지 않는 것이다 이것은 현저하게</p>
-		
-		</div>
-		<div class="other_content">
-			<img id="mt_photo" src="${contextPath}/resources/img/${mountainName}.jpg">
-			<div class="hashtag">
-				<a>#산타</a>
-				<a>#북한산</a>
-				<a>#화강암</a>
+			<div class="text_content">
+				<p><b><%=mname  %></b> :  <%=info  %></p><br>
+				<p><b><span style="font: italic bold 1em;">상세정보</span></b> :  <%=dinfo  %></p><br>
+				<p><b><span>추천 트립</span></b> : <%=trip  %></p><br>
+				<p><b><span>교통 정보</span></b> : <%=traffic  %></p>
+				
+			</div>
+			
+			
+			
+				<div class="other_content">
+				<img src="${contextPath}/resources<%=img %>"/><br>
+				
+		<form action="/mountainInfo/inserthashtag" method="post">
+			<select name = "mname">
+				<option  name = "mname" value = "<%=mname  %>"><%=mname %></option>
+			</select>
+			<input type="text" name="hashtag" size = '5'  placeholder="해쉬태그"/>
+			<input class = "submitname" type="submit" name="<%=mname %>" value="등록" />
+		</form>	
+			<br>
+			#<%=hashtagcategory[0]  %>&nbsp;&nbsp;#<%=hashtagcategory[1]  %>&nbsp;&nbsp;#<%=hashtagcategory[2]  %>&nbsp;&nbsp;#<%=hashtagcategory[3]  %>&nbsp;&nbsp;#<%=hashtagcategory[4]  %>&nbsp;&nbsp;
 			</div>
 		</div>
-	</div>
+		
+		
 	<div class="content_bottom">
 		<div class="recommended_trip">
 			<div class="rt_title">산 위치</div>
 			<div class="wrap_map">
-				<div id="map"></div>
+<div id="map" style="width:85%;height:320px;"></div>		
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bbda277c882224ab79cec03a792fe074"></script>
+<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(<%=mmap  %>), // 지도의 중심좌표
+	        level: 10 // 지도의 확대 레벨
+	    };
+	
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	
+	// 마커가 표시될 위치입니다 
+	var markerPosition  = new kakao.maps.LatLng(<%=mmap  %>); 
+	
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+	    position: markerPosition
+	});
+	
+	// 마커가 지도 위에 표시되도록 설정합니다
+	marker.setMap(map);
+	
+	var iwContent = '<div style="padding:5px;"><%=mname  %>!<br>고도 : <%=mhigh %>m<br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    iwPosition = new kakao.maps.LatLng(<%=mmap  %>); //인포윈도우 표시 위치입니다
+	
+	// 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    position : iwPosition, 
+	    content : iwContent 
+	});
+	  
+	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+	 infowindow.open(map, marker); 
+		
+</script>		
+				</div>
 			</div>
-			<div class="distance_and_time">거리와 시간</div>
-		</div>
+			
+			
 		<!-- 슬라이드 구현 -->
 		<div class="photos">
 			<div class="photos_title">Photos</div>
@@ -101,7 +214,11 @@ $(document).ready( function() {
 							<div>
 								<div>&lt;</div>
 								<!-- <img src=${memBoard.picture}>  -->
-								<div><img id="photo" src="${contextPath }/resources/img/${mountainName}.jpg"></div>
+								<%-- <div><img id="photo" src="${contextPath }/resources/img/${mountainName}.jpg"></div> --%>
+						<img id="photo" src="${contextPath}/resources<%=rimg1%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg2%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg3%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg4%>" alt="산이미지">
 								<div>&gt;</div>
 							</div>
 						</div>
@@ -156,7 +273,6 @@ $(document).ready( function() {
 
 		})
 	}
-	
 	
 	/* 해당 산 idx를 넘겨받아 산 정보 페이지 뿌리기
 	산 idx로 산 이름 받아와서 (서브쿼리)
