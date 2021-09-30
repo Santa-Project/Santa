@@ -5,7 +5,7 @@ public enum Config {
 	//DOMAIN("http://www.pclass.com"),
 	DOMAIN("http://localhost:7070"),
 	SMTP_AUTHENTICATION_ID("kim37171@cuk.edu"),
-	SMTP_AUTHENTICATION_PASSWORD("password입력"),
+	SMTP_AUTHENTICATION_PASSWORD("비밀번호"),
 	COMPANY_EMAIL("kim37171@cuk.edu"), //공통이메일
 	//UPLOAD_PATH("C:\\CODE\\upload\\"); 운영서버
 	UPLOAD_PATH("C:\\CODE\\upload\\"); //개발서버

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
@@ -41,9 +43,7 @@ public class MountainDao {
 	   Mountain mountain = new Mountain();
       
 	   mountain.setMtIdx(String.valueOf(rset.getInt("mtidx")));
-	   System.out.println(mountain.getMtIdx());
 	   mountain.setMountainName(rset.getString("mname"));
-	   System.out.println(mountain.getMountainName());
 
 	   return mountain;
    }
@@ -111,6 +111,33 @@ public class MountainDao {
 		} finally {
 			template.close(pstm);
 		}
+	}
+
+	public List<Mountain> searchAllMtIdxAndMtName(Connection conn) {
+		List<Mountain> mountainList = new ArrayList<Mountain>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from mountain";
+	
+		try {
+			pstm = conn.prepareStatement(query);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Mountain mountain = new Mountain();
+				
+				mountain.setMtIdx(String.valueOf(rset.getInt("mtidx")));
+				mountain.setMountainName(rset.getString("mname"));
+				mountainList.add(mountain);
+			}
+		  
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return mountainList;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.kh.santa.mountainInfo.model.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.mountainInfo.model.dao.MountainDao;
@@ -70,6 +71,21 @@ public class MountainService {
 		}finally {
 			template.close(conn);
 		}
+	}
+
+	public List<Mountain> searchAllMtIdxAndMtName() {
+		List<Mountain> mountainList = null;
+		Connection conn = template.getConnection();
+		
+		try {
+			
+			mountainList = mountainDao.searchAllMtIdxAndMtName(conn);
+
+		} finally {
+			template.close(conn);
+		}
+
+		return mountainList;
 	}
 }
 
