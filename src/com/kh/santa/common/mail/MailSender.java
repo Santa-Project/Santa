@@ -35,7 +35,7 @@ public class MailSender {
 
 	    try {
 	        MimeMessage msg = new MimeMessage(getSession());
-	        msg.setFrom(new InternetAddress(Config.COMPANY_EMAIL.DESC));
+	        msg.setFrom(new InternetAddress(Config.SMTP_AUTHENTICATION_ID.DESC));
 	        msg.setRecipients(Message.RecipientType.TO,to);
 	        msg.setSubject(subject);
 	        msg.setSentDate(new Date());

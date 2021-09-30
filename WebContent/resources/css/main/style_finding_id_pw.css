@@ -12,7 +12,7 @@
 	}
 	
 	a {
-	    text-decoration: none;
+		text-decoration: none;
 	}
 	/*화면크기에 따른 영역 잡음*/
 	@media all and (min-width : 1132px) {   

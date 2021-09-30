@@ -44,9 +44,11 @@ public class MountainService {
 		Connection conn = template.getConnection();
 
 		try {
-
-			mountainDao.insertMountainWishlist(memberIdx,mountain, conn);
-	         
+			mountainDao.insertMountainWishlist(memberIdx, mountain, conn);
+			mountain = mountainDao.selectMountainBymtIdx(mountain.getMtIdx(), conn);
+			int addLike = mountain.getLikedMountainCnt() + 1;
+			mountainDao.updateMountainLike(addLike, mountain, conn);
+			System.out.println(addLike);
 			template.commit(conn);
 		} catch(Exception e){
 			template.rollback(conn);
@@ -57,13 +59,16 @@ public class MountainService {
   
 	}
 
-	public void removeMountainWishlist(String memberIdx, String mtIdx) {
+	public void removeMountainWishlist(String memberIdx, Mountain mountain) {
 		Connection conn = template.getConnection();
 
 		try {
 
-			mountainDao.deleteMountainWishlist(memberIdx, mtIdx, conn);
-	         
+			mountainDao.deleteMountainWishlist(memberIdx, mountain.getMtIdx(), conn);
+			mountain = mountainDao.selectMountainBymtIdx(mountain.getMtIdx(), conn);
+			int minusLike = mountain.getLikedMountainCnt() - 1;
+			mountainDao.updateMountainLike(minusLike, mountain, conn);
+			System.out.println(minusLike);
 			template.commit(conn);
 		} catch(Exception e){
 			template.rollback(conn);

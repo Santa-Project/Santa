@@ -266,9 +266,9 @@ public class MainController extends HttpServlet {
 		if(session.getAttribute("persistPreperence") != null) {
 			List<Mountain> mountainList = (List<Mountain>)session.getAttribute("persistPreperence");
 			mainService.insertMemberAndPreperence(member, mountainList);
+		} else {
+			mainService.insertMember(member);
 		}
-		
-		mainService.insertMember(member);
 		
 		
 		// 같은 persistUser값이 두 번 DB에 입력되지 않도록 사용자 정보와 인증을 만료시킴

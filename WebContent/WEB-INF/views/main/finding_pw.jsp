@@ -45,17 +45,24 @@
 		</c:if>
 		<c:if test="${not empty found_pw}">
 				<div class="found_pw">
-					PASSWORD : ${found_pw }
+					PASSWORD : [ ${found_pw } ]
 				</div>
 		</c:if>
 		</section>
 		
 		<br>
 		<section class="Social-sign-in">
+		
+			<c:if test="${empty found_pw}">
+			<div id="search-wrqp">
+				<a href="/main/finding_id">아이디 찾기</a> / <a href="/main/joinform">아직 회원이 아니신가요?</a>  
+			</div>
+			</c:if>		
 			
-			<br>
-
-            <a href="/main/joinform">아직 회원이 아니신가요?</a>  
+			<c:if test="${not empty found_pw}">
+				<a href="/main/loginform">로그인</a> 
+			</c:if>
+			
 		</section>
 		
 		

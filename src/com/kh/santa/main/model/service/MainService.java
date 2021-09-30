@@ -118,6 +118,10 @@ public class MainService {
 			
 			for (Mountain mountain : mountainList) {
 				mountainDao.insertMountainWishlist(m.getMemberIdx(), mountain, conn);
+				mountain = mountainDao.selectMountainBymtIdx(mountain.getMtIdx(), conn);
+				int addLike = mountain.getLikedMountainCnt() + 1;
+				System.out.println(addLike);
+				mountainDao.updateMountainLike(addLike, mountain, conn);
 			}
 			
 			// 회원가입 이후 자동 로그인처리(안함)
