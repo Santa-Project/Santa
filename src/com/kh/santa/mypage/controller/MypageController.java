@@ -76,29 +76,29 @@ public class MypageController extends HttpServlet {
          insertBoard(request,response);
          break;
       case "deleteBoard" :
-    	  deleteBoard(request,response);
+         deleteBoard(request,response);
           break;
       case "insertComment" :
-    	  insertComment(request,response);
+         insertComment(request,response);
           break;
       case "deleteComment" :
-    	  deleteComment(request,response);
+         deleteComment(request,response);
           break;
       case "insertFollow" :
-    	  insertFollow(request,response);
+         insertFollow(request,response);
           break;
       case "deleteFollow" :
-    	  deleteFollow(request,response);
+         deleteFollow(request,response);
           break;
       case "anotherBoard" :
-    	  anotherBoard(request,response);
+         anotherBoard(request,response);
           break;
           
       case "editMember" :
-    	  editMember(request,response);
+         editMember(request,response);
           break;
       case "leaveSanta" :
-    	  leaveSanta(request,response);
+         leaveSanta(request,response);
           break;
       default :
          break;
@@ -129,7 +129,7 @@ public class MypageController extends HttpServlet {
 
    //게시글 작성페이지
    private void mypageWriteBoard(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-	      
+         
       request.getRequestDispatcher("/mypage/mypageWriteBoard").forward(request, response);
    } 
    
@@ -152,96 +152,96 @@ public class MypageController extends HttpServlet {
    }
    
    //게시글 삭제
-	private void deleteBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String boardIdx =request.getParameter("deleteboard");
-		myboardService.deleteBoard(boardIdx);
-		request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
-	}
+   private void deleteBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String boardIdx =request.getParameter("deleteboard");
+      myboardService.deleteBoard(boardIdx);
+      request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
+   }
 
    //댓글 작성
    private void insertComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-   	
-	   Member member = (Member) request.getSession().getAttribute("authentication");
-	   String boardIdx =request.getParameter("boardIdx");
-	   String content = request.getParameter("content");
-	   MemberBoardComment comment = new MemberBoardComment();
-	   comment.setNickname(member.getNickname());
-	   comment.setMemberIdx(member.getMemberIdx());
-	   comment.setBoardIdx(boardIdx);
-	   comment.setContent(content);
-	   myboardService.insertComment(comment);
-	   mypageBoard(request,response);
+      
+      Member member = (Member) request.getSession().getAttribute("authentication");
+      String boardIdx =request.getParameter("boardIdx");
+      String content = request.getParameter("content");
+      MemberBoardComment comment = new MemberBoardComment();
+      comment.setNickname(member.getNickname());
+      comment.setMemberIdx(member.getMemberIdx());
+      comment.setBoardIdx(boardIdx);
+      comment.setContent(content);
+      myboardService.insertComment(comment);
+      mypageBoard(request,response);
    }
 
    //댓글 삭제
-	private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String commentIdx =request.getParameter("commentIdx");
-		System.out.println(commentIdx);
-		myboardService.deleteComment(commentIdx);
-		
-		response.sendRedirect("/mypage/mypageBoard");
-	}
-	
-	   
+   private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String commentIdx =request.getParameter("commentIdx");
+      System.out.println(commentIdx);
+      myboardService.deleteComment(commentIdx);
+      
+      response.sendRedirect("/mypage/mypageBoard");
+   }
+   
+      
    //다른사람 페이지
-	private void anotherBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		   
-		   String anotherIdx = request.getParameter("anotherIdx");
-	       List<MemberBoard> boardList = myboardService.selectBoardDetail(anotherIdx); //조회한 세션값으로 게시판 불러오기
-	       
-	       List<Object[]> others = new ArrayList<Object[]>();
-	      
-	       for (MemberBoard memberBoard : boardList) {
-	          String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
-	          FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
-	          List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
-	          Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
-	          others.add(ob);
-	       }
-	       request.setAttribute("others", others);
-		
-		 request.getRequestDispatcher("/mypage/anotherBoard").forward(request, response);
-	}
-	
+   private void anotherBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+         
+         String anotherIdx = request.getParameter("anotherIdx");
+          List<MemberBoard> boardList = myboardService.selectBoardDetail(anotherIdx); //조회한 세션값으로 게시판 불러오기
+          
+          List<Object[]> others = new ArrayList<Object[]>();
+         
+          for (MemberBoard memberBoard : boardList) {
+             String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
+             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
+             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
+             others.add(ob);
+          }
+          request.setAttribute("others", others);
+      
+       request.getRequestDispatcher("/mypage/anotherBoard").forward(request, response);
+   }
+   
    //팔로우
    private void mypageFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-	   
-	  Member member = (Member) request.getSession().getAttribute("authentication");
-	  List<Member> followList = followingService.FollowList(member.getMemberIdx()); 
-	  request.setAttribute("followList", followList); 
+      
+     Member member = (Member) request.getSession().getAttribute("authentication");
+     List<Member> followList = followingService.FollowList(member.getMemberIdx()); 
+     request.setAttribute("followList", followList); 
       request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response); 
    }
    
    //팔로워
    private void mypageFollower(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   
-	  Member member = (Member) request.getSession().getAttribute("authentication");
-	  List<Member> followerList = followingService.FollowerList(member.getMemberIdx());
-	  request.setAttribute("followerList", followerList);
+      
+     Member member = (Member) request.getSession().getAttribute("authentication");
+     List<Member> followerList = followingService.FollowerList(member.getMemberIdx());
+     request.setAttribute("followerList", followerList);
       request.getRequestDispatcher("/mypage/mypageFollower").forward(request, response);
       
    }
    
    //팔로우 삭제
    private void deleteFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	   Member member = (Member) request.getSession().getAttribute("authentication");
-	   Follow follow = new Follow();
-	   follow.setMemberIdx(member.getMemberIdx());			//내 member_idx랑 
-	   follow.setFollowId(request.getParameter("deletefollow"));	//follow_idx가지고옴
-	   followingService.deleteFollow(follow);
-	   request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
+   
+      Member member = (Member) request.getSession().getAttribute("authentication");
+      Follow follow = new Follow();
+      follow.setMemberIdx(member.getMemberIdx());         //내 member_idx랑 
+      follow.setFollowId(request.getParameter("deletefollow"));   //follow_idx가지고옴
+      followingService.deleteFollow(follow);
+      request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
    }
    
    //팔로우 추가
-	private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  Member member = (Member) request.getSession().getAttribute("authentication");
-	  Follow follow = new Follow();
-	  follow.setFollowId(request.getParameter("deletefollow"));
-	  follow.setMemberIdx(member.getMemberIdx());
-	  followingService.insertFollow(follow);
-	  request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
-	}
+   private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     Member member = (Member) request.getSession().getAttribute("authentication");
+     Follow follow = new Follow();
+     follow.setFollowId(request.getParameter("deletefollow"));
+     follow.setMemberIdx(member.getMemberIdx());
+     followingService.insertFollow(follow);
+     request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
+   }
 
    
    //마이페이지 수정페이지
@@ -252,24 +252,24 @@ public class MypageController extends HttpServlet {
    
    //마이페이지 수정post
    private void editMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   Member member = (Member) request.getSession().getAttribute("authentication");
-	   member.setUserPassword(request.getParameter("editpass"));
-	   member.setNickname(request.getParameter("editnickname"));
-	   member.setPhone(request.getParameter("editphone"));
-	   member.setEmail(request.getParameter("editemail"));
-	   member.setAddress(request.getParameter("editaddress"));
-	   member.setPhoto(request.getParameter("editeimg"));
-	   mypageService.editMember(member);
-	   request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
+      Member member = (Member) request.getSession().getAttribute("authentication");
+      member.setUserPassword(request.getParameter("editpass"));
+      member.setNickname(request.getParameter("editnickname"));
+      member.setPhone(request.getParameter("editphone"));
+      member.setEmail(request.getParameter("editemail"));
+      member.setAddress(request.getParameter("editaddress"));
+      member.setPhoto(request.getParameter("editeimg"));
+      mypageService.editMember(member);
+      request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
    }
 
-	//회원탈퇴
-	private void leaveSanta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		
-		Member member = (Member) request.getSession().getAttribute("authentication");
-		mypageService.leaveSanta(member.getMemberIdx());
-	    response.sendRedirect("/main/main");
-	}
+   //회원탈퇴
+   private void leaveSanta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+      
+      Member member = (Member) request.getSession().getAttribute("authentication");
+      mypageService.leaveSanta(member.getMemberIdx());
+       response.sendRedirect("/main/main");
+   }
    
    /**
     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

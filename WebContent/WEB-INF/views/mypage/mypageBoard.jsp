@@ -127,7 +127,6 @@
                                 </div>
                                 
                                 <div class="board_content_side_rep">
-                                
 	                                <c:forEach items='${objectArr[2]}' var='comment'>
 	                                    <div class="board_content_side_rep_item">
 	                                    
@@ -156,7 +155,7 @@
 	                                    	</c:if>
 	                                    </div>
 									</c:forEach>
-                                    
+									
                                 </div>
                             </div>
                         </div>

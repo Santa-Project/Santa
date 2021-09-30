@@ -41,7 +41,10 @@
                         
                             <div class="content">
                                 <h3>${member.userId}</h3>
-                                <a href="?userid=${member.userId}"><i class="fas fa-home"></i></a>
+                                <form action="/mypage/anotherBoard?anotherIdx=${member.memberIdx}" method="POST">
+                                	<button><i class="fas fa-home"></i></button>
+                                </form><!-- <i class="fas fa-home"></i> -->
+                                <%-- <a href="/mypage/anotherBoard?anotherIdx=${member.memberidx}"><i class="fas fa-home"></i></a> --%>
                             </div>
                         </div>
                     </div>

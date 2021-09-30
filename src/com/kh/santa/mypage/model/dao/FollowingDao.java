@@ -40,7 +40,6 @@ public class FollowingDao {
 	public void insertFollower(Follow follow, Connection conn) { //상대방이 추가
 
 	      PreparedStatement pstm = null;
-	      							//
 	      String sql = "INSERT INTO follower(follower_idx,member_idx,follower_id) VALUES(sc_follower_idx.nextval,?,?)";
 	      
 	         try {
@@ -80,7 +79,7 @@ public class FollowingDao {
 		PreparedStatement pstm = null;
 		
 		try {							//
-			String query = "DELETE FROM follower WHERE member_idx = ? and follower_id = ? ";
+			String query = "DELETE FROM follower WHERE member_idx = ? and follow_id = ? ";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, follow.getFollowId());  //여기서  follower_idx와 member_idx가 바껴서 들어감
 			pstm.setString(2, follow.getMemberIdx());

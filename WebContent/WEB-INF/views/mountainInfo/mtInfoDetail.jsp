@@ -32,21 +32,21 @@ $(document).ready( function() {
 		</form>
 	</div>
 	<div class="title">
-		<div class="mt_name"><h1>${mountainName}인왕산</h1></div>
-		
-		<div class="like">
-			<c:if test="${not empty authentication}">
-			<!-- 
-			click event 발생 시 ♡ 또는 ♥ 로 변경
-			/mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
-				<c:if test="false">
-					<i class="far fa-heart"></i>
-				</c:if>
-				<c:if test="true">
-					<i class="fas fa-heart"></i>
-				</c:if>
-			</c:if>
-		</div>
+		<div class="mt_name"><h1>${mountain.mountainName}</h1></div>
+      
+      	<div class="like">
+        <c:if test="${not empty authentication}">
+        <!-- 
+        click event 발생 시 ♡ 또는 ♥ 로 변경
+        /mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
+            <c:if test="${!sessionScope.like}">
+               <i class="far fa-heart" id="blackHeart" ></i>
+            </c:if>
+            <c:if test="${sessionScope.like}">
+               <i class="fas fa-heart" id="redHeart"></i>
+            </c:if>
+        </c:if>
+      </div>
 		
 	</div>
 	<div class="content_top">
@@ -137,18 +137,23 @@ $(document).ready( function() {
 <script type="text/javascript">
 
 (function(){
-	
+
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");  //get 방식
+	document.body.appendChild(form);
+
 	if("${not empty authentication}"){
 		document.querySelector(".like").addEventListener('click',function(){
-			if(false){
-				document.querySelector(".like").innerHTML = "<i class='far fa-heart'></i>";
-				location.href = "/mountainInfo/mtInfoDetail/like?like=true";
+
+			if("${sessionScope.like}"){
+				form.setAttribute("action", `/mountainInfo/like?like=${!sessionScope.like}`); //요청 보낼 주소
+				form.submit();
+
+			} else {
+				form.setAttribute("action", `/mountainInfo/like?like=${sessionScope.like}`); //요청 보낼 주소
+				form.submit();
 			}
-			if(true){
-				document.querySelector(".like").innerHTML = "<i class='fas fa-heart'></i>";
-				location.href = "/mountainInfo/mtInfoDetail/like?like=false";
-			}
-			
+
 		})
 	}
 	

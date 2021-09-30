@@ -18,6 +18,7 @@ public class Member {
 	private String photo;
 	private String socialLogin;
 	private String grade;
+	
 	public String getMemberIdx() {
 		return memberIdx;
 	}

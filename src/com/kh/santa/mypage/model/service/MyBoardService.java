@@ -32,20 +32,6 @@ public class MyBoardService {
       }
    }
    
-   public void deleteBoard(String boardIdx) {
-	   	Connection conn = template.getConnection();
-	      try {
-	    	  myboardDao.deleteBoardToComment(boardIdx,conn);
-	    	  template.commit(conn);
-	    	  myboardDao.deleteFile(boardIdx,conn);
-	    	  template.commit(conn);
-	    	  myboardDao.deleteBoard(boardIdx,conn);
-	    	  template.commit(conn);
-	      }finally {
-	         template.close(conn);
-	      }
-   }
-   
 	public void insertComment(MemberBoardComment comment) {
 		Connection conn =template.getConnection();
 	   
@@ -59,6 +45,19 @@ public class MyBoardService {
 	       template.close(conn);
 	    }
 	}
+   public void deleteBoard(String boardIdx) {
+	   	Connection conn = template.getConnection();
+	      try {
+	    	  myboardDao.deleteBoardToComment(boardIdx,conn);
+	    	  template.commit(conn);
+	    	  myboardDao.deleteFile(boardIdx,conn);
+	    	  template.commit(conn);
+	    	  myboardDao.deleteBoard(boardIdx,conn);
+	    	  template.commit(conn);
+	      }finally {
+	         template.close(conn);
+	      }
+   }
    
 	 public void deleteComment(String commentIdx) {
 		   	Connection conn = template.getConnection();

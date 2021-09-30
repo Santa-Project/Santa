@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
+import com.kh.santa.mountainInfo.model.dto.Mountain;
+import com.kh.santa.mountainInfo.model.service.MountainService;
+import com.kh.santa.mypage.model.dto.Member;
 
 /**
  * Servlet implementation class MountainInfoController
@@ -15,7 +18,8 @@ import com.kh.santa.common.wrapper.RequestWrapper;
 @WebServlet("/mountainInfo/*")
 public class MountainInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	MountainService mountainService = new MountainService();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,6 +41,9 @@ public class MountainInfoController extends HttpServlet {
 			break;
 		case "mtInfoDetail" :
 			mtInfoDetail(request,response);
+			break;
+		case "like" :
+			like(request,response);
 			break;
 		case "searchKeyword" :
 			searchKeyword(request,response);
@@ -67,7 +74,54 @@ public class MountainInfoController extends HttpServlet {
 	}
 
 	private void mtInfoDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		Mountain mountain = null;
+
+		if(request.getParameter("mtIdx") != null) {
+			String mtIdx  = request.getParameter("mtIdx");
+			mountain = mountainService.searchMountain(mtIdx);
+			request.getSession().setAttribute("mountain", mountain);
+		} else {
+			mountain = (Mountain) request.getSession().getAttribute("mountain");
+		}
+
+		Member member = (Member)request.getSession().getAttribute("authentication");
+
+		if(member != null) {
+	         
+			String memberIdx = member.getMemberIdx();
+
+			if(mountainService.checkMountainWishlist(memberIdx,mountain.getMtIdx())) {
+				request.getSession().setAttribute("like", true);
+			} else{
+				request.getSession().setAttribute("like", false);
+			};
+
+		}
+
 		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
+
+		
+	}
+	
+	private void like(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Member member = (Member)request.getSession().getAttribute("authentication");
+		String memberIdx = member.getMemberIdx();
+		Mountain mountain = (Mountain)request.getSession().getAttribute("mountain");
+
+		String like = request.getParameter("like");
+
+		if(like.equals("true")) {
+			// mountain_wishlist에 추가
+			mountainService.addMountainWishlist(memberIdx,mountain);
+			request.getSession().setAttribute("like", true);
+		} else {
+			mountainService.removeMountainWishlist(memberIdx, mountain.getMtIdx());
+			request.getSession().setAttribute("like", false);
+		}
+		
+		response.sendRedirect("/mountainInfo/mtInfoDetail");
+
 		
 	}
 	

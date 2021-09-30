@@ -44,7 +44,7 @@ public class ValidatorFilter implements Filter {
 			String redirectURI = null;
 			
 			switch (uriArr[1]) {
-				case "member":
+				case "main":
 					redirectURI = memberValidation(httpRequest, httpReponse, uriArr);
 					break;
 				default:

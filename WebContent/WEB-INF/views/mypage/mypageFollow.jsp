@@ -87,6 +87,7 @@
                             <div id="follow_member_selfie"><!-- img로 변경 ,경로 urc= ${f.userId} --></div>
                          </div>
                          <div class="follow_member2">
+<<<<<<< HEAD
 	                        <div class="follow_member_id_padding">
                          		<form id="idForm" action="/mypage/anotherBoard" method="post">
 			                         <input type="hidden" name="anotherIdx" value="${f.memberIdx}">
@@ -97,9 +98,27 @@
 	                        	<button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}">unfollow</button>
                        			<input type="hidden" value='${f.memberIdx}' name="deletefollow">
                        		</form>
+=======
+
+	                        <div class="follow_member_id_padding">
+                         		<form id="idForm" action="/mypage/anotherBoard" method="post">
+			                         <input type="hidden" name="anotherIdx" value="${f.memberIdx}">
+			                         <button type="submit" id="follow_member_id" >${f.nickname} (${f.userId})</button> 
+                         		</form>
+	                        </div>
+	                        <form action="/mypage/deleteFollow" method="post">
+	                        	<button id="unfollow_button" onclick="if(!confirm('팔로잉을 취소하시겠습니까?')){return false;}">unfollow</button>
+                       			<input type="hidden" value='${f.memberIdx}' name="deletefollow">
+                       		</form>
+
+>>>>>>> branch 'main' of https://github.com/Santa-Project/Santa
                        </div>
                      </div>
                  </c:forEach>
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'main' of https://github.com/Santa-Project/Santa
                      
                 </div>
             </div>
