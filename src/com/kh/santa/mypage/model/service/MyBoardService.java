@@ -18,12 +18,10 @@ public class MyBoardService {
 
    public void insertBoard(MemberBoard board, List<FileDTO> fileDTOs) {
       Connection conn =template.getConnection();
-      int res = 0;
       try {
          myboardDao.insertBoard(board,conn);
          for (FileDTO fileDTO : fileDTOs) {
-        	 res=  myboardDao.insertFile(fileDTO,conn);
-            System.out.println(res);
+        	 myboardDao.insertFile(fileDTO,conn);
          }
          template.commit(conn);
       }catch (DataAccessException e) {
@@ -47,7 +45,33 @@ public class MyBoardService {
 	       template.close(conn);
 	    }
 	}
+   public void deleteBoard(String boardIdx) {
+	   	Connection conn = template.getConnection();
+	      try {
+	    	  myboardDao.deleteBoardToComment(boardIdx,conn);
+	    	  template.commit(conn);
+	    	  myboardDao.deleteFile(boardIdx,conn);
+	    	  template.commit(conn);
+	    	  myboardDao.deleteBoard(boardIdx,conn);
+	    	  template.commit(conn);
+	      }finally {
+	         template.close(conn);
+	      }
+   }
    
+	 public void deleteComment(String commentIdx) {
+		   	Connection conn = template.getConnection();
+		      try {
+		    	  myboardDao.deleteComment(conn,commentIdx);
+		    	  template.commit(conn);
+		      }catch (DataAccessException e) {
+			       template.rollback(conn);
+			       throw e;
+		      }finally {
+		         template.close(conn);
+		      }
+	   }
+	
    public List<MemberBoard> selectBoardDetail(String memberIdx) {
       
       Connection conn = template.getConnection();
@@ -55,6 +79,7 @@ public class MyBoardService {
       
       try {
          boardList = myboardDao.selectBoardDetail(memberIdx,conn);
+         System.out.println(boardList);
          template.commit(conn);
       }finally {
          template.close(conn);

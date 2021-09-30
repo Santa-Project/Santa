@@ -4,19 +4,9 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="${contextPath}/resources/css/main/style_login3.css">
+<%@ include file="/WEB-INF/views/include/head.jsp" %>
+<link rel="stylesheet" href="${contextPath }/resources/css/main/style_finding_id_pw.css">
 
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<style>
-    :root{
-    --body-background-color: #fff;
-    --border-gray-color : #dadada;
-    --naver-green-color: #94af76;;
-    --naver-green-border-color: #94af76;;
-    }
-</style>
 </head>
 
 <body>
@@ -34,22 +24,30 @@
 			</div>
 	
 	
-		<section class="login-section">
-			<form action="/main/password_request">
-			<div class="login-wrap email-wrap">	
-				<input placeholder="email" type="email">
+		<section class="search-section">
+			
+		<c:if test="${empty found_pw}">
+		<form action="/main/password_request" method="post">
+			<div class="search-wrap id-wrap">
+				<input placeholder="id" type="id" name="id">
 			</div>
 			
-			<div class="login-wrap password-wrap">	
-				<input placeholder="Password" type="password">
+			<div class="search-wrap email-wrap">	
+				<input placeholder="email" type="email" name="email">
 			</div>
 			
 			<br>
 			<br>
-			<div class="login-button">
+			<div class="search-button">
 				<button>search</button>
 			</div>
-			</form>
+		</from>
+		</c:if>
+		<c:if test="${not empty found_pw}">
+				<div class="found_pw">
+					PASSWORD : ${found_pw }
+				</div>
+		</c:if>
 		</section>
 		
 		<br>

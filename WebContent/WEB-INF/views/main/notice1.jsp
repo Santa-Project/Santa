@@ -5,7 +5,7 @@
 <head>
 <%@ include file = "/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/style_notice3.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/main/style_notice.css">
 
 <meta charset="UTF-8">
 <title>Insert title here</title>

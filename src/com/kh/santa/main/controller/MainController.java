@@ -286,7 +286,20 @@ public class MainController extends HttpServlet {
 	
 	private void id_request(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("/main/finding_id");
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		System.out.println(username);
+		System.out.println(email);
+		
+		String id = mainService.findingId(username,email);
+		if(id.equals("")) {
+			request.setAttribute("msg", "입력하신 회원정보와 일치하는 아이디가 존재하지 않습니다.");
+			request.setAttribute("url", "/main/finding_id");
+			request.getRequestDispatcher("/common/result").forward(request, response);
+		}
+		request.setAttribute("found_id", id);
+		
+		finding_id(request, response);
 	}
 
 	private void finding_pw(HttpServletRequest request, HttpServletResponse response)
@@ -297,7 +310,21 @@ public class MainController extends HttpServlet {
 	
 	private void password_request(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("/main/password_request");
+		
+		String id = request.getParameter("id");
+		String email = request.getParameter("email");
+		System.out.println(id);
+		System.out.println(email);
+		
+		String password = mainService.findingPassword(id,email);
+		if(password.equals("")) {
+			request.setAttribute("msg", "입력하신 정보와 일치하는 회원을 찾을 수 없습니다.");
+			request.setAttribute("url", "/main/finding_pw");
+			request.getRequestDispatcher("/common/result").forward(request, response);
+		}
+		request.setAttribute("found_pw", password);
+		
+		finding_pw(request, response);
 
 	}
 

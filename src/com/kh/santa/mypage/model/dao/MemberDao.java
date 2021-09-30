@@ -200,6 +200,23 @@ public class MemberDao {
 		return memberArr;
 	}
 
+	public void leaveSanta(String memberIdx, Connection conn) {
+		
+		 PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM member WHERE member_idx = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, memberIdx);
+				pstm.executeUpdate();
+				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+	}
+
 	public boolean checkMemberById(String userId, Connection conn) {
 		PreparedStatement pstm = null;
 		String columns = "user_id";
@@ -224,6 +241,32 @@ public class MemberDao {
 			template.close(rset,pstm);
 		}
 		return false;
+	}
+	
+	
+	public void editMember(Member member, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "UPDATE member SET " +
+						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?, PHOTO =?, MEMBER_IDX=?"+
+					   " WHERE member_idx = ?";
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getUserPassword());
+			pstm.setString(2, member.getNickname());
+			pstm.setString(3, member.getPhone()); 
+			pstm.setString(4, member.getEmail());
+			pstm.setString(5, member.getAddress());
+			pstm.setString(6, member.getPhoto());
+			pstm.setString(6, member.getMemberIdx());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
 	}
 	
 	private Member convertRowToMember(String columns, ResultSet rset) throws SQLException {
@@ -282,5 +325,59 @@ public class MemberDao {
 		}
 		
 		return member;
+	}
+
+	public String selectMemberByNameAndEmail(String username, String email, Connection conn) {
+		String foundId = "";
+		
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = " select user_id from member where username = ? and email = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, username);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				foundId = rset.getString("user_id");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		return foundId;
+	}
+
+	public String selectMemberByIdAndEmail(String id, String email, Connection conn) {
+String foundPw = "";
+		
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = " select user_password from member where user_id = ? and email = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, id);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				foundPw = rset.getString("user_password");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		return foundPw;
 	}
 }

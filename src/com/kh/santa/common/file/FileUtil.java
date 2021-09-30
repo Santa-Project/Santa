@@ -37,12 +37,12 @@ public class FileUtil {
 			parser.setEncoding("UTF-8");
 			Part part = null;
 			while((part = parser.readNextPart()) != null) {
-				if(part.isFile()) {
+				if(part.isFile()) { //파일이라면
 					FilePart filePart = (FilePart) part;
 					FileDTO fileDTO = createFileDTO(filePart);
 					filePart.writeTo(new File(getSavePath() + fileDTO.getRenameFileName())); //파일저장
 					fileDTOs.add(fileDTO);
-				} else {
+				} else { //파일이 아니고
 					ParamPart paramPart = (ParamPart) part;
 					setParameterMap(paramPart, res);
 				}				

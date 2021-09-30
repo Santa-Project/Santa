@@ -40,7 +40,6 @@ public class FollowingDao {
 	public void insertFollower(Follow follow, Connection conn) { //상대방이 추가
 
 	      PreparedStatement pstm = null;
-	      
 	      String sql = "INSERT INTO follower(follower_idx,member_idx,follower_id) VALUES(sc_follower_idx.nextval,?,?)";
 	      
 	         try {
@@ -62,10 +61,10 @@ public class FollowingDao {
 		PreparedStatement pstm = null;
 		
 		try {
-			String query = "DELETE FROM follow WHERE member_idx = ? and follow_idx = ? "; //내 idx와 follow_idx가 ?과 일치한다면, 삭제
+			String query = "DELETE FROM follow WHERE member_idx = ? and follow_id = ? "; 
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, follow.getMemberIdx());
-			pstm.setString(2, follow.getFollowIdx());
+			pstm.setString(2, follow.getFollowId());
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -79,10 +78,10 @@ public class FollowingDao {
 		
 		PreparedStatement pstm = null;
 		
-		try {
-			String query = "DELETE FROM follower WHERE member_idx = ? and follower_idx = ? ";
+		try {							//
+			String query = "DELETE FROM follower WHERE member_idx = ? and follow_id = ? ";
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, follow.getFollowIdx());  //여기서  follower_idx와 member_idx가 바껴서 들어감
+			pstm.setString(1, follow.getFollowId());  //여기서  follower_idx와 member_idx가 바껴서 들어감
 			pstm.setString(2, follow.getMemberIdx());
 			pstm.executeUpdate();
 			
@@ -112,7 +111,6 @@ public class FollowingDao {
 				Member member = convertRowTofollowMember(rset);
 				followList.add(member);
 			}
-			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}finally {
@@ -128,7 +126,7 @@ public class FollowingDao {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
 		
-		try {
+		try {																				//
 			String query = "SELECT * FROM member WHERE member_idx in (select follower_id from follower where member_idx = ?)";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, memberIdx);
@@ -138,7 +136,6 @@ public class FollowingDao {
 				Member member = convertRowTofollowMember(rset);
 				followerList.add(member);
 			}
-			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}finally {
