@@ -6,14 +6,14 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mtinfomain.css">
-
 <meta charset="UTF-8">
 <title>산정보 메인</title>
-</head>
 
+</head>
 <body>
 <!-- <header> -->
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
+
 <div class = "allwrap">	
 	<div class="side">
 		<form action="/mountainInfo/mtInfoMain" method="get">	

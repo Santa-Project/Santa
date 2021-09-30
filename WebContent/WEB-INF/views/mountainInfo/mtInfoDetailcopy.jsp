@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mtinfodetail.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mt_info_detail.css">
 
 <meta charset="UTF-8">
 <title>산정보 상세정보</title>
@@ -29,22 +30,21 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
 </head>
-
 <body>
+
+
+<%@ include file="/WEB-INF/views/common/header.jsp"  %>
+
+<section>
+	<div class="wrap_search">
+		<form class="search" action="/mountainInfo/mtInfoDetail" method="get">	
+			<input type="text" placeholder="산 또는 키워드 입력입력하세요.">
+			<button><i class="fas fa-search"></i></button>
+		</form>
+	</div>
 	
-	<section>
-	<%@ include file="/WEB-INF/views/common/header.jsp"  %>
-	
-<!-- 산이름 검색창 -->	
-		<div class="wrap_search">
-			<form class="search" action="/mountainInfo/mtInfoDetail" method="get">	
-				<input type="text" placeholder="산이름을 입력입력하세요." name="searchinput">
-				<button><i class="fas fa-search"></i></button>
-			</form>
-		</div>
-		
-		<%@include file="dbconn.jsp" %>
-		<% String searchinput = request.getParameter("searchinput");
+<%@include file="dbconn.jsp" %>
+<% String searchinput = request.getParameter("searchinput");
 			if(searchinput == null) {
 					searchinput = "개화산";
 				}
@@ -115,24 +115,27 @@
 				}
 			} 
 		%>	
-			
-		<div class="title">
+
+
+	<div class="title">
 			<div class="mt_name"><h1><%=mname  %></h1></div>
 			
 			<div class="like">
-				<!-- 
-				click event 발생 시 ♡ 또는 ♥ 로 변경
-				/mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
-					<c:if test="false">
-						<i class="far fa-heart"></i>
-					</c:if>
-					<c:if test="true">
-						<i class="fas fa-heart"></i>
-					</c:if>
-			</div>
-			
-		</div>
-		<div class="content_top">
+        <c:if test="${not empty authentication}">
+        <!-- 
+        click event 발생 시 ♡ 또는 ♥ 로 변경
+        /mtInfo/like?like=like or /mtInfo/like?like=dislike 로 변경 -->
+            <c:if test="${!sessionScope.like}">
+               <i class="far fa-heart" id="blackHeart" ></i>
+            </c:if>
+            <c:if test="${sessionScope.like}">
+               <i class="fas fa-heart" id="redHeart"></i>
+            </c:if>
+        </c:if>
+      </div>
+		
+	</div>
+	<div class="content_top">
 			<div class="text_content">
 				<p><b><%=mname  %></b> :  <%=info  %></p><br>
 				<p><b><span style="font: italic bold 1em;">상세정보</span></b> :  <%=dinfo  %></p><br>
@@ -141,7 +144,9 @@
 				
 			</div>
 			
-			<div class="other_content">
+			
+			
+				<div class="other_content">
 				<img src="${contextPath}/resources<%=img %>"/><br>
 				
 		<form action="/mountainInfo/inserthashtag" method="post">
@@ -156,12 +161,12 @@
 			</div>
 		</div>
 		
-
+		
 	<div class="content_bottom">
 		<div class="recommended_trip">
 			<div class="rt_title">산 위치</div>
-				<div class="wrap_map">
-					<div id="map" style="width:85%;height:320px;"></div>		
+			<div class="wrap_map">
+<div id="map" style="width:85%;height:320px;"></div>		
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bbda277c882224ab79cec03a792fe074"></script>
 <script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -199,43 +204,171 @@
 				</div>
 			</div>
 			
-<!-- 슬라이드 구현 -->
-	<div class="photos">
-		<div class="photos_title">Photos</div>
-			<div class="image-slider" id="imageSlider1">
-				<div class="slider-body">
-					<!-- 이미지 부분을 나타내는 코드 -->
-					<div class="image-list">
-						<img src="${contextPath}/resources<%=rimg1%>" alt="산이미지">
-						<img src="${contextPath}/resources<%=rimg2%>" alt="산이미지">
-						<img src="${contextPath}/resources<%=rimg3%>" alt="산이미지">
-						<img src="${contextPath}/resources<%=rimg4%>" alt="산이미지">
-					</div>
-					<br>
+			
+		<!-- 슬라이드 구현 -->
+		<div class="photos">
+			<div class="photos_title">Photos</div>
+			<div class="photos_contents">
+				<div class="wrap_photos_content">
+					<c:forEach items="${searchedMbList}" var="memBoard" varStatus="status">
+						<div>
+							<!-- <img src=${memBoard.picture}>  -->
+							<img class="photo" src="${contextPath }/resources/img/${mountainName}.jpg">
+							<div class="user_id">${memBoard.memberIdx}</div>
+						</div>
+						<!-- 모달창 만들기 -->
+						<div class="modal">
+							<div>
+								<div>&lt;</div>
+								<!-- <img src=${memBoard.picture}>  -->
+								<%-- <div><img id="photo" src="${contextPath }/resources/img/${mountainName}.jpg"></div> --%>
+						<img id="photo" src="${contextPath}/resources<%=rimg1%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg2%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg3%>" alt="산이미지">
+						<img id="photo" src="${contextPath}/resources<%=rimg4%>" alt="산이미지">
+								<div>&gt;</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 					
-					<ul class="index-nav">
-						<li><a href="" alt="1">o</a></li>
-						<li><a href="" alt="2">o</a></li>
-						<li><a href="" alt="3">o</a></li>
-						<li><a href="" alt="4">o</a></li>
-					</ul>
+				
+				<div class="slide">
+					<div class='arrow'>
+						<button class='arrow-left'><i class="fas fa-angle-double-left"></i></button>
+					</div>
+					<div class='btn_slide'>
+						<button data-slide-idx = '0' data-slide-img='mt1'></button>
+						<button data-slide-idx = '1' data-slide-img='mt2'></button>
+						<button data-slide-idx = '2' data-slide-img='mt3'></button>
+						<button data-slide-idx = '3' data-slide-img='mt4'></button>
+					</div>	
+					<div class='arrow'>
+						<button class='arrow-right'><i class="fas fa-angle-double-right"></i></button>
+					</div>
 				</div>
-
-		<div class="slider-btn-prev">
-				<div class='arrow'>
-					<button class='arrow-left'><i class="fas fa-angle-double-left"></i></button>
-				</div>
-			 
-		</div>
-		
-		<div class="slider-btn-next">
-				<div class='arrow'>
-					<button class='arrow-right'><i class="fas fa-angle-double-right"></i></button>
-				</div>
-		</div>
 			</div>
+				
 		</div>
 	</div>
+	
 </section>
+
+<!-- <footer> -->
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+
+<script type="text/javascript">
+
+(function(){
+
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");  //get 방식
+	document.body.appendChild(form);
+
+	if("${not empty authentication}"){
+		document.querySelector(".like").addEventListener('click',function(){
+
+			if("${sessionScope.like}"){
+				form.setAttribute("action", `/mountainInfo/like?like=${!sessionScope.like}`); //요청 보낼 주소
+				form.submit();
+
+			} else {
+				form.setAttribute("action", `/mountainInfo/like?like=${sessionScope.like}`); //요청 보낼 주소
+				form.submit();
+			}
+
+		})
+	}
+	
+	
+	/* 해당 산 idx를 넘겨받아 산 정보 페이지 뿌리기
+	산 idx로 산 이름 받아와서 (서브쿼리)
+	회원게시글 테이블에서 좋아요 내림차순으로 12위까지 뽑아서 (게시글번호, 게시글사진, 회원번호)
+	회원정보 테이블에서  member_idx로 mem_username 가져오고 (join 회원정보 테이블 using(member_idx))
+	차례로 div, img, user_id 생성 (forEach) */
+	
+	
+	/* 모달창 */
+	$('.photo').click(function(e){
+		$('.modal').addClass('active');
+	});
+	
+	$('.modal').click(function(e){
+		$('.modal').removeClass('active');
+	});
+	
+	
+	
+	
+	let cnt = 0;
+
+	document.querySelector('.arrow-left').addEventListener('click',function(e){
+		document.querySelectorAll(".btn_slide>button").forEach(function(e){
+			e.style.backgroundColor = 'black';
+		})
+		
+		$('button[data-slide-idx="0"]').css('backgroundColor','red');
+		
+		moveSlide(0);
+	});
+
+	document.querySelector('.arrow-right').addEventListener('click',function(e){
+		document.querySelectorAll(".btn_slide>button").forEach(function(e){
+			e.style.backgroundColor = 'black';
+		})
+		
+		$('button[data-slide-idx="3"]').css('backgroundColor','red');
+		
+		moveSlide(3);
+	});
+
+	document.querySelectorAll(".btn_slide>button").forEach(function(e){
+		e.addEventListener('click',function(event){
+			
+			console.dir(e);
+			console.dir(event);
+			
+			let dataSet = event.target.dataset;
+			
+			let slideIdx = dataSet.slideIdx;
+			
+			document.querySelectorAll(".btn_slide>button").forEach(function(e){
+				e.style.backgroundColor = 'black';
+			})
+			
+			event.target.style.backgroundColor = 'red';
+			
+			moveSlide(slideIdx);
+		})
+	})
+
+	let moveSlide = function(slideIdx){
+		$('.wrap_photos_content').css("transform",'translateX(' + (slideIdx * -100) + '%)');
+		$('.wrap_photos_content').css("transitionDuration",'0.5s');
+	}
+})();
+
+
+
+var container = document.getElementById('map');
+var options = {
+	center: new kakao.maps.LatLng(37.55138202753834, 126.98824805488653),
+	level: 5,
+	keyboardShortcuts: true
+};
+
+var map = new kakao.maps.Map(container, options);
+map.addControl(new kakao.maps.MapTypeControl(),kakao.maps.ControlPosition.BOTTOMLEFT);
+map.addControl(new kakao.maps.ZoomControl(),kakao.maps.ControlPosition.BOTTOMRIGHT);
+
+
+
+
+
+</script>
+
+
 </body>
+
 </html>
