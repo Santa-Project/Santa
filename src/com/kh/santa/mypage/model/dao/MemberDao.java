@@ -326,4 +326,58 @@ public class MemberDao {
 		
 		return member;
 	}
+
+	public String selectMemberByNameAndEmail(String username, String email, Connection conn) {
+		String foundId = "";
+		
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = " select user_id from member where username = ? and email = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, username);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				foundId = rset.getString("user_id");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		return foundId;
+	}
+
+	public String selectMemberByIdAndEmail(String id, String email, Connection conn) {
+String foundPw = "";
+		
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = " select user_password from member where user_id = ? and email = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, id);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				foundPw = rset.getString("user_password");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		return foundPw;
+	}
 }

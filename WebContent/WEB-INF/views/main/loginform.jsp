@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="${contextPath}/resources/css/main/style_login3.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/main/style_login.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>	
 <style>

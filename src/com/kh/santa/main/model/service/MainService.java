@@ -152,4 +152,30 @@ public class MainService {
 		
 	}
 
+	public String findingId(String username, String email) {
+		String foundId = "";
+		Connection conn = template.getConnection();
+		
+		try {
+			foundId = memberDao.selectMemberByNameAndEmail(username,email,conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return foundId;
+	}
+
+	public String findingPassword(String id, String email) {
+		String foundPw = "";
+		Connection conn = template.getConnection();
+		
+		try {
+			foundPw = memberDao.selectMemberByIdAndEmail(id,email,conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return foundPw;
+	}
+
 }
