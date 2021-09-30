@@ -1,13 +1,9 @@
 package com.kh.santa.mypage.model.service;
 
 import java.sql.Connection;
-
 import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
-import com.kh.santa.mypage.model.dao.FollowingDao;
-import com.kh.santa.mypage.model.dto.Follow;
-import com.kh.santa.mypage.model.dto.Member;
 import com.kh.santa.common.exception.DataAccessException;
 import com.kh.santa.mypage.model.dao.FollowingDao;
 import com.kh.santa.mypage.model.dto.Follow;

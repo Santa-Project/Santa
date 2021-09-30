@@ -192,12 +192,6 @@ button{
 .mypage_board2{
   width: 1000px;
   height: 1100px;
-<<<<<<< HEAD
-  overflow-y:scroll;
-  border-color: red;
-=======
->>>>>>> refs/heads/dev2
-  
 }
 
 .board_write_title{

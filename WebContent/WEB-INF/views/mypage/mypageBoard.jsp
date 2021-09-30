@@ -119,39 +119,14 @@
                                     <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
-<<<<<<< HEAD
-                                    <a class="input_id" style="color:green">${authentication.nickname}</a>
-                                <form action="/mypage/insertComment" method="post">
-                                    <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
-                                    <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
-                                </form>
-=======
 	                                <div class="input_id" style="color:green">${authentication.nickname}</div>
 	                                <form action="/mypage/insertComment" method="post">
 	                                    <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
 	                                    <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
 	                                </form>
->>>>>>> refs/heads/dev2
                                 </div>
                                 
                                 <div class="board_content_side_rep">
-                                
-<<<<<<< HEAD
-                                <c:forEach items='${objectArr[2]}' var='comment'>
-                                    <div class="board_content_side_rep_item">
-                                    	<c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
-	                                        <form action="/mypage/anotherBoard" method="post">
-		                                        <a class="input_id">
-		                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">${comment.nickname}</a>
-	                                        </form>
-                                        </c:if>
-                                        <c:if test="${comment.nickname == sessionScope.userId}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
-                                        	<a class="input_id" href="mypage/mypageBoard">${comment.nickname}</a>
-                                        </c:if>
-                                        <div class="input_content">${comment.content}</div>
-                                    </div>
-								</c:forEach>
-=======
 	                                <c:forEach items='${objectArr[2]}' var='comment'>
 	                                    <div class="board_content_side_rep_item">
 	                                    
@@ -180,8 +155,7 @@
 	                                    	</c:if>
 	                                    </div>
 									</c:forEach>
->>>>>>> refs/heads/dev2
-                                    
+									
                                 </div>
                             </div>
                         </div>
