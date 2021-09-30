@@ -39,11 +39,11 @@
                         </div>
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
-                           <div id="my_introduce_id">${member.nickname}(${member.userId})</div>
-                            <button class="hidden1" id="my_introduce_edite" >edit</button>
-                            <button class="hidden1" id="my_introduce_edite" >저장</button>
+                           <div id="my_introduce_id">${authentication.nickname}(${authentication.userId})</div>
+                            <button id="my_introduce_edite" >edit</button>
+                            <button id="my_introduce_edite" >저장</button>
                             </div>
-                            <div id="my_introduce_comment">${member.profileContent}</div>
+                            <div id="my_introduce_comment">${authentication.profileContent}</div>
                         </div>
                 </div>
                 
@@ -95,8 +95,11 @@
                     <div class="board_content_item">
                         <div class="board_content_padding">
                             <div class="board_content_picture">
-
                                 <img class="board_content_picture_item" src="http://localhost:7070/file/${objectArr[1].savePath}${objectArr[1].renameFileName}">
+                                <form action="/mypage/deleteBoard" method="post">
+                                	<input type='hidden' name='deleteboard' value="${objectArr[0].boardIdx}" >
+                                	<input type='submit' style="border-color:white; border-radius: 20%;" value='삭제'>
+                            	</form>
                             </div>
                             <div class="board_content_side">
                                 <div class="board_content_side_ment_padding">
@@ -116,14 +119,24 @@
                                     <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
+<<<<<<< HEAD
                                     <a class="input_id" style="color:green">${authentication.nickname}</a>
                                 <form action="/mypage/insertComment" method="post">
                                     <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
                                     <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
                                 </form>
+=======
+	                                <div class="input_id" style="color:green">${authentication.nickname}</div>
+	                                <form action="/mypage/insertComment" method="post">
+	                                    <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
+	                                    <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
+	                                </form>
+>>>>>>> refs/heads/dev2
                                 </div>
+                                
                                 <div class="board_content_side_rep">
                                 
+<<<<<<< HEAD
                                 <c:forEach items='${objectArr[2]}' var='comment'>
                                     <div class="board_content_side_rep_item">
                                     	<c:if test="${comment.nickname != sessionScope.userId}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
@@ -138,6 +151,36 @@
                                         <div class="input_content">${comment.content}</div>
                                     </div>
 								</c:forEach>
+=======
+	                                <c:forEach items='${objectArr[2]}' var='comment'>
+	                                    <div class="board_content_side_rep_item">
+	                                    
+	                                    	<c:if test="${comment.nickname != authentication.nickname}" > <!-- 남이 쓴 댓글 아이디 클릭시 -->
+		                                        <form id="idForm" action="/mypage/anotherBoard" method="post">
+			                                        <label>
+			                                        <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">
+													<button type="submit" class="input_id">${comment.nickname}</button>
+													</label>
+		                                        </form>
+	                                        </c:if>
+	                                        <c:if test="${comment.nickname == authentication.nickname}" > <!-- 내가 쓴 댓글 아이디 클릭시 -->
+	                                        	<a class="input_id" href="/mypage/mypageBoard">${comment.nickname}</a>
+	                                        </c:if>
+	                                        
+		                                    <div class="input_content">${comment.content}${comment.commentIdx}</div>
+		                                    <c:if test="${comment.nickname == authentication.nickname}" > <!-- 내가 쓴 댓글 삭제 -->
+			                                        <form action="/mypage/deleteComment" method="post" >
+			                                         <label>
+			                                       	 	<input type="hidden" name="commentIdx" value="${comment.commentIdx}">
+			                                       	 	${comment.commentIdx}
+														<button style="color:red; margin-left: 10px;" type="submit" id="delete" >
+														 <i class="far fa-minus-square" ></i></button>
+			                                        </label>
+			                                        </form>
+	                                    	</c:if>
+	                                    </div>
+									</c:forEach>
+>>>>>>> refs/heads/dev2
                                     
                                 </div>
                             </div>
@@ -150,6 +193,18 @@
         </div>
          </div>
 </section>
+
+<script type="text/javascript">
+
+document.querySelector("#delete").addEventListener('submit', function(e){
+	if(!confirm('댓글을 삭제하시겠습니까?여기도안먹네여')){
+		return;
+	}
+})
+
+
+
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

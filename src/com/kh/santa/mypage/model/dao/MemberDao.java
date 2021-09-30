@@ -163,9 +163,51 @@ public class MemberDao {
 		}
 		return memberArr;
 	}
+
+	public void leaveSanta(String memberIdx, Connection conn) {
+		
+		 PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM member WHERE member_idx = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, memberIdx);
+				pstm.executeUpdate();
+				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+	}
+
 	
 	
 	
 	
+	public void editMember(Member member, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "UPDATE member SET " +
+						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?, PHOTO =?, MEMBER_IDX=?"+
+					   " WHERE member_idx = ?";
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getUserPassword());
+			pstm.setString(2, member.getNickname());
+			pstm.setString(3, member.getPhone()); 
+			pstm.setString(4, member.getEmail());
+			pstm.setString(5, member.getAddress());
+			pstm.setString(6, member.getPhoto());
+			pstm.setString(6, member.getMemberIdx());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
 	
 }

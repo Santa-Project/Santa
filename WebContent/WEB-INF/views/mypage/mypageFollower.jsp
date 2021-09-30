@@ -90,6 +90,10 @@
                          <div class="follow_member2">
                         <div class="follow_member_id_padding">
                          <div id="follow_member_id"><a>${f.nickname} (${f.userId})</a></div> 
+	                        <form id="idForm" action="/mypage/anotherBoard" method="post">
+				                         <input type="hidden" name="anotherIdx" value="${f.memberIdx}">
+				                         <button type="submit" id="follow_member_id" >${f.nickname} (${f.userId})</button> 
+	                        </form>
                         </div>
                        </div>
                      </div>
