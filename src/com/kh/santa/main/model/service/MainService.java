@@ -39,7 +39,12 @@ public class MainService {
 		Connection conn = template.getConnection();
 		
 		try {
-			member = memberDao.memberAuthenticateByKakaoId(kakaoId, conn);
+			String memberIdx = memberDao.memberAuthenticateByKakaoId(kakaoId, conn);
+			
+			if(memberIdx != null) {
+				member = memberDao.selectMemberByIdx(memberIdx, conn);
+			}
+			
 		} finally {
 			template.close(conn);
 		}

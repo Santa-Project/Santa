@@ -41,16 +41,15 @@ public class MemberDao {
 		return member;
 	}
 
-	public Member memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
-		Member member = null;
+	public String memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
+		String memberIdx = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
 		
 		ResultSet rset = null;
 		
 		
 		try {
-			String query = " select " + columns + " from member where member_idx = (select member_idx from social_member where kakao_id = ?) ";
+			String query = " select member_idx from social_member where kakao_id = ? ";
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, kakaoId);
@@ -58,7 +57,7 @@ public class MemberDao {
 			
 			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
 			if(rset.next()) {
-				member = convertRowToMember(columns,rset);
+				memberIdx = rset.getString("member_idx");
 			}
 			
 		} catch (SQLException e) {
@@ -66,7 +65,7 @@ public class MemberDao {
 		} finally {
 			template.close(rset,pstm);
 		}
-		return member;
+		return memberIdx;
 	}
 
 	public Member selectMemberById(String userId, Connection conn) {
@@ -81,6 +80,33 @@ public class MemberDao {
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, userId);
+			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
+			
+			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
+			if(rset.next()) {
+				member = convertRowToMember(columns, rset);
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return member;
+	}
+	
+	public Member selectMemberByIdx(String memberIdx, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		
+		ResultSet rset = null;
+		
+		try {
+			String query = " select " + columns + " from member where member_idx = ? ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
 			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
 			
 			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
