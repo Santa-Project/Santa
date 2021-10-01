@@ -39,6 +39,30 @@ public class MountainDao {
 	  return mountain;
 	}
 	
+	public String selectselectMountainNameBymtIdx(String mtIdx, Connection conn) {
+		String mountainName = "";
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		  
+		try {
+			String query = "select mname from mountain where mtidx = ?";
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, Integer.parseInt(mtIdx));
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				mountainName = rset.getString("mname");
+			}
+		     
+		  } catch (SQLException e) {
+			  throw new DataAccessException(e);
+		  } finally {
+			  template.close(rset, pstm);
+		  }
+		  
+		  return mountainName;
+		}
+	
    private Mountain convertRowToMountain(ResultSet rset) throws SQLException {
 	   Mountain mountain = new Mountain();
       

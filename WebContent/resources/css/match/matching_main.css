@@ -1,0 +1,294 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --text-color: #555555;
+    --main-color: #c5e1a5;
+    --santa-color: #94af76;
+    --point-color: #f8ffd7;
+    --bg-color: rgb(240, 240, 240);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    color: #555555;
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+}
+
+a {
+    color: #555555;
+    text-decoration: none;
+}
+
+.top_header {
+    display: flex;
+    width: 100%;
+    height: 150px;
+}
+
+.top_header1 {
+    height: 100%;
+    width: 33.3333%;
+}
+
+.top_header2 {
+    height: 100%;
+    width: 33.3333%;
+    text-align: center;
+}
+
+.logo {
+    padding: 25px;
+}
+
+.logo img {
+    width: 300px;
+    margin-right: 30px;
+}
+
+.top_header3 {
+    display: flex;
+    height: 100%;
+    width: 33.33333%;
+}
+
+.login_wrapper1 {
+    width: 40%;
+    height: 100%;
+}
+
+.login_wrapper2 {
+    display: flex;
+    width: 45%;
+    height: 100%;
+}
+
+.wrap_mypage{
+   display: flex;
+   flex-direction: column;
+   width: 40%;
+}
+
+.login {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.mypage {
+    width: 100%;
+    font-size: 50px;
+    margin-top: 30px;
+}
+
+.join {
+    width: 20%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.user_id {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.logout {
+    width: 20%;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.bottom_header {
+    display: flex;
+    width: 100%;
+    height: 60px;
+}
+
+.bottom_header1 {
+    height: 100%;
+    width: 25%;
+}
+
+.bottom_header2 {
+    display: flex;
+    height: 100%;
+    width: 50%;
+}
+
+.nav1 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.nav2 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.nav3 {
+    height: 100%;
+    width: 33.33333%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.bottom_header2 a:hover {
+    color: var(--santa-color);
+    font-weight: bold;
+}
+
+.bottom_header3 {
+    height: 100%;
+    width: 25%;
+}
+
+section{
+    width: 100%;
+    height: 800px;
+}
+
+.matching_nav{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    background-color: #a1bf4d;;
+}
+
+.matching_nav1{
+    width: 15%;
+    height: 100%;
+    
+
+}
+
+.matching_nav2{
+    display: flex;
+    width: 70%;
+    height: 100%;
+
+}
+
+#matching_btn{
+    width: 100px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #a1bf4d;
+    border: none;
+    outline : none;
+    cursor: pointer;
+}
+
+#matching_btn :hover{
+    color: #fff;
+}
+
+
+.matching_nav3{
+    width: 15%;
+    height: 100%;
+}
+
+.alarm_btn .fas{
+    font-size: 30px;
+    padding: 15px;
+}
+
+.alarm_sub{
+    display: none;
+    box-shadow: 0 0 10px ;
+    padding-top: 10px;
+}
+
+.alarm_sub a{
+    display: block;
+    padding: 10px;
+    text-align: center;
+    z-index: 100;
+}
+
+.alarm_sub a:hover{
+    background-color:#c5e1a5;
+}
+
+.matching_nav3:hover .alarm_sub{
+    display: block;
+}
+
+
+.search_box{
+    display: flex;
+    width: 70%;
+    height: 70px;
+}
+
+.search_box1{
+    width: 15%;
+    height: 100%;
+}
+
+.search_box2{
+    display: flex;
+    width: 70%;
+    height: 100%;
+}
+
+.input{
+    position: absolute;
+    height: 50px;
+    padding: 10px;
+    left: 260px;
+    top: 310px;
+}
+
+.search_box2 .fas{
+    font-size: 25px;
+    position: absolute;
+    left: 430px;
+    top: 325px;
+}
+
+
+.search_box3{
+    width: 15%;
+    height: 100%;
+
+}
+
+.search_board{
+    width: 100%;
+    height: 400px;
+
+}
+
+table{
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    border: 1px solid ;
+}
+
+.create_btn{
+    position: absolute;
+    right: 15%;
+    top: 700px;
+}

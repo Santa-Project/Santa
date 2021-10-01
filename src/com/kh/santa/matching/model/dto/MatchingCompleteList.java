@@ -1,6 +1,6 @@
 package com.kh.santa.matching.model.dto;
 
-public class MatchingComplateList {
+public class MatchingCompleteList {
 	
 	private String listIdx;
 	private String memberIdx;

@@ -5,7 +5,7 @@ import oracle.sql.DATE;
 public class MatchingAlarm {
 	
 	private String maIdx;
-	private String brdIdx;
+	private String mbIdx;
 	private String msg;
 	private DATE time;
 	private String sender;
@@ -15,11 +15,11 @@ public class MatchingAlarm {
 	public void setMaIdx(String maIdx) {
 		this.maIdx = maIdx;
 	}
-	public String getBrdIdx() {
-		return brdIdx;
+	public String getMbIdx() {
+		return mbIdx;
 	}
-	public void setBrdIdx(String brdIdx) {
-		this.brdIdx = brdIdx;
+	public void setMbIdx(String mbIdx) {
+		this.mbIdx = mbIdx;
 	}
 	public String getMsg() {
 		return msg;
@@ -41,7 +41,7 @@ public class MatchingAlarm {
 	}
 	@Override
 	public String toString() {
-		return "MatchingAlarm [maIdx=" + maIdx + ", brdIdx=" + brdIdx + ", msg=" + msg + ", time=" + time + ", sender="
+		return "MatchingAlarm [maIdx=" + maIdx + ", mbIdx=" + mbIdx + ", msg=" + msg + ", time=" + time + ", sender="
 				+ sender + "]";
 	}
 	
