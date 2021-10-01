@@ -36,6 +36,9 @@ public class MountainInfoController extends HttpServlet {
 		String[] uriArr = wrappedRequest.getRequestURIArray();
 		
 		switch(uriArr[uriArr.length-1]){
+		case "inserthashtag" :
+			inserthashtag(request,response);
+			break;	
 		case "mtInfoMain" :
 			mtInfoMain(request,response);
 			break;
@@ -66,6 +69,11 @@ public class MountainInfoController extends HttpServlet {
 		default :
 			break;
 		}
+	}
+	
+	private void inserthashtag(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/mountainInfo/inserthashtag").forward(request, response);
+		
 	}
 
 	private void mtInfoMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
