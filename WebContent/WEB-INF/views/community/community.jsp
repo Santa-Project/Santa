@@ -2,15 +2,17 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<%@include file= "/WEB-INF/views/include/head.jsp"%>
-<link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/community/community.css">
-</head>
-<body>
-<%@include file= "/WEB-INF/views/common/header.jsp"%>
 
-<section>
+<head>
+    <%@include file= "/WEB-INF/views/include/head.jsp"%>
+    <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/community/community.css">
+</head>
+
+<body>
+    <%@include file= "/WEB-INF/views/common/header.jsp"%>
+
+    <section>
         <div class="search_wrapper">
             <div class="searchbox1">
                 <div class="search">
@@ -19,7 +21,9 @@
                 </div>
             </div>
             <div class="searchbox2">
-                <div class="search_content"><h1>소통하고 싶은 유저와 원하는 게시물을 검색해보세요!</h1></div>
+                <div class="search_content">
+                    <h1>소통하고 싶은 유저와 원하는 게시물을 검색해보세요!</h1>
+                </div>
             </div>
         </div>
         <div class="rank_user">
@@ -29,34 +33,36 @@
                     <span>명예의 전당</span>
                 </div>
                 <div class="rank_box_bottom">
-                <c:forEach items='${memberArr}' var='member' varStatus="status">
-               <c:if test="${status.index < 3}">
-                    <div class="rank1">
-                        <div class="rank_title">
-                            <i class="fas fa-trophy"> ${status.count}위</i>
-                        </div>
-                        <div class="rank_card">
-                            <%-- <img src="${member.photo}" alt=""> --%>
-                            <img src="${contextPath}/resources/img/community/rank1.jpg" alt="">
-                        
-                            <div class="content">
-                                <h3>${member.userId}</h3>
-                                <form action="/mypage/anotherBoard?anotherIdx=${member.memberIdx}" method="POST">
-                                	<button><i class="fas fa-home"></i></button>
-                                </form><!-- <i class="fas fa-home"></i> -->
-                                <%-- <a href="/mypage/anotherBoard?anotherIdx=${member.memberidx}"><i class="fas fa-home"></i></a> --%>
+                    <c:forEach items='${memberArr}' var='member' varStatus="status">
+                        <c:if test="${status.index < 3}">
+                            <div class="rank1">
+                                <div class="rank_title">
+                                    <i class="fas fa-trophy"> ${status.count}위</i>
+                                </div>
+                                <div class="rank_card">
+                                    <%-- <img src="${member.photo}" alt=""> --%>
+                                    <img src="${contextPath}/resources/img/community/rank1.jpg" alt="">
+
+                                    <div class="content">
+                                        <h3>${member.userId}</h3>
+                                        <form action="/mypage/anotherBoard?anotherIdx=${member.memberIdx}"
+                                            method="POST">
+                                            <button><i class="fas fa-home"></i></button>
+                                        </form><!-- <i class="fas fa-home"></i> -->
+                                        <%-- <a href="/mypage/anotherBoard?anotherIdx=${member.memberidx}"><i class="fas fa-home"></i></a> --%>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
+                    </c:forEach>
+                    <div class="rank4">
+                        <c:forEach items='${memberArr}' var='member' varStatus='status'>
+                            <c:if test='${status.index >= 3 }'>
+                                <span><i class="fas fa-medal"></i><a href="?userid=${member.userId}">${status.count}위
+                                        ${member.userId}</a></span>
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    </c:if>
-                 </c:forEach>
-                 	<div class="rank4">
-	                <c:forEach items='${memberArr}' var='member' varStatus='status'>
-	                <c:if test='${status.index >= 3 }'>
-	                	<span><i class="fas fa-medal"></i><a href="?userid=${member.userId}">${status.count}위 ${member.userId}</a></span>
-	                </c:if>
-	             </c:forEach>
-	                </div>
 
                 </div>
             </div>
@@ -86,11 +92,134 @@
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <a href="">
-                                    <img src="/resources/img/community/mt1.jpg">
-                                    <img src="/resources/img/community/mt2.jpg">
-                                    <img src="/resources/img/community/mt3.jpg">
-                                </a>
+                                <div class="hot_photo1">
+                                    <img src="http://localhost:7070/file/${objectArr[1].savePath}${objectArr[1].renameFileName}" class="hot_open1">
+                                    <div class="hotmodal1">
+                                        <div class="modal_content">
+                                            <div class="hotphoto1"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <p>${objectArr[0].boardComment}</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+												    <form action="/mypage/insertComment" method="post"></form>
+												    
+												    <div class="button_wrap">
+												        <div class="heart">
+												            <i class="fas fa-heart"></i>
+												        </div>
+												        <!-- <button type="submit" id="input_text_submit">작성하기 핫1</button> -->
+												        
+												        <form action="/mypage/insertComment" method="post">
+	                                    					<input type="text" id="input_text"name="content" placeholder="댓글을 입력하세요"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
+	                                  					 	<button type="submit" id="input_text_submit">작성하기 핫1</button>
+	                                					</form>
+												    </div>
+												    
+												    <div class="comment_wrap">
+												        <div class="comment" id="1">
+															<c:forEach items='${objectArr[2]}' var='comment'>
+															    <div class="board_content_side_rep_item">
+															
+															        <c:if test="${comment.nickname != authentication.nickname}">
+															            <!-- 남이 쓴 댓글 아이디 클릭시 -->
+															            <form id="idForm" action="/mypage/anotherBoard" method="post">
+															                <label>
+															                    <input type="hidden" name="anotherIdx" value="${comment.memberIdx}">
+															                    <button type="submit" class="input_id">${comment.nickname}</button>
+															                </label>
+															            </form>
+															        </c:if>
+															        <c:if test="${comment.nickname == authentication.nickname}">
+															            <!-- 내가 쓴 댓글 아이디 클릭시 -->
+															            <a class="input_id" href="/mypage/mypageBoard">${comment.nickname}</a>
+															        </c:if>
+															
+															        <div class="input_content">${comment.content}${comment.commentIdx}</div>
+															        <c:if test="${comment.nickname == authentication.nickname}">
+															            <!-- 내가 쓴 댓글 삭제 -->
+															            <form action="/mypage/deleteComment" method="post">
+															                <label>
+															                    <input type="hidden" name="commentIdx" value="${comment.commentIdx}">
+															                    ${comment.commentIdx}
+															                    <button style="color:red; margin-left: 10px;" type="submit" id="delete">
+															                        <i class="far fa-minus-square"></i></button>
+															                </label>
+															            </form>
+															        </c:if>
+															    </div>
+															</c:forEach>
+												        </div>
+												    </div>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo2">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open2">
+                                    <div class="hotmodal2">
+                                        <div class="modal_content">
+                                            <div class="hotphoto2"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫2</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo3">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open3">
+                                    <div class="hotmodal3">
+                                        <div class="modal_content">
+                                            <div class="hotphoto3"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫3</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,11 +235,99 @@
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <a href="">
-                                    <img src="/resources/img/community/mt1.jpg">
-                                    <img src="/resources/img/community/mt2.jpg">
-                                    <img src="/resources/img/community/mt3.jpg">
-                                </a>
+                                <div class="hot_photo4">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open4">
+                                    <div class="hotmodal4">
+                                        <div class="modal_content">
+                                            <div class="hotphoto4"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫4</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo5">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open5">
+                                    <div class="hotmodal5">
+                                        <div class="modal_content">
+                                            <div class="hotphoto5"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫5</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo6">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open6">
+                                    <div class="hotmodal6">
+                                        <div class="modal_content">
+                                            <div class="hotphoto6"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫6</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -126,11 +343,99 @@
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <a href="">
-                                    <img src="/resources/img/community/mt1.jpg">
-                                    <img src="/resources/img/community/mt2.jpg">
-                                    <img src="/resources/img/community/mt3.jpg">
-                                </a>
+                                <div class="hot_photo7">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open7">
+                                    <div class="hotmodal7">
+                                        <div class="modal_content">
+                                            <div class="hotphoto7"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫7</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo8">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open8">
+                                    <div class="hotmodal8">
+                                        <div class="modal_content">
+                                            <div class="hotphoto8"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫8</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo9">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open9">
+                                    <div class="hotmodal9">
+                                        <div class="modal_content">
+                                            <div class="hotphoto9"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫9</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -146,11 +451,99 @@
                         </div>
                         <div class="hot_photo">
                             <div class="hot_photo_wrapper">
-                                <a href="">
-                                    <img src="/resources/img/community/mt1.jpg">
-                                    <img src="/resources/img/community/mt2.jpg">
-                                    <img src="/resources/img/community/mt3.jpg">
-                                </a>
+                                <div class="hot_photo10">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open10">
+                                    <div class="hotmodal10">
+                                        <div class="modal_content">
+                                            <div class="hotphoto10"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫10</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo11">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open11">
+                                    <div class="hotmodal11">
+                                        <div class="modal_content">
+                                            <div class="hotphoto11"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫11</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
+                                <div class="hot_photo12">
+                                    <img src="/resources/img/community/mt1.jpg" class="hot_open12">
+                                    <div class="hotmodal12">
+                                        <div class="modal_content">
+                                            <div class="hotphoto12"></div>
+                                            <div class="desc">
+                                                <div class="desc_header">
+                                                    <h3>작성한 제목</h3>
+                                                    <p>작성한 글 내용 들어갈 자리</p>
+                                                    <button class="btn_close">&times;</button>
+                                                </div>
+                                                <div class="desc_content">
+                                                    <input type="text" placeholder="댓글을 입력하세요.">
+                                                    <div class="button_wrap">
+                                                        <div class="heart">
+                                                            <i class="fas fa-heart"></i>
+                                                        </div>
+                                                        <button>작성하기 핫12</button>
+                                                    </div>
+                                                    <div class="comment_wrap">
+                                                        <div class="comment" id="1">
+                                                            <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                            <div class="comment_cont">GOOOOOD</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overlay"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,18 +574,18 @@
                                             <input type="text" placeholder="댓글을 입력하세요.">
                                             <div class="button_wrap">
                                                 <div class="heart">
-                                                
-                                                <!-- 로그인되었을 때만 하트 보이게 처리 -->
-                                                	<c:if test = "${not empty authentication}">
-                                                		<i class="fas fa-heart"></i>
-                                                	</c:if>
-                                                
+
+                                                    <!-- 로그인되었을 때만 하트 보이게 처리 -->
+                                                    <c:if test="${not empty authentication}">
+                                                        <i class="fas fa-heart"></i>
+                                                    </c:if>
+
                                                 </div>
                                                 <button>작성하기 11</button>
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -221,9 +614,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -251,9 +643,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,9 +672,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -313,9 +703,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -343,9 +732,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -373,9 +761,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -403,9 +790,8 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> yoonzam</a></div>
+                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
-                                                    <div class="comment_heart"><i class="fas fa-heart"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -421,90 +807,104 @@
         </div>
         <div class="top_button">
             <a href="#"><i class="fas fa-arrow-circle-up"></i>
-                <h1>TOP</h1></a>
+                <h1>TOP</h1>
+            </a>
         </div>
     </section>
-    
-<%@include file= "/WEB-INF/views/common/footer.jsp"%>
 
-	<script>
-	$('.btn_open1').click(function(){
-        $('.modal1, .overlay').addClass('active')
-    })
+    <%@include file= "/WEB-INF/views/common/footer.jsp"%>
 
-    $('.btn_open2').click(function(){
-        $('.modal2, .overlay').addClass('active')
-    })
+    <script>
 
-    $('.btn_open3').click(function(){
-        $('.modal3, .overlay').addClass('active')
-    })
+        $('.hot_open1').click(function () {
+            $('.hotmodal1, .overlay').addClass('active')
+        })
 
-    $('.btn_open4').click(function(){
-        $('.modal4, .overlay').addClass('active')
-    })
+        $('.hot_open2').click(function () {
+            $('.hotmodal2, .overlay').addClass('active')
+        })
 
-    $('.btn_open5').click(function(){
-        $('.modal5, .overlay').addClass('active')
-    })
+        $('.hot_open3').click(function () {
+            $('.hotmodal3, .overlay').addClass('active')
+        })
 
-    $('.btn_open6').click(function(){
-        $('.modal6, .overlay').addClass('active')
-    })
+        $('.hot_open4').click(function () {
+            $('.hotmodal4, .overlay').addClass('active')
+        })
 
-    $('.btn_open7').click(function(){
-        $('.modal7, .overlay').addClass('active')
-    })
+        $('.hot_open5').click(function () {
+            $('.hotmodal5, .overlay').addClass('active')
+        })
 
-    $('.btn_open8').click(function(){
-        $('.modal8, .overlay').addClass('active')
-    })
+        $('.hot_open6').click(function () {
+            $('.hotmodal6, .overlay').addClass('active')
+        })
 
-    $('.btn_close, .overlay').click(function(){
-        $('.modal1, .modal2, .modal3, .modal4, .modal5, .modal6, .modal7, .modal8, .overlay').removeClass('active')
-    })
-    $('.heart .fas, .comment_heart .fas').click(function(){
-        $(this).toggleClass('active')
-    })
-    
-    /* 하트 클릭시 좋아요 추가 또는 제거 */
-    /* $(function(){
-    	$("#rec_update").click(function(){
-    		$.ajax({
-    			url: "/expro/RecUpdate.do",
-    			type: "POST",
-    			data: {
-    				no: ${content.board_no},
-    				id: '${id}'
-    			},
-    			success: function (){
-    				recCount();
-    			},
-    		})
-    	}) */
-    	
-    	/* 좋아요 수 카운트*/
-    	/* function recCount() {
-    		$.ajax({
-    			url: "expro/RecCount.do",
-    			type: "POST",
-    			data: {
-    				no: ${content.board_no}
-    			},
-    			success: function(count){
-    				$(".rec_count").html(count);
-    			},
-    		})
-    	};
-    	recCount();  */
-    	/* 처음 시작했을 때 실행되도록 해당 함수 호출 */
+        $('.hot_open7').click(function () {
+            $('.hotmodal7, .overlay').addClass('active')
+        })
 
-  /*   }) */
-    
-    
-    
-    
-    
-	</script>
+        $('.hot_open8').click(function () {
+            $('.hotmodal8, .overlay').addClass('active')
+        })
+
+        $('.hot_open9').click(function () {
+            $('.hotmodal9, .overlay').addClass('active')
+        })
+
+        $('.hot_open10').click(function () {
+            $('.hotmodal10, .overlay').addClass('active')
+        })
+
+        $('.hot_open11').click(function () {
+            $('.hotmodal11, .overlay').addClass('active')
+        })
+
+        $('.hot_open12').click(function () {
+            $('.hotmodal12, .overlay').addClass('active')
+        })
+
+        $('.btn_open1').click(function () {
+            $('.modal1, .overlay').addClass('active')
+        })
+
+        $('.btn_open2').click(function () {
+            $('.modal2, .overlay').addClass('active')
+        })
+
+        $('.btn_open3').click(function () {
+            $('.modal3, .overlay').addClass('active')
+        })
+
+        $('.btn_open4').click(function () {
+            $('.modal4, .overlay').addClass('active')
+        })
+
+        $('.btn_open5').click(function () {
+            $('.modal5, .overlay').addClass('active')
+        })
+
+        $('.btn_open6').click(function () {
+            $('.modal6, .overlay').addClass('active')
+        })
+
+        $('.btn_open7').click(function () {
+            $('.modal7, .overlay').addClass('active')
+        })
+
+        $('.btn_open8').click(function () {
+            $('.modal8, .overlay').addClass('active')
+        })
+
+        $('.btn_close, .overlay').click(function () {
+            $('.hotmodal1,.hotmodal2,.hotmodal3,.hotmodal4,.hotmodal5,.hotmodal6,.hotmodal7,.hotmodal8,.hotmodal9,.hotmodal10, .hotmodal11, .hotmodal12, .modal1, .modal2, .modal3, .modal4, .modal5, .modal6, .modal7, .modal8, .overlay')
+                .removeClass(
+                    'active')
+        })
+        $('.heart .fas, .comment_heart .fas').click(function () {
+            $(this).toggleClass('active')
+        })
+    </script>
 </body>
+
 </html>

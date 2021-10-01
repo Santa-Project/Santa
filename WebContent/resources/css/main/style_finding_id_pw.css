@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+:root{
+    --body-background-color: #fff;
+    --border-gray-color : #dadada;
+    --naver-green-color: #94af76;;
+    --naver-green-border-color: #94af76;;
+    }
+    
+    body {
+    font-family: 'Montserrat', '나눔고딕', '굴림';
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	/*화면크기에 따른 영역 잡음*/
+	@media all and (min-width : 1132px) {   
+	
+	}
+	/*헤더영역 CSS*/
+	
+	.header {
+	    position: relative;
+	    padding: 18px 5px;
+	}
+	
+	.header .logo {
+	    float: left;
+	    margin-left: 35%
+	}
+	
+	.header .logo a {
+	    font-size: 60px;
+	    color: #94af76;;
+	}
+    
+    /*해당 영역 중심으로 맞춤*/
+    #wrap2 {
+    width: 40%;
+    margin: 20vh auto;
+	}
+	
+	/*allwrap영역 CSS*/
+	.allwrap{
+		width:100%;
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+		margin-top: 21px;
+	}
+	
+    .search-section{
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	}
+	
+	.search-wrap{
+	width: 465px;
+	height :48px;
+	border: solid 1px var(	--border-gray-color );
+	background: white;
+	}
+	
+	.id-wrap{
+		margin-top: 13px;
+	}
+	
+	.username-wrap{
+		margin-top: 13px;
+	}
+	
+	.email-wrap{
+		margin-top: 13px;
+	}
+	
+	.search-wrap input{
+		border: none;
+		width:430px;
+		margin-top: 10px;
+		font-size: 14px;
+		margin-left: 10px;
+		height:30px;
+	}
+	
+	.search-button {
+		padding-top: 13px;
+	}
+		
+	.search-button button{
+		width: 465px;
+		height :48px;
+		font-size: 18px;
+		background: var(--naver-green-color);
+		color: white;
+		border: solid 1px var(--naver-green-border-color);
+	}
+	
+	/*social sign in css*/
+	.Social-sign-in{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 40px;
+	
+	}
+	.Social-sign-in h2{
+		font-size: 20px;
+	}
+	.Social-sign-in .Social-button-list
+	{
+		padding-top:25px;
+		list-style: none;
+		width: 465px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.Social-sign-in .Social-button-list li{
+		padding-bottom: 10px;
+	}
+	
+	.Social-sign-in .Social-button-list li button{
+		width: 465px;
+		height: 56px;
+		border: solid 1px var(--border-gray-color);
+		text-align: left;
+		background: white;
+	}
+	
+	
+	.Social-sign-in .Social-button-list li button span{
+		padding-left: 20px;
+		font-size: 18px;
+	}
+	
+	/*footer영역 CSS*/
+	/*창 크기조절에도 중심으로 위치*/
+	footer{
+	    width:768px;
+	}

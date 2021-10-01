@@ -39,7 +39,12 @@ public class MainService {
 		Connection conn = template.getConnection();
 		
 		try {
-			member = memberDao.memberAuthenticateByKakaoId(kakaoId, conn);
+			String memberIdx = memberDao.memberAuthenticateByKakaoId(kakaoId, conn);
+			
+			if(memberIdx != null) {
+				member = memberDao.selectMemberByIdx(memberIdx, conn);
+			}
+			
 		} finally {
 			template.close(conn);
 		}
@@ -118,6 +123,10 @@ public class MainService {
 			
 			for (Mountain mountain : mountainList) {
 				mountainDao.insertMountainWishlist(m.getMemberIdx(), mountain, conn);
+				mountain = mountainDao.selectMountainBymtIdx(mountain.getMtIdx(), conn);
+				int addLike = mountain.getLikedMountainCnt() + 1;
+				System.out.println(addLike);
+				mountainDao.updateMountainLike(addLike, mountain, conn);
 			}
 			
 			// 회원가입 이후 자동 로그인처리(안함)
@@ -150,6 +159,32 @@ public class MainService {
 			template.close(conn);
 		}
 		
+	}
+
+	public String findingId(String username, String email) {
+		String foundId = "";
+		Connection conn = template.getConnection();
+		
+		try {
+			foundId = memberDao.selectMemberByNameAndEmail(username,email,conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return foundId;
+	}
+
+	public String findingPassword(String id, String email) {
+		String foundPw = "";
+		Connection conn = template.getConnection();
+		
+		try {
+			foundPw = memberDao.selectMemberByIdAndEmail(id,email,conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return foundPw;
 	}
 
 }

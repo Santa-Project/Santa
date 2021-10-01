@@ -72,7 +72,7 @@ public class MypageService {
 		   Connection conn = template.getConnection();
 		      Member member = null;
 		      try {
-		    	  member = memberDao.selectMemberByMemberIdx(memberIdx,conn);
+		    	  member = memberDao.selectMemberByIdx(memberIdx,conn);
 		         template.commit(conn);
 		      }finally {
 		         template.close(conn);

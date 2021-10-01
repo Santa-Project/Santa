@@ -22,7 +22,7 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo,PROFILE_CONTENT";
 		
 		try {
 			String query = "select " + columns + " from member where user_id = ? and user_password = ? ";
@@ -45,16 +45,15 @@ public class MemberDao {
 		return member;
 	}
 
-	public Member memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
-		Member member = null;
+	public String memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
+		String memberIdx = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
 		
 		ResultSet rset = null;
 		
 		
 		try {
-			String query = " select " + columns + " from member where member_idx = (select member_idx from social_member where kakao_id = ?) ";
+			String query = " select member_idx from social_member where kakao_id = ? ";
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, kakaoId);
@@ -62,7 +61,34 @@ public class MemberDao {
 			
 			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
 			if(rset.next()) {
-				member = convertRowToMember(columns,rset);
+				memberIdx = rset.getString("member_idx");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return memberIdx;
+	}
+
+	public Member selectMemberById(String userId, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo,PROFILE_CONTENT";
+		
+		ResultSet rset = null;
+		
+		try {
+			String query = " select " + columns + " from member where user_id = ? ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, userId);
+			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
+			
+			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
+			if(rset.next()) {
+				member = convertRowToMember(columns, rset);
 			}
 			
 		} catch (SQLException e) {
@@ -72,19 +98,19 @@ public class MemberDao {
 		}
 		return member;
 	}
-
-	public Member selectMemberById(String userId, Connection conn) {
+	
+	public Member selectMemberByIdx(String memberIdx, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
 		try {
-			String query = " select " + columns + " from member where user_id = ? ";
+			String query = " select " + columns + " from member where member_idx = ? ";
 			
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, userId);
+			pstm.setString(1, memberIdx);
 			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
 			
 			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
@@ -175,7 +201,7 @@ public class MemberDao {
 		
 		Member[] memberArr = new Member[9];
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
@@ -204,6 +230,7 @@ public class MemberDao {
 		return memberArr;
 	}
 
+
 	public boolean checkMemberById(String userId, Connection conn) {
 		PreparedStatement pstm = null;
 		String columns = "user_id";
@@ -230,41 +257,128 @@ public class MemberDao {
 		return false;
 	}
 	
-
-	   
-	   // member_idx로 멤버 찾기
-	public Member selectMemberByMemberIdx(String memberIdx, Connection conn) {
-		Member member = null;
-		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,grade,photo";
+	
+	private Member convertRowToMember(String columns, ResultSet rset) throws SQLException {
+		Member member = new Member();
 		
+		String[] columnsArr = columns.split(",");
+		
+		for (String column : columnsArr) {
+			
+			switch(column) {
+			case "member_idx":
+				member.setMemberIdx(rset.getString("member_idx"));
+				break;
+			case "user_id":
+				member.setUserId(rset.getString("user_id"));
+				break;
+			case "email":
+				member.setEmail(rset.getString("email"));
+				break;
+			case "user_password":
+				member.setUserPassword(rset.getString("user_password"));
+				break;
+			case "username":
+				member.setUsername(rset.getString("username"));
+				break;
+			case "nickname":
+				member.setNickname(rset.getString("nickname"));
+				break;
+			case "phone":
+				member.setPhone(rset.getString("phone"));
+				break;
+			case "gender":
+				member.setGender(rset.getString("gender"));
+				break;
+			case "address":
+				member.setAddress(rset.getString("address"));
+				break;
+			case "register_datetime":
+				member.setRegisterDatetime(rset.getDate("register_datetime"));
+				break;
+			case "profile_content":
+				member.setProfileContent(rset.getString("profile_content"));
+				break;
+			case "photo":
+				member.setPhoto(rset.getString("photo"));
+				break;
+			case "social_login":
+				member.setSocialLogin(rset.getString("social_login"));
+				break;
+			case "grade":
+				member.setGrade(rset.getString("grade"));
+				break;
+			default: break;
+			}
+			
+		}
+		
+		return member;
+	}
+
+	public String selectMemberByNameAndEmail(String username, String email, Connection conn) {
+		String foundId = "";
+		
+		PreparedStatement pstm = null;
 		ResultSet rset = null;
+		String query = " select user_id from member where username = ? and email = ? ";
 		
 		try {
-			String query = " select " + columns + " from member where member_idx = ? ";
-			
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, memberIdx);
-			rset = pstm.executeQuery(); 
+			pstm.setString(1, username);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
 			if(rset.next()) {
-				member = convertRowToMember(columns, rset);
+				foundId = rset.getString("user_id");
 			}
 			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		} finally {
-			template.close(rset,pstm);
+			template.close(rset, pstm);
 		}
-		return member;
+		
+		
+		return foundId;
+	}
+
+	public String selectMemberByIdAndEmail(String id, String email, Connection conn) {
+		String foundPw = "";
+		
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = " select user_password from member where user_id = ? and email = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, id);
+			pstm.setString(2, email);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				foundPw = rset.getString("user_password");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		return foundPw;
 	}
 	
-	//마이페이지 수정
+	
+	
+	
 	public void editMember(Member member, Connection conn) {
 		
 		PreparedStatement pstm = null;
 		
 		String query = "UPDATE member SET " +
-						" USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?"+ 
+						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?,  MEMBER_IDX=?"+
 					   " WHERE member_idx = ?";
 		try {
 			pstm = conn.prepareStatement(query);
@@ -279,8 +393,10 @@ public class MemberDao {
 			throw new DataAccessException(e);
 		} finally {
 			template.close(pstm);
-		}	
+		}
+		
 	}
+	
 	
 	//마이페이지 수정(비번 변경안함)
 	public void editMemberExclusionPassword(Member member, Connection conn) {
@@ -387,64 +503,7 @@ public class MemberDao {
 	      }
 	      return whishlist;
 	   }
-	 
-	 
-	private Member convertRowToMember(String columns, ResultSet rset) throws SQLException {
-		Member member = new Member();
-		
-		String[] columnsArr = columns.split(",");
-		
-		for (String column : columnsArr) {
-			
-			switch(column) {
-			case "member_idx":
-				member.setMemberIdx(rset.getString("member_idx"));
-				break;
-			case "user_id":
-				member.setUserId(rset.getString("user_id"));
-				break;
-			case "email":
-				member.setEmail(rset.getString("email"));
-				break;
-			case "user_password":
-				member.setUserPassword(rset.getString("user_password"));
-				break;
-			case "username":
-				member.setUsername(rset.getString("username"));
-				break;
-			case "nickname":
-				member.setNickname(rset.getString("nickname"));
-				break;
-			case "phone":
-				member.setPhone(rset.getString("phone"));
-				break;
-			case "gender":
-				member.setGender(rset.getString("gender"));
-				break;
-			case "address":
-				member.setAddress(rset.getString("address"));
-				break;
-			case "register_datetime":
-				member.setRegisterDatetime(rset.getDate("register_datetime"));
-				break;
-			case "profile_content":
-				member.setProfileContent(rset.getString("profile_content"));
-				break;
-			case "photo":
-				member.setPhoto(rset.getString("photo"));
-				break;
-			case "social_login":
-				member.setSocialLogin(rset.getString("social_login"));
-				break;
-			case "grade":
-				member.setGrade(rset.getString("grade"));
-				break;
-			default: break;
-			}
-			
-		}
-		
-		return member;
-	}
-
+	
+	
+	
 }

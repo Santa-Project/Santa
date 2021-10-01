@@ -4,9 +4,8 @@ public class SocialMember {
 	
 	private String socialIdx;
 	private String memberIdx;
-	private String snsNickname;
-	private String snsPhoto;
-	private String snsPhone;
+	private String kakaoId;
+	
 	public String getSocialIdx() {
 		return socialIdx;
 	}
@@ -19,29 +18,15 @@ public class SocialMember {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getSnsNickname() {
-		return snsNickname;
+	public String getKakaoId() {
+		return kakaoId;
 	}
-	public void setSnsNickname(String snsNickname) {
-		this.snsNickname = snsNickname;
-	}
-	public String getSnsPhoto() {
-		return snsPhoto;
-	}
-	public void setSnsPhoto(String snsPhoto) {
-		this.snsPhoto = snsPhoto;
-	}
-	public String getSnsPhone() {
-		return snsPhone;
-	}
-	public void setSnsPhone(String snsPhone) {
-		this.snsPhone = snsPhone;
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
 	}
 	@Override
 	public String toString() {
-		return "SocialMember [socialIdx=" + socialIdx + ", memberIdx=" + memberIdx + ", snsNickname=" + snsNickname
-				+ ", snsPhoto=" + snsPhoto + ", snsPhone=" + snsPhone + "]";
+		return "SocialMember [socialIdx=" + socialIdx + ", memberIdx=" + memberIdx + ", kakaoId=" + kakaoId + "]";
 	}
-	
 	
 }

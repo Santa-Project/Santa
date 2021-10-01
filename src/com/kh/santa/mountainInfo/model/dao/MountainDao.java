@@ -42,8 +42,9 @@ public class MountainDao {
    private Mountain convertRowToMountain(ResultSet rset) throws SQLException {
 	   Mountain mountain = new Mountain();
       
-	   mountain.setMtIdx(String.valueOf(rset.getInt("mtidx")));
-	   mountain.setMountainName(rset.getString("mname"));
+	   mountain.setMtIdx(String.valueOf(rset.getInt("MTIDX")));
+	   mountain.setMountainName(rset.getString("MNAME"));
+	   mountain.setLikedMountainCnt(rset.getInt("LIKED_MOUNTAIN_CNT"));
 
 	   return mountain;
    }
@@ -138,6 +139,25 @@ public class MountainDao {
 		}
 		
 		return mountainList;
+	}
+
+	public void updateMountainLike(int updatedlike, Mountain mountain, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "update mountain set liked_mountain_cnt = ? where mtidx = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, updatedlike);
+			pstm.setString(2, mountain.getMtIdx());
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
 	}
 	
 }

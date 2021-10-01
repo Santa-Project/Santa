@@ -15,13 +15,9 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	 <div>
            
-            
-            <div class="photo">
-                <a class="prof" href="">산타산타</a>
-                <a class="prof" href="">사진</a>
-            </div>
+         
         </div>
-         <nav >
+         <nav>
         <div class="nav_div">
             <button class="nav_but">1</button>
             <button class="nav_but">2</button>
@@ -29,15 +25,20 @@
         </div>
     </nav>
     <div class="team">
-        <a href="">팀원모집</a>
-        <a href="">유저목록</a>
+        <a href="/matching/collectTeam">팀원모집</a>
+        <a href="/matching/list">유저목록</a>
         <div class="bell">
-             <a id="a_bell" href=""><img id="bell" src="/resources/img/match/bell.jpg" alt=""></a>
+
+             <a id="a_bell" href="href=/matching/collectTeam_chat"><img id="bell" src="/resources/img/match/bell.jpg" alt=""></a>
+
+             
+
             <a id="a_dots" href=""><img id="dots" src="" alt=""></a>
         </div>
     </div>
     <div id="search">
-        <input id="search_button" type="button" name="" id="">
+
+        <input id="search_button" type="button" name="검색" id="" value="검색">
         <input id="search_text" type="text" name="" id="">
     </div>
 
