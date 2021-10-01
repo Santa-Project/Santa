@@ -63,96 +63,94 @@ public class MyBoardDao {
    
    //댓글,사진,게시판 삭제
    public void deleteBoard(String boardIdx,Connection conn) {
-	   
-	   PreparedStatement pstm = null;
-		
-		try {
-			String query = "DELETE FROM member_board WHERE board_idx = ? "; 
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, boardIdx);
-			pstm.executeUpdate();
-			
-		} catch (SQLException e) {
+      
+      PreparedStatement pstm = null;
+      
+      try {
+         String query = "DELETE FROM member_board WHERE board_idx = ? "; 
+         pstm = conn.prepareStatement(query);
+         pstm.setString(1, boardIdx);
+         pstm.executeUpdate();
+         
+      } catch (SQLException e) {
           throw new DataAccessException(e);
-		}finally {
-			template.close(pstm);
-		}
+      }finally {
+         template.close(pstm);
+      }
    }
    
-	//사진 삭제
-	public void deleteFile(String boardIdx, Connection conn) {
-		
-		   PreparedStatement pstm = null;
-			
-			try {
-				String query = "DELETE FROM file_info WHERE board_idx = ? "; 
-				pstm = conn.prepareStatement(query);
-				pstm.setString(1, boardIdx);
-				pstm.executeUpdate();
-				
-			} catch (SQLException e) {
-	          throw new DataAccessException(e);
-			}finally {
-				template.close(pstm);
-			}
-		
-	}
-	//댓글삭제 (게시판 전체삭제용) 어...이거는 게시판삭제..
-	public void deleteBoardToComment(String boardidx, Connection conn) {
-		 
-		PreparedStatement pstm = null;
-			
-			try {
-				String query = "DELETE FROM member_board_comment WHERE board_idx = ? "; 
-				pstm = conn.prepareStatement(query);
-				pstm.setString(1, boardidx);
-				pstm.executeUpdate();
-			} catch (SQLException e) {
-	          throw new DataAccessException(e);
-			}finally {
-				template.close(pstm);
-			}
-	}
+   //사진 삭제
+   public void deleteFile(String boardIdx, Connection conn) {
+      
+         PreparedStatement pstm = null;
+         
+         try {
+            String query = "DELETE FROM file_info WHERE board_idx = ? "; 
+            pstm = conn.prepareStatement(query);
+            pstm.setString(1, boardIdx);
+            pstm.executeUpdate();
+            
+         } catch (SQLException e) {
+             throw new DataAccessException(e);
+         }finally {
+            template.close(pstm);
+         }
+      
+   }
+   //댓글삭제 (게시판 전체삭제용) 어...이거는 게시판삭제..
+   public void deleteBoardToComment(String boardidx, Connection conn) {
+       
+      PreparedStatement pstm = null;
+         
+         try {
+            String query = "DELETE FROM member_board_comment WHERE board_idx = ? "; 
+            pstm = conn.prepareStatement(query);
+            pstm.setString(1, boardidx);
+            pstm.executeUpdate();
+         } catch (SQLException e) {
+             throw new DataAccessException(e);
+         }finally {
+            template.close(pstm);
+         }
+   }
    //댓글 삭제
-	public void deleteComment(Connection conn,String commentIdx) {
-		 
-		PreparedStatement pstm = null;
-			
-			try {
-				String query = "DELETE FROM member_board_comment WHERE COMMENT_IDX = ? "; 
-				pstm = conn.prepareStatement(query);
-				pstm.setString(1, commentIdx);
-				pstm.executeUpdate();
-			} catch (SQLException e) {
-	          throw new DataAccessException(e);
-			}finally {
-				template.close(pstm);
-			}
-	}
+   public void deleteComment(Connection conn,String commentIdx) {
+       
+      PreparedStatement pstm = null;
+         
+         try {
+            String query = "DELETE FROM member_board_comment WHERE COMMENT_IDX = ? "; 
+            pstm = conn.prepareStatement(query);
+            pstm.setString(1, commentIdx);
+            pstm.executeUpdate();
+         } catch (SQLException e) {
+             throw new DataAccessException(e);
+         }finally {
+            template.close(pstm);
+         }
+   }
 
 
-   
-   
    //댓글 추가
    public void insertComment(MemberBoardComment comment, Connection conn) {
-		
-	   PreparedStatement pstm = null;
-	      
-	      String sql = "INSERT INTO member_board_comment(comment_idx, board_idx, content, nickname, member_idx) VALUES(sc_comment_idx.nextval,?,?,?,?)";
-	      
-	         try {
-	            pstm =conn.prepareStatement(sql);
-	            pstm.setString(1, comment.getBoardIdx());
-	            pstm.setString(2, comment.getContent());
-	            pstm.setString(3, comment.getNickname());
-	            pstm.setString(4, comment.getMemberIdx());
-	            pstm.executeUpdate(); 
-	         } catch (SQLException e) {
-	            throw new DataAccessException(e);
-	         }finally {
-	            template.close(pstm);
-	         }
-	}
+      
+      PreparedStatement pstm = null;
+         
+         String sql = "INSERT INTO member_board_comment(comment_idx, board_idx, content, nickname, member_idx) VALUES(sc_comment_idx.nextval,?,?,?,?)";
+         
+            try {
+               pstm =conn.prepareStatement(sql);
+               pstm.setString(1, comment.getBoardIdx());
+               pstm.setString(2, comment.getContent());
+               pstm.setString(3, comment.getNickname());
+               pstm.setString(4, comment.getMemberIdx());
+               pstm.executeUpdate(); 
+            } catch (SQLException e) {
+               throw new DataAccessException(e);
+            }finally {
+               template.close(pstm);
+            }
+   }
    
    //게시판조회
    public List<MemberBoard> selectBoardDetail(String memberIdx, Connection conn) {
@@ -209,13 +207,13 @@ public class MyBoardDao {
       return file;
    }
    
-   //게시판댓글뿌려줌
+   //게시판댓글조회
    public List<MemberBoardComment> selectBoardComent(String boardIdx, Connection conn) {
 
       List<MemberBoardComment> comments = new ArrayList<MemberBoardComment>();
       PreparedStatement pstm = null;
       ResultSet rset =null;
-      String columns ="nickname,content";
+      String columns ="comment_idx,board_idx,member_idx,nickname,content";
       
       String sql ="SELECT " +columns
             + " FROM member_board_comment WHERE board_idx=? order by COMMENT_DATETIME desc"; 
@@ -236,7 +234,6 @@ public class MyBoardDao {
       
       return comments;
    }
-   
    
    
      //colums가져오기
