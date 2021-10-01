@@ -1,6 +1,6 @@
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 </head>
 <body>
 	<%@ include file="dbconn.jsp" %>
+	
 	<%
 		request.setCharacterEncoding("UTF-8");
 	
@@ -27,7 +28,9 @@
 			
 			
 			pstmt.executeUpdate();
-			response.sendRedirect("mtInfoDetail.jsp");
+			response.sendRedirect("http://localhost:7070/mountainInfo/mtInfoDetail");
+			
+			
 		}catch(SQLException e){
 			out.println("MHASHTAG테이블에 삽입 실패되었습니다.");
 			out.println("SQLException : " + e.getMessage());
@@ -38,6 +41,7 @@
 			if(connection != null) 
 				connection.close();
 		}	
+		
 	%>	
 </body>
 </html>
