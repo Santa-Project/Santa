@@ -14,6 +14,8 @@
 <!-- <header> -->
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
 
+
+
 <div class = "allwrap">	
 	<div class="side">
 		<form action="/mountainInfo/mtInfoMain" method="get">	
@@ -59,8 +61,11 @@
 			<th width="400" align="center">이미지</th>	
 		</tr>
 	
-		<%String searchinput = request.getParameter("searchinput");
+		<%
+		String mtidx1 = request.getParameter("mtidx");
+		String searchinput = request.getParameter("searchinput");
 		if(searchinput == null) {
+			mtidx1 = "1";
 			searchinput = "개화산";
 		}
 		String melvel = request.getParameter("melvel");
@@ -73,6 +78,7 @@
 			PreparedStatement pstmt = null;
 			
 			String mname = null;
+			String mtidx = null;
 			String mregion = null;
 			String mhigh = null;
 			String mlevel = null;
@@ -89,6 +95,7 @@
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
+					mname = rs.getString("MTIDX");	
 					mname = rs.getString("MNAME");	
 					mregion = rs.getString("REGION");	
 					mhigh = rs.getString("MHIGH");
@@ -102,24 +109,34 @@
 					cnt++;
 					
 		%>
+		
+		
 		<tr>
 			<td align="center"><%=mname  %></td>
 			<td align="center"><%=mregion  %></td>
 			<td align="center"><%=mhigh  %>m</td>
 			<td align="center"><%=mlevel %></td>
 			<td align="center"><%=mtime %></td>
-			<td height="20"><a onclick = showdetail()><img class = "img" src="${contextPath}/resources<%=img %>" name = <%=mname  %>></a></td>
+			<td height="20">
+				<a onclick="showdetail()">
+				
+					<img class = "img" src="${contextPath}/resources<%=img %>" name = <%=mname  %>>
+				</a>
+				
+			</td>
 		</tr>
 		
 		
 		
 		<script>
-		var imgname = document.querySelector(".img").name;
+		var mtidx = 1;
+		
+		console.dir(mtidx);
+		var mname = document.querySelector(".img").name;
 		function showdetail(){
-		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname;
+		location.href = '/mountainInfo/mtInfoDetail?mtidx=' + mtidx + "&searchinput=" + mname;
 		}
 		</script>
-		
 		
 		
 		<%
