@@ -43,17 +43,27 @@
 		</c:if>
 		<c:if test="${not empty found_id}">
 				<div class="found_id">
-					ID : ${found_id }
+					ID : [ ${found_id } ]
 				</div>
 		</c:if>
 		</section>
 		
 		<br>
 		<section class="Social-sign-in">
+		
+			<c:if test="${not empty found_id}">
+				<a href="/main/loginform">로그인</a> 
+			</c:if>
 			
 			<br>
-
-            <a href="/main/joinform">아직 회원이 아니신가요?</a>  
+			
+			<div id="search-wrqp">
+				<a href="/main/finding_pw">비밀번호 찾기</a>
+				<c:if test="${empty found_id}">
+				 / <a href="/main/joinform">아직 회원이 아니신가요?</a> 
+				 </c:if>
+			</div>
+			 
 		</section>
 		
 		

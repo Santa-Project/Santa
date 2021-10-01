@@ -116,7 +116,7 @@ public class MountainInfoController extends HttpServlet {
 			mountainService.addMountainWishlist(memberIdx,mountain);
 			request.getSession().setAttribute("like", true);
 		} else {
-			mountainService.removeMountainWishlist(memberIdx, mountain.getMtIdx());
+			mountainService.removeMountainWishlist(memberIdx, mountain);
 			request.getSession().setAttribute("like", false);
 		}
 		
