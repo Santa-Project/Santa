@@ -126,11 +126,8 @@ $(document).ready(function() {
 	</div>
 	
 <%@include file="dbconn.jsp" %>
-	<% 
-	String mtidx1 = request.getParameter("mtidx");
-	String searchinput = "${mountain.mountainName}";
+	<% String searchinput = request.getParameter("searchinput");
 				if(searchinput == null) {
-					mtidx1 = "1";
 						searchinput = "개화산";
 					}
 	%>
@@ -139,7 +136,6 @@ $(document).ready(function() {
 		ResultSet rs = null;   
 		PreparedStatement pstmt = null;
 		
-		String mtidx = null;
 		String mname = null;	
 		String mmap = null;
 		String mlevel = null;
@@ -164,7 +160,6 @@ $(document).ready(function() {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mtidx = rs.getString("MTIDX");
 				mname = rs.getString("MNAME");
 				mmap = rs.getString("MMAP");
 				mlevel = rs.getString("MLEVEL");	
@@ -193,7 +188,7 @@ $(document).ready(function() {
 			if(rs != null) rs.close();
 			if(pstmt != null) pstmt.close();
 			if(connection != null) connection.close();				
-		}  
+		}
 		
 		for(int i=0;i<hashtagcategory.length;i++) {
 			if(hashtagcategory[i] == null){

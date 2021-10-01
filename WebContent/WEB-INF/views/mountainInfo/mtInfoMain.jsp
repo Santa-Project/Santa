@@ -6,16 +6,58 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mtinfomain.css">
+<!-- top버튼 -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 <meta charset="UTF-8">
 <title>산정보 메인</title>
 
+<!-- top버튼 css-->
+<style type="text/css">
+#back-to-top {
+  display: inline-block;
+  background-color: yellowgreen;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+#back-to-top::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#back-to-top:hover {
+  cursor: pointer;
+  background-color: darkgreen;
+}
+#back-to-top:active {
+  background-color: #555;
+}
+#back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+</style>
 </head>
 <body>
 <!-- <header> -->
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
-
-
-
+<a id="back-to-top"></a>
 <div class = "allwrap">	
 	<div class="side">
 		<form action="/mountainInfo/mtInfoMain" method="get">	
@@ -61,11 +103,8 @@
 			<th width="400" align="center">이미지</th>	
 		</tr>
 	
-		<%
-		String mtidx1 = request.getParameter("mtidx");
-		String searchinput = request.getParameter("searchinput");
+		<%String searchinput = request.getParameter("searchinput");
 		if(searchinput == null) {
-			mtidx1 = "1";
 			searchinput = "개화산";
 		}
 		String melvel = request.getParameter("melvel");
@@ -78,7 +117,6 @@
 			PreparedStatement pstmt = null;
 			
 			String mname = null;
-			String mtidx = null;
 			String mregion = null;
 			String mhigh = null;
 			String mlevel = null;
@@ -95,7 +133,6 @@
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-					mname = rs.getString("MTIDX");	
 					mname = rs.getString("MNAME");	
 					mregion = rs.getString("REGION");	
 					mhigh = rs.getString("MHIGH");
@@ -109,34 +146,24 @@
 					cnt++;
 					
 		%>
-		
-		
 		<tr>
 			<td align="center"><%=mname  %></td>
 			<td align="center"><%=mregion  %></td>
 			<td align="center"><%=mhigh  %>m</td>
 			<td align="center"><%=mlevel %></td>
 			<td align="center"><%=mtime %></td>
-			<td height="20">
-				<a onclick="showdetail()">
-				
-					<img class = "img" src="${contextPath}/resources<%=img %>" name = <%=mname  %>>
-				</a>
-				
-			</td>
+			<td height="20"><a onclick = showdetail()><img class = "img" src="${contextPath}/resources<%=img %>" name = <%=mname  %>></a></td>
 		</tr>
 		
 		
 		
 		<script>
-		var mtidx = 1;
-		
-		console.dir(mtidx);
-		var mname = document.querySelector(".img").name;
+		var imgname = document.querySelector(".img").name;
 		function showdetail(){
-		location.href = '/mountainInfo/mtInfoDetail?mtidx=' + mtidx + "&searchinput=" + mname;
+		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname;
 		}
 		</script>
+		
 		
 		
 		<%
@@ -290,6 +317,25 @@
 	        infowindow.close();
 	    };
 	}
+	
+
+	
+	//top버튼
+	$(function(){
+		  $('#back-to-top').on('click',function(e){
+		      e.preventDefault();
+		      $('html,body').animate({scrollTop:0},600);
+		  });
+		  
+		  $(window).scroll(function() {
+		    if ($(document).scrollTop() > 100) {
+		      $('#back-to-top').addClass('show');
+		    } else {
+		      $('#back-to-top').removeClass('show');
+		    }
+		  });
+		})
+	
 </script>
 </div>
 </div>	
