@@ -198,88 +198,45 @@
     </content>  
     
 <script type="text/javascript">
-(function(){
-	//아이디 중복 체크
-	let confirmId = '';
-	document.querySelector('#btnIdCheck').addEventListener('click', function(){
+//아이디 중복 체크
+let confirmId = '';
+document.querySelector('#btnIdCheck').addEventListener('click', function(){
 
-		let userId = document.querySelector('#id').value;
-		   
-		if(!userId){
-			document.querySelector("#idCheck").style.color = "red";
-			document.querySelector("#idCheck").innerHTML = "아이디를 입력하지 않았습니다.";
-			return;
-		}
+	let userId = document.querySelector('#id').value;
+	   
+	if(!userId){
+		document.querySelector("#idCheck").style.color = "red";
+		document.querySelector("#idCheck").innerHTML = "아이디를 입력하지 않았습니다.";
+		return;
+	}
 
-		fetch("/main/id-check?id=" + userId)
-		.then(function(response){
-			if(response.ok){
-				console.dir(response);
-				return response.text()
-			} else {
-				throw new Error(response.status);
-			}
-		})
-		.then(function(text){
-			console.dir(text);
-			if(text == 'available'){
-				confirmId = userId;
-				document.querySelector('#id').value = userId;
-				document.querySelector("#idCheck").style.color = "black";
-				document.querySelector("#idCheck").innerHTML = "사용 가능한 아이디 입니다.";
-			} else {
-				document.querySelector('#id').value = "";
-				document.querySelector("#idCheck").style.color = "red";
-				document.querySelector("#idCheck").innerHTML = "사용 불가능한 아이디 입니다.";
-				
-			}
-		})
-		.catch(function(error){
-			document.querySelector("#idCheck").innerHTML = "응답에 실패했습니다. 상태코드 : " + error;
-		})
-	});
-	
-	//제출   
-	document.querySelector("#btnJoin").addEventListener('click', function(e){
-		
-		let flg = true;
-		
-		document.querySelector('#idCheck').innerHTML = "";
-		document.querySelector('#pwCheck').innerHTML = "";
-		document.querySelector('#vpwCheck').innerHTML = "";
-		document.querySelector('#nameCheck').innerHTML = "";
-		document.querySelector('#nicknameCheck').innerHTML = "";
-		document.querySelector('#genderCheck').innerHTML = "";
-		document.querySelector('#mobileCheck').innerHTML = "";
-		document.querySelector('#emailCheck').innerHTML = "";
-		
-		let userId = document.querySelector('#id').value;
-		console.dir(confirmId);
-		console.dir(userId);
-		if(confirmId != userId){
-			e.preventDefault();
-			document.querySelector("#idCheck").style.color = "red";
-			document.querySelector('#idCheck').innerHTML = "아이디 중복 검사를 하지 않았습니다.";
-			document.querySelector('#id').focus();
-			flg = false;
+	fetch("/main/id-check?id=" + userId)
+	.then(function(response){
+		if(response.ok){
+			console.dir(response);
+			return response.text()
+		} else {
+			throw new Error(response.status);
 		}
-		
-		let gender = document.querySelector('#gender').value;
-		if(!gender){
-			document.querySelector("#genderCheck").style.color = "red";
-			document.querySelector('#genderCheck').innerHTML = "성별을 선택하세요.";
-			flg = false;
-		}
-		
-		if(!flg){
-			return;
-		}
-		
-		document.querySelector("#form").submit();
-		
 	})
-		
-})();
+	.then(function(text){
+		console.dir(text);
+		if(text == 'available'){
+			confirmId = userId;
+			document.querySelector('#id').value = userId;
+			document.querySelector("#idCheck").style.color = "black";
+			document.querySelector("#idCheck").innerHTML = "사용 가능한 아이디 입니다.";
+		} else {
+			document.querySelector('#id').value = "";
+			document.querySelector("#idCheck").style.color = "red";
+			document.querySelector("#idCheck").innerHTML = "사용 불가능한 아이디 입니다.";
+			
+		}
+	})
+	.catch(function(error){
+		document.querySelector("#idCheck").innerHTML = "응답에 실패했습니다. 상태코드 : " + error;
+	})
+});
 
 //조소api
 var pop;
@@ -293,8 +250,51 @@ var jusoCallBack = function(roadFullAddr,roadAddrPart1,engAddr, jibunAddr, zipNo
 	document.form.roadAddrPart1.value = roadAddrPart1;
 	document.form.zipNo.value = zipNo;
 	document.form.detailaddress.value = addrDetail;
-	pop.close();
 }
+
+//제출   
+document.querySelector("#btnJoin").addEventListener('click', function(e){
+	
+	let flg = true;
+	
+	document.querySelector('#idCheck').innerHTML = "";
+	document.querySelector('#pwCheck').innerHTML = "";
+	document.querySelector('#vpwCheck').innerHTML = "";
+	document.querySelector('#nameCheck').innerHTML = "";
+	document.querySelector('#nicknameCheck').innerHTML = "";
+	document.querySelector('#genderCheck').innerHTML = "";
+	document.querySelector('#mobileCheck').innerHTML = "";
+	document.querySelector('#emailCheck').innerHTML = "";
+	
+	let userId = document.querySelector('#id').value;
+	console.dir(confirmId);
+	console.dir(userId);
+	if(confirmId != userId){
+		e.preventDefault();
+		document.querySelector("#idCheck").style.color = "red";
+		document.querySelector('#idCheck').innerHTML = "아이디 중복 검사를 하지 않았습니다.";
+		document.querySelector('#id').focus();
+		flg = false;
+	}
+	
+	let gender = document.querySelector('#gender').value;
+	if(!gender){
+		document.querySelector("#genderCheck").style.color = "red";
+		document.querySelector('#genderCheck').innerHTML = "성별을 선택하세요.";
+		flg = false;
+	}
+	
+	if(!flg){
+		return;
+	}
+	
+	document.querySelector("#form").submit();
+	
+})
+		
+
+
+
 
 </script>
 </body>

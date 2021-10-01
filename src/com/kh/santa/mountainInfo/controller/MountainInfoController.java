@@ -36,6 +36,9 @@ public class MountainInfoController extends HttpServlet {
 		String[] uriArr = wrappedRequest.getRequestURIArray();
 		
 		switch(uriArr[uriArr.length-1]){
+		case "inserthashtag" :
+			inserthashtag(request,response);
+			break;	
 		case "mtInfoMain" :
 			mtInfoMain(request,response);
 			break;
@@ -67,6 +70,11 @@ public class MountainInfoController extends HttpServlet {
 			break;
 		}
 	}
+	
+	private void inserthashtag(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/mountainInfo/inserthashtag").forward(request, response);
+		
+	}
 
 	private void mtInfoMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/mountainInfo/mtInfoMain").forward(request, response);
@@ -75,29 +83,29 @@ public class MountainInfoController extends HttpServlet {
 
 	private void mtInfoDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Mountain mountain = null;
+//		Mountain mountain = null;
 
-		if(request.getParameter("mtIdx") != null) {
-			String mtIdx  = request.getParameter("mtIdx");
-			mountain = mountainService.searchMountain(mtIdx);
-			request.getSession().setAttribute("mountain", mountain);
-		} else {
-			mountain = (Mountain) request.getSession().getAttribute("mountain");
-		}
-
-		Member member = (Member)request.getSession().getAttribute("authentication");
-
-		if(member != null) {
-	         
-			String memberIdx = member.getMemberIdx();
-
-			if(mountainService.checkMountainWishlist(memberIdx,mountain.getMtIdx())) {
-				request.getSession().setAttribute("like", true);
-			} else{
-				request.getSession().setAttribute("like", false);
-			};
-
-		}
+//		if(request.getParameter("mname") != null) {
+//			String mtIdx  = request.getParameter("mname");
+//			mountain = mountainService.searchMountain(mtIdx);
+//			request.getSession().setAttribute("mountain", mountain);
+//		} else {
+//			mountain = (Mountain) request.getSession().getAttribute("mountain");
+//		}
+//
+//		Member member = (Member)request.getSession().getAttribute("authentication");
+//
+//		if(member != null) {
+//	         
+//			String memberIdx = member.getMemberIdx();
+//
+//			if(mountainService.checkMountainWishlist(memberIdx,mountain.getMtIdx())) {
+//				request.getSession().setAttribute("like", true);
+//			} else{
+//				request.getSession().setAttribute("like", false);
+//			};
+//
+//		}
 
 		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
 

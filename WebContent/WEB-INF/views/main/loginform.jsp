@@ -88,123 +88,78 @@ function kakaoLogin() {
     document.body.appendChild(form);
 	
 	console.log(Kakao);
-	if(!Kakao.Auth.getAccessToken()){
-		// 첫 로그인
-		Kakao.Auth.login({
-			scope:'profile_nickname,profile_image,account_email,gender',
-		    success: async function (response) {
-		    	console.log("success_login");
-		    	await Kakao.API.request({
-		        	url: '/v2/user/me',
-		        	success: function (res) {
-		        		console.log("success_request");
-		      			console.log(res);
-		      			
-		      			let id = document.createElement("input");
-		      			id.name = "id";
-		      			id.setAttribute('value',res.id);
-		      			id.setAttribute('type','hidden');
-		      			form.appendChild(id);
-		      			
-		      			// 닉네임
-		      			let kakao_nickname = res.kakao_account.profile.nickname;
-		      			let nickname = document.createElement("input");
-		      			nickname.name = "nickname";
-		      			nickname.setAttribute('value',kakao_nickname);
-		      			nickname.setAttribute('type','hidden');
-		      			form.appendChild(nickname);
-		      			console.dir(kakao_nickname);
-		      			
-		      			// 성별
-		      			let kakao_gender;
-		      			if(!res.kakao_account.gender_needs_agreement){
-		      				kakao_gender = res.kakao_account.gender;
-		      				let gender = document.createElement("input");
-		      				gender.name = "gender";
-		      				gender.setAttribute('value',kakao_gender);
-		      				gender.setAttribute('type','hidden');
-			      			form.appendChild(gender);
-		      			}
-		      			
-		      			// 이메일
-		      			let kakao_email;
-		      			if(!res.kakao_account.email_needs_agreement){
-		      				kakao_email = res.kakao_account.email;
-		      				let email = document.createElement("input");
-		      				email.name = "email";
-		      				email.setAttribute('value',kakao_email);
-		      				email.setAttribute('type','hidden');
-			      			form.appendChild(email);
-		      			}
-		      			
-		      			/* // 프로필 사진 url
-		      			let kakao_photo;
-		      			if(!res.kakao_account.profile_image_needs_agreement){
-		      				kakao_photo = res.kakao_account.profile.profile_image_url;
-		      				let photo = document.createElement("input");
-		      				photo.name = "photo";
-		      				photo.setAttribute('value',kakao_photo);
-		      				photo.setAttribute('type','hidden');
-			      			form.appendChild(photo);
-		      			} */
-		      			
-		        	}
-		        });	
-		    	
-		    	
-		    	form.submit();
-		    },
-		    fail: function (error) {
-		    	console.log(error);
-		    }
-		})
-	} else {
-		// 카카오 로그인 이력이 있는 경우
-		//access token 유효
-		(async function (){
-			await Kakao.API.request({
-		       	url: '/v2/user/me',
-		       	success: function (res) {
-		     			console.log(res);
-		     			
-		     			let id = document.createElement("input");
-		     			id.name = "id";
-		     			id.setAttribute('value',res.id);
-		     			id.setAttribute('type','hidden');
-		     			form.appendChild(id);
-	     			
-	       		},
-		       	fail: function(error){
-		       		console.error(error);
-		       		//access token 만료
-		       		Kakao.Auth.logout(function() {
-		 				  console.log(Kakao.Auth.getAccessToken());
-		 			});
-	 				Kakao.Auth.login({
-		  			    success: function (response) {
-		  			    	
-		  			    	Kakao.API.request({
-		  			        	url: '/v2/user/me',
-		  			        	success: function (res) {
-		  			      			console.log(res);
-		  			      			
-		  			      			let id = document.createElement("input");
-		  			      			id.name = "id";
-		  			      			id.setAttribute('value',res.id);
-		  			      			id.setAttribute('type','hidden');
-		  			      			form.appendChild(id);
-		  			      			
-		  			        	}
-		  			        });	
-		  			    }	
-	 				})
-		       	}
-	   		});
-	
-			form.submit();
-		})();
-			
-	};
+	Kakao.Auth.login({
+		scope:'profile_nickname,profile_image,account_email,gender',
+	    success: async function (response) {
+	    	console.log("success_login");
+	    	console.log(response);
+	    	await Kakao.API.request({
+	        	url: '/v2/user/me',
+	        	success: function (res) {
+	        		console.log("success_request");
+	      			console.log(res);
+	      			
+	      			let id = document.createElement("input");
+	      			id.name = "id";
+	      			id.setAttribute('value',res.id);
+	      			id.setAttribute('type','hidden');
+	      			form.appendChild(id);
+	      			
+	      			// 닉네임
+	      			let kakao_nickname = res.kakao_account.profile.nickname;
+	      			let nickname = document.createElement("input");
+	      			nickname.name = "nickname";
+	      			nickname.setAttribute('value',kakao_nickname);
+	      			nickname.setAttribute('type','hidden');
+	      			form.appendChild(nickname);
+	      			console.dir(kakao_nickname);
+	      			
+	      			// 성별
+	      			let kakao_gender;
+	      			if(!res.kakao_account.gender_needs_agreement){
+	      				kakao_gender = res.kakao_account.gender;
+	      				let gender = document.createElement("input");
+	      				gender.name = "gender";
+	      				gender.setAttribute('value',kakao_gender);
+	      				gender.setAttribute('type','hidden');
+		      			form.appendChild(gender);
+	      			}
+	      			
+	      			// 이메일
+	      			let kakao_email;
+	      			if(!res.kakao_account.email_needs_agreement){
+	      				kakao_email = res.kakao_account.email;
+	      				let email = document.createElement("input");
+	      				email.name = "email";
+	      				email.setAttribute('value',kakao_email);
+	      				email.setAttribute('type','hidden');
+		      			form.appendChild(email);
+	      			}
+	      			
+	      			/* // 프로필 사진 url
+	      			let kakao_photo;
+	      			if(!res.kakao_account.profile_image_needs_agreement){
+	      				kakao_photo = res.kakao_account.profile.profile_image_url;
+	      				let photo = document.createElement("input");
+	      				photo.name = "photo";
+	      				photo.setAttribute('value',kakao_photo);
+	      				photo.setAttribute('type','hidden');
+		      			form.appendChild(photo);
+	      			} */
+	      			
+	        	}
+	        });	
+	    	
+	    	Kakao.Auth.logout(function() {
+				  console.log(Kakao.Auth.getAccessToken());
+			});
+
+       		form.submit();
+	    },
+	    fail: function (error) {
+	    	console.log(error);
+	    }
+	})
 }
   
 </script>

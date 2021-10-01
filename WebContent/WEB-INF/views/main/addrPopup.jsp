@@ -21,7 +21,7 @@ String addrDetail = request.getParameter("addrDetail");
 document.domain = "localhost:7070";
 function init(){
 	var url = location.href;
-	var confmKey = "devU01TX0FVVEgyMDIxMDkyNDE2MzM1NzExMTY4Mzc="; // 연계싞청시 부여받은 승인키 입력(테스트용 승인키 : TESTJUSOGOKR) 
+	var confmKey = "devU01TX0FVVEgyMDIxMTAwMTE5MTk0NzExMTcxNDA="; // 연계싞청시 부여받은 승인키 입력(테스트용 승인키 : TESTJUSOGOKR) 
 	var resultType = "1"; // 도로명주소 검색결과 화면 출력유형, 1 : 도로명, 2 : 도로명+지번+상세보기(관련지번, 관할주민센터), 3 : 도로명+상세보기(상세건물명), 4 : 도로명+지번+상세보기(관련지번, 관할주민센터, 상세건물명) 
 	var inputYn= "<%=inputYn%>";
 	if(inputYn != "Y"){
@@ -33,6 +33,7 @@ function init(){
 		 document.form.submit();
 	}else{
 		window.opener.jusoCallBack("<%=roadFullAddr%>","<%=roadAddrPart1%>","<%=engAddr%>", "<%=jibunAddr%>","<%=zipNo%>","<%=addrDetail%>");
+		opener.pop.close();
 	}
 }
 </script>
