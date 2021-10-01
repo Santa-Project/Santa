@@ -33,6 +33,7 @@ function init(){
 		 document.form.submit();
 	}else{
 		window.opener.jusoCallBack("<%=roadFullAddr%>","<%=roadAddrPart1%>","<%=engAddr%>", "<%=jibunAddr%>","<%=zipNo%>","<%=addrDetail%>");
+		opener.pop.close();
 	}
 }
 </script>
