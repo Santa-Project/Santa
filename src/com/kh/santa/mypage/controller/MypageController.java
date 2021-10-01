@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
 import com.kh.santa.main.model.service.MainService;
+import com.kh.santa.mountainInfo.model.dto.Mountain;
+import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
+import com.kh.santa.mountainInfo.model.service.MountainService;
 import com.kh.santa.mypage.model.dto.Follow;
 import com.kh.santa.mypage.model.dto.Member;
 import com.kh.santa.mypage.model.dto.MemberBoard;
@@ -34,11 +37,13 @@ import com.kh.santa.common.file.FileDTO;
 @WebServlet("/mypage/*")
 public class MypageController extends HttpServlet {
    private static final long serialVersionUID = 1L;
-   MyBoardService myboardService = new MyBoardService();
-   FollowingService followingService = new FollowingService();
-   MainService mainService = new MainService();
-   MypageService mypageService = new MypageService();
-   
+   private MyBoardService myboardService = new MyBoardService();
+   private FollowingService followingService = new FollowingService();
+   private MainService mainService = new MainService();
+   private MypageService mypageService = new MypageService();
+   private MountainService mountainService = new MountainService();
+   private List<Mountain> mountainList = mountainService.searchAllMtIdxAndMtName();
+   private List<MountainWishlist> wishlist = new ArrayList<MountainWishlist>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -71,6 +76,9 @@ public class MypageController extends HttpServlet {
       case "mypageMemberEdit" :
          mypageMemberEdit(request,response);
          break;
+      case "anotherBoard" :
+          anotherBoard(request,response);
+           break;
 
       case "insertBoard" :
          insertBoard(request,response);
@@ -88,15 +96,25 @@ public class MypageController extends HttpServlet {
          insertFollow(request,response);
           break;
       case "deleteFollow" :
-         deleteFollow(request,response);
+          deleteFollow(request,response);
+           break;
+      case "deleteFollowTopage" :
+    	  deleteFollowTopage(request,response); 
           break;
-      case "anotherBoard" :
-         anotherBoard(request,response);
+    	  
+      case "insertMountainwish" :
+    	  insertMountainwish(request,response); 
           break;
-          
+      case "deleteMountainwish" :
+    	  deleteMountainwish(request,response); 
+          break;
+    	  
       case "editMember" :
          editMember(request,response);
           break;
+      case "editprofile" :
+    	  editprofile(request,response);
+           break;
       case "leaveSanta" :
          leaveSanta(request,response);
           break;
@@ -106,8 +124,7 @@ public class MypageController extends HttpServlet {
       
    }
 
-
-   //게시판 및 댓글 출력
+//게시판 및 댓글 출력
    private void mypageBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
          Member member = (Member) request.getSession().getAttribute("authentication"); //세션조회
@@ -123,13 +140,45 @@ public class MypageController extends HttpServlet {
             res.add(ob);
          }
          request.getSession().setAttribute("res", res);
-         
+         request.setAttribute("mountainList", mountainList);
+         wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+         request.setAttribute("wishlist", wishlist);
       request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
    }
+   
+   //다른사람 페이지
+   private void anotherBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+          
+		  String anotherIdx = request.getParameter("anotherIdx"); //다른사람아이디 클릭한거 (mypageBoard.jsp에서) 받아옴
+	      Member anotherMember = mypageService.selectMemberByMemberIdx(anotherIdx); //(프로필 및 게시판 뿌려주기 위해) 다른사람정보 가져오기
+	      request.setAttribute("anotherMember", anotherMember); //프로필나오게
 
+          List<MemberBoard> boardList = myboardService.selectBoardDetail(anotherIdx); //조회한 세션값으로 게시판 불러오기
+          List<Object[]> others = new ArrayList<Object[]>();
+         
+          for (MemberBoard memberBoard : boardList) {
+             String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
+             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
+             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
+             others.add(ob); 
+          }
+          request.setAttribute("others", others);
+          wishlist = mypageService.selectMountainWishlist(anotherMember.getMemberIdx());
+          request.setAttribute("wishlist", wishlist);
+          request.getRequestDispatcher("/mypage/anotherBoard").forward(request, response); //여기가 뭔가 이상한거같기두하구..
+   }
+   
    //게시글 작성페이지
    private void mypageWriteBoard(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-         
+	   String[] seoulcity = {"강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구",
+"서대문구","마포구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"};
+	   request.setAttribute("seoulcity", seoulcity);
+	   
+	   request.setAttribute("mountainList", mountainList);
+	   Member member = (Member) request.getSession().getAttribute("authentication");
+       wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+       request.setAttribute("wishlist", wishlist);
       request.getRequestDispatcher("/mypage/mypageWriteBoard").forward(request, response);
    } 
    
@@ -176,39 +225,20 @@ public class MypageController extends HttpServlet {
    //댓글 삭제
    private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       String commentIdx =request.getParameter("commentIdx");
-      System.out.println(commentIdx);
       myboardService.deleteComment(commentIdx);
-      
       response.sendRedirect("/mypage/mypageBoard");
    }
    
       
-   //다른사람 페이지
-   private void anotherBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-         
-         String anotherIdx = request.getParameter("anotherIdx");
-          List<MemberBoard> boardList = myboardService.selectBoardDetail(anotherIdx); //조회한 세션값으로 게시판 불러오기
-          
-          List<Object[]> others = new ArrayList<Object[]>();
-         
-          for (MemberBoard memberBoard : boardList) {
-             String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
-             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
-             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
-             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
-             others.add(ob);
-          }
-          request.setAttribute("others", others);
-      
-       request.getRequestDispatcher("/mypage/anotherBoard").forward(request, response);
-   }
-   
    //팔로우
    private void mypageFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
       
      Member member = (Member) request.getSession().getAttribute("authentication");
      List<Member> followList = followingService.FollowList(member.getMemberIdx()); 
      request.setAttribute("followList", followList); 
+     request.setAttribute("mountainList", mountainList);
+     wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+     request.setAttribute("wishlist", wishlist);
       request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response); 
    }
    
@@ -218,58 +248,126 @@ public class MypageController extends HttpServlet {
      Member member = (Member) request.getSession().getAttribute("authentication");
      List<Member> followerList = followingService.FollowerList(member.getMemberIdx());
      request.setAttribute("followerList", followerList);
+     request.setAttribute("mountainList", mountainList);
+     wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+     request.setAttribute("wishlist", wishlist);
       request.getRequestDispatcher("/mypage/mypageFollower").forward(request, response);
       
    }
    
-   //팔로우 삭제
-   private void deleteFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
    
+   //팔로우 추가(다른사람 마이페이지)
+   private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     Member member = (Member) request.getSession().getAttribute("authentication");
+     Follow follow = new Follow();
+     follow.setFollowId(request.getParameter("deletefollow"));
+     follow.setMemberIdx(member.getMemberIdx()); 
+     followingService.insertFollow(follow);
+     anotherBoard(request,response);
+   }
+   //팔로우 삭제(다른사람 마이페이지)
+   private void deleteFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       Member member = (Member) request.getSession().getAttribute("authentication");
       Follow follow = new Follow();
-      follow.setMemberIdx(member.getMemberIdx());         //내 member_idx랑 
+      follow.setMemberIdx(member.getMemberIdx());         
+      follow.setFollowId(request.getParameter("deletefollow"));   
+      followingService.deleteFollow(follow);
+      anotherBoard(request,response);
+   }
+   //팔로우 삭제
+   private void deleteFollowTopage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      Member member = (Member) request.getSession().getAttribute("authentication");
+      Follow follow = new Follow();
+      follow.setMemberIdx(member.getMemberIdx());         		  //내 member_idx랑 
       follow.setFollowId(request.getParameter("deletefollow"));   //follow_idx가지고옴
       followingService.deleteFollow(follow);
       request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
    }
    
-   //팔로우 추가
-   private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     Member member = (Member) request.getSession().getAttribute("authentication");
-     Follow follow = new Follow();
-     follow.setFollowId(request.getParameter("deletefollow"));
-     follow.setMemberIdx(member.getMemberIdx());
-     followingService.insertFollow(follow);
-     request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
-   }
-
-   
    //마이페이지 수정페이지
    private void mypageMemberEdit(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-
+	   request.setAttribute("mountainList", mountainList);
+	   Member member = (Member) request.getSession().getAttribute("authentication");
+       wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+       request.setAttribute("wishlist", wishlist);
       request.getRequestDispatcher("/mypage/mypageMemberEdit").forward(request, response);
    }
    
    //마이페이지 수정post
    private void editMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   
       Member member = (Member) request.getSession().getAttribute("authentication");
-      member.setUserPassword(request.getParameter("editpass"));
       member.setNickname(request.getParameter("editnickname"));
       member.setPhone(request.getParameter("editphone"));
-      member.setEmail(request.getParameter("editemail"));
-      member.setAddress(request.getParameter("editaddress"));
-      member.setPhoto(request.getParameter("editeimg"));
-      mypageService.editMember(member);
+      member.setEmail(request.getParameter("editmail"));
+      String address = "(" + request.getParameter("zipNo") + ")" + request.getParameter("roadAddrPart1") + request.getParameter("detailaddress");
+      member.setAddress(address);
+      
+      if(request.getParameter("editpass")==member.getUserPassword()) { //변경함 //그대로 비번 같으면
+    	  member.setUserPassword(request.getParameter("editpass"));  
+    	  mypageService.editMember(member);
+      }else {//비밀번호 변경안할때
+    	  mypageService.editMemberExclusionPassword(member);
+      }
       request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
+      
    }
+   
+   //프로필 수정post
+	private void editprofile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		FileUtil util = new FileUtil();
+	    MultiPartParams params = util.fileUpload(request);
+	    Member member = (Member) request.getSession().getAttribute("authentication");
+	    member.setMemberIdx(member.getMemberIdx());
+	    
+	    member.setProfileContent(params.getParameter("profilecomment"));
+	    
+		List<FileDTO> fileDTOs = params.getFilesInfo(); 
+		mypageService.updateprofile(member,fileDTOs);
+	    request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
 
+	}
+
+   
+   
+
+   //산리스트 추가
+   private void insertMountainwish(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   
+	   Member member = (Member) request.getSession().getAttribute("authentication");
+	   String memberIdx = member.getMemberIdx();
+	   String mtIdx = request.getParameter("insertwish");
+	   
+	   Mountain mountain = new Mountain();
+	   mountain = mountainService.searchMountain(mtIdx); 
+	   
+	   mypageService.insertMountainWishlist(memberIdx, mountain);
+	   mypageBoard(request,response);
+}
+   
+   //산리스트 삭제
+	private void deleteMountainwish(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		 Member member = (Member) request.getSession().getAttribute("authentication");
+		   String memberIdx = member.getMemberIdx();
+		   String mtIdx = request.getParameter("deletewish");
+		   mypageService.deleteMountainWishlist(memberIdx,mtIdx);
+		   mypageBoard(request,response);
+	}
+
+   
+   
    //회원탈퇴
    private void leaveSanta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
       
       Member member = (Member) request.getSession().getAttribute("authentication");
       mypageService.leaveSanta(member.getMemberIdx());
+      wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
+      request.setAttribute("wishlist", wishlist);
        response.sendRedirect("/main/main");
    }
+
    
    /**
     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

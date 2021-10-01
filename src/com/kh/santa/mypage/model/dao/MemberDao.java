@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
+import com.kh.santa.common.file.FileDTO;
+import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
 import com.kh.santa.mypage.model.dto.Member;
 
 public class MemberDao {
@@ -18,7 +22,7 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,grade,photo";
 		
 		try {
 			String query = "select " + columns + " from member where user_id = ? and user_password = ? ";
@@ -44,7 +48,7 @@ public class MemberDao {
 	public Member memberAuthenticateByKakaoId(String kakaoId, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
 		
 		ResultSet rset = null;
 		
@@ -72,7 +76,7 @@ public class MemberDao {
 	public Member selectMemberById(String userId, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
 		
 		ResultSet rset = null;
 		
@@ -171,7 +175,7 @@ public class MemberDao {
 		
 		Member[] memberArr = new Member[9];
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
 		
 		ResultSet rset = null;
 		
@@ -200,23 +204,6 @@ public class MemberDao {
 		return memberArr;
 	}
 
-	public void leaveSanta(String memberIdx, Connection conn) {
-		
-		 PreparedStatement pstm = null;
-			
-			try {
-				String query = "DELETE FROM member WHERE member_idx = ? "; 
-				pstm = conn.prepareStatement(query);
-				pstm.setString(1, memberIdx);
-				pstm.executeUpdate();
-				
-			} catch (SQLException e) {
-	          throw new DataAccessException(e);
-			}finally {
-				template.close(pstm);
-			}
-	}
-
 	public boolean checkMemberById(String userId, Connection conn) {
 		PreparedStatement pstm = null;
 		String columns = "user_id";
@@ -243,13 +230,41 @@ public class MemberDao {
 		return false;
 	}
 	
+
+	   
+	   // member_idx로 멤버 찾기
+	public Member selectMemberByMemberIdx(String memberIdx, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,grade,photo";
+		
+		ResultSet rset = null;
+		
+		try {
+			String query = " select " + columns + " from member where member_idx = ? ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			rset = pstm.executeQuery(); 
+			if(rset.next()) {
+				member = convertRowToMember(columns, rset);
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return member;
+	}
 	
+	//마이페이지 수정
 	public void editMember(Member member, Connection conn) {
 		
 		PreparedStatement pstm = null;
 		
 		String query = "UPDATE member SET " +
-						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?, PHOTO =?, MEMBER_IDX=?"+
+						" USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?"+ 
 					   " WHERE member_idx = ?";
 		try {
 			pstm = conn.prepareStatement(query);
@@ -258,17 +273,122 @@ public class MemberDao {
 			pstm.setString(3, member.getPhone()); 
 			pstm.setString(4, member.getEmail());
 			pstm.setString(5, member.getAddress());
-			pstm.setString(6, member.getPhoto());
 			pstm.setString(6, member.getMemberIdx());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		} finally {
 			template.close(pstm);
-		}
-		
+		}	
 	}
 	
+	//마이페이지 수정(비번 변경안함)
+	public void editMemberExclusionPassword(Member member, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "UPDATE member SET " +
+						" NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?"+ 
+					   " WHERE member_idx = ?";
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getNickname());
+			pstm.setString(2, member.getPhone()); 
+			pstm.setString(3, member.getEmail());
+			pstm.setString(4, member.getAddress());
+			pstm.setString(5, member.getMemberIdx());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}	
+	}
+
+	//프로필 수정 (사진,코멘트)
+	public void updateprofile(Member member,List<FileDTO> fileDTOs, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		//사진경로
+		String photoPath = fileDTOs.get(0).getSavePath() + fileDTOs.get(0).getRenameFileName();
+		
+		String query = "UPDATE member SET " +
+						" PROFILE_CONTENT = ?, PHOTO = ? WHERE member_idx = ?";
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getProfileContent());
+			pstm.setString(2, photoPath);
+			pstm.setString(3, member.getMemberIdx()); 
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}	
+	}
+
+	//회원탈퇴 (sql 참조없이 삭제하는걸로 변경해야됨)
+	public void leaveSanta(String memberIdx, Connection conn) {
+		
+		 PreparedStatement pstm = null;
+			
+			try {
+				String query = "DELETE FROM member WHERE member_idx = ? "; 
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, memberIdx);
+				pstm.executeUpdate();
+				
+			} catch (SQLException e) {
+	          throw new DataAccessException(e);
+			}finally {
+				template.close(pstm);
+			}
+	}
+	
+	
+	//특정회원의 산 위시리스트 조회
+	public List<MountainWishlist> selectMountainWishlist(String memberIdx, Connection conn) {
+	      
+	      List<MountainWishlist> mountainWishlist = new ArrayList<MountainWishlist>();
+	      PreparedStatement pstm = null;
+	      ResultSet rset =null;
+	      String columns= "MT_IDX, MEMBER_IDX, MOUNTAIN_NAME";
+	      String sql ="SELECT "+columns+" FROM mountain_wishlist WHERE member_idx = ? order by mt_idx desc";
+	      
+	      try {
+	         pstm =conn.prepareStatement(sql);
+	         pstm.setString(1, memberIdx);
+	         rset = pstm.executeQuery();
+	         
+	         while(rset.next()) {
+	        	 MountainWishlist mountainWish = convertRowToMountainWishlist(columns.split(","),rset);
+	            mountainWishlist.add(mountainWish);
+	         }
+	      } catch (SQLException e) {
+	         throw new DataAccessException(e);
+	      }finally{
+	         template.close(rset,pstm);
+	      }
+	      return mountainWishlist;
+	   }
+	
+	 private MountainWishlist convertRowToMountainWishlist(String[] columns,ResultSet rset) throws SQLException {
+		 MountainWishlist whishlist = new MountainWishlist();
+	      for(int i=0; i<columns.length; i++) {
+	         
+	      String column=columns[i].toLowerCase();
+	      column=column.trim();
+	       switch(column) {
+	       case "mt_idx": whishlist.setMtIdx(rset.getString("mt_idx"));break;
+	       case "member_udx": whishlist.setMemberIdx(rset.getString("member_udx"));break;
+	       case "mountain_name": whishlist.setMountainName(rset.getString("mountain_name"));break;
+	         }
+	      }
+	      return whishlist;
+	   }
+	 
+	 
 	private Member convertRowToMember(String columns, ResultSet rset) throws SQLException {
 		Member member = new Member();
 		
@@ -326,4 +446,5 @@ public class MemberDao {
 		
 		return member;
 	}
+
 }
