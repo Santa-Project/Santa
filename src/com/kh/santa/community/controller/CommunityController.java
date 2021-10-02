@@ -25,7 +25,7 @@ import com.kh.santa.mypage.model.service.MyBoardService;
 public class CommunityController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CommunityService communityService = new CommunityService();
-       
+     MyBoardService  myboardService = new MyBoardService();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,31 +43,64 @@ public class CommunityController extends HttpServlet {
 		
 		switch(uriArr[uriArr.length-1]){
 		case "community" :
-			community(request,response);
+			community(request,response); 
+			break;
+		case "insertComment" :
+			insertComment(request,response); 
 			break;
 		default :
 			break;
 		}
 	}
 
+
+
 	private void community(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//인기유저
 		Member[] memberArr = communityService.selectPopularMember();
-		
-		for (int i = 0; i < memberArr.length; i++) {
-
-			System.out.println(memberArr[i]);
-		}
-
-		
+//			for (int i = 0; i < memberArr.length; i++) {
+//				System.out.println(memberArr[i]); 
+//			}
         request.setAttribute("memberArr", memberArr);
         
+        //인기게시판 
+        List<Object[]> res = new ArrayList<Object[]>();
+        List<MemberBoard> boardList = communityService.selectBoardTop4();
         
+        for (MemberBoard memberBoard : boardList) { 
+    	String boardIdx = memberBoard.getBoardIdx();
+        FileDTO file =communityService.selectFileDTOsTop4(boardIdx);
+        List<MemberBoardComment> commentList = communityService.selectBoardComentTop4(boardIdx);
+        Object[] ob = new Object[] {memberBoard, file,commentList};
+        res.add(ob);
+		}
+        request.getSession().setAttribute("res", res);
         request.getRequestDispatcher("/community/community").forward(request, response);
         
         
         }
 
+	
+	
+	
+	private void insertComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		Member member = (Member) request.getSession().getAttribute("authentication");
+	    String boardIdx =request.getParameter("boardIdx");
+	    String content = request.getParameter("content");
+	    MemberBoardComment comment = new MemberBoardComment();
+	    comment.setNickname(member.getNickname());
+	    comment.setMemberIdx(member.getMemberIdx());
+	    comment.setBoardIdx(boardIdx);
+	    comment.setContent(content);
+	    myboardService.insertComment(comment);
+	    request.getRequestDispatcher("/community/community").forward(request, response);
+	}
+	
+	
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
