@@ -19,9 +19,6 @@ public class CommunityDao {
 
 	JDBCTemplate template = JDBCTemplate.getInstance();
 	
-	
-	
-	//이거 반환하자낳여 서비스에서도 
 	public List<MemberBoard> selectBoardTop4(Connection conn) {
 		
 		List<MemberBoard> BoardArr = new ArrayList<MemberBoard>();
