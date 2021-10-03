@@ -39,9 +39,9 @@
             <div class="userlist_wrapper">
             <c:forEach items="${userList }" var="user" varStatus="status">
                 <div class="userlist1">
-                    <span>${user[2].nickname}</span>
-                    <p>user[1].mountainName</p>
-                    <p>user[1].region</p>
+                    <span>${user[2]}</span>
+                    <p>user[1].mtName</p>
+                    <p>user[1].mtRegion</p>
                     <p>user[0].mtDate</p>
                     <p>user[0].brdDate</p>
                     <button>초대</button>

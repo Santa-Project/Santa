@@ -22,7 +22,7 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
 		
 		try {
 			String query = "select " + columns + " from member where user_id = ? and user_password = ? ";
@@ -53,7 +53,7 @@ public class MemberDao {
 		
 		
 		try {
-			String query = " select member_idx from social_member where kakao_id = ? ";
+			String query = " select member_idx from social_login where kakao_id = ? ";
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, kakaoId);
@@ -75,7 +75,7 @@ public class MemberDao {
 	public Member selectMemberById(String userId, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
 		
 		ResultSet rset = null;
 		
@@ -102,7 +102,7 @@ public class MemberDao {
 	public Member selectMemberByIdx(String memberIdx, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login";
 		
 		ResultSet rset = null;
 		
@@ -130,8 +130,8 @@ public class MemberDao {
 		
 		PreparedStatement pstm = null;
 		
-		String query = "insert into social_member "
-				+ " values(sc_social_idx.nextval,sc_member_idx.currval,?)";
+		String query = "insert into social_login "
+				+ " values(sc_sl_idx.nextval,sc_member_idx.currval,?)";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -148,11 +148,11 @@ public class MemberDao {
 	public void insertMember(Member member, Connection conn) {
 		
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address";
 		
 		String query = "insert into member ( "
 				+ columns
-				+ " ) values(sc_member_idx.nextval, ?, ?, ? , ? , ? , ? , ?, ? ,sysdate,'N','US00') ";
+				+ " ) values(sc_member_idx.nextval, ?, ?, ? , ? , ? , ? , ?, ? ) ";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -176,18 +176,19 @@ public class MemberDao {
 	public void insertMemberWithKakao(Member member, Connection conn) {
 		
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,profile_photo";
 		
 		String query = "insert into member "
 				+ columns
 				+ " values(sc_member_idx.nextval, 'kakao' || sc_kakao_idx.nextval, "
-				+ "	?,'-','-',?,'-',?,'-',sysdate,'Y','US00') ";
+				+ "	?,'-',?, 'kakao' || sc_kakao_idx.currval ,'-',?,'-', ?) ";
 		
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, member.getEmail());
-			pstm.setString(2, member.getNickname());
+			pstm.setString(2, member.getUsername());
 			pstm.setString(3, member.getGender());
+			pstm.setString(4, member.getProfilePhoto());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
@@ -201,7 +202,7 @@ public class MemberDao {
 		
 		Member[] memberArr = new Member[9];
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
 		
 		ResultSet rset = null;
 		
@@ -299,14 +300,11 @@ public class MemberDao {
 			case "profile_content":
 				member.setProfileContent(rset.getString("profile_content"));
 				break;
-			case "photo":
-				member.setPhoto(rset.getString("photo"));
+			case "profile_photo":
+				member.setProfilePhoto(rset.getString("profile_photo"));
 				break;
 			case "social_login":
 				member.setSocialLogin(rset.getString("social_login"));
-				break;
-			case "grade":
-				member.setGrade(rset.getString("grade"));
 				break;
 			default: break;
 			}
@@ -377,7 +375,7 @@ public class MemberDao {
 	public Member selectMemberByMemberIdx(String memberIdx, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,grade,photo";
+		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,profile_photo";
 		
 		ResultSet rset = null;
 		
@@ -456,7 +454,7 @@ public class MemberDao {
 		String photoPath = fileDTOs.get(0).getSavePath() + fileDTOs.get(0).getRenameFileName();
 		
 		String query = "UPDATE member SET " +
-						" PROFILE_CONTENT = ?, PHOTO = ? WHERE member_idx = ?";
+						" PROFILE_CONTENT = ?, PROFILE_PHOTO = ? WHERE member_idx = ?";
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, member.getProfileContent());
@@ -495,7 +493,7 @@ public class MemberDao {
 	      List<MountainWishlist> mountainWishlist = new ArrayList<MountainWishlist>();
 	      PreparedStatement pstm = null;
 	      ResultSet rset =null;
-	      String columns= "MT_IDX, MEMBER_IDX, MOUNTAIN_NAME";
+	      String columns= "MT_IDX, MEMBER_IDX, MT_NAME";
 	      String sql ="SELECT "+columns+" FROM mountain_wishlist WHERE member_idx = ? order by mt_idx desc";
 	      
 	      try {
@@ -523,8 +521,8 @@ public class MemberDao {
 	      column=column.trim();
 	       switch(column) {
 	       case "mt_idx": whishlist.setMtIdx(rset.getString("mt_idx"));break;
-	       case "member_udx": whishlist.setMemberIdx(rset.getString("member_udx"));break;
-	       case "mountain_name": whishlist.setMountainName(rset.getString("mountain_name"));break;
+	       case "member_idx": whishlist.setMemberIdx(rset.getString("member_idx"));break;
+	       case "mt_name": whishlist.setMtName(rset.getString("mt_name"));break;
 	         }
 	      }
 	      return whishlist;
@@ -553,6 +551,33 @@ public class MemberDao {
 			template.close(rset,pstm);
 		}
 		return leaderNickName;
+	}
+
+	public Member selectMemberByNickname(String nickname, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login";
+		
+		ResultSet rset = null;
+		
+		try {
+			String query = " select " + columns + " from member where nickname = ? ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, nickname);
+			rset = pstm.executeQuery(); // -- 쿼리 조회 결과를 참조할 주소값을 받음
+			
+			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
+			if(rset.next()) {
+				member = convertRowToMember(columns, rset);
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return member;
 	}
 	
 	

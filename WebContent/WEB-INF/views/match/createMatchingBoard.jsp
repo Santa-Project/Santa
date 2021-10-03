@@ -15,17 +15,14 @@
             <div class="matching_nav1"></div>
             <div class="matching_nav2">
                 <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam">팀원모집</a></button>
-                <button class="matching_btn2" id="matching_btn"><a href="#">유저목록</a></button>
+                <button class="matching_btn2" id="matching_btn"><a href="/matching/matchingBoard">유저목록</a></button>
             </div>
             <div class="matching_nav3">
                 <div class="alarm_btn"><a href="#"><i class="fas fa-bell"></i></a></div>
                 <div class="alarm_sub">
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                    <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
+                    <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
+                        <a href="#">${matchingAlarm[1] } ${matchingAlarm[0].msg }</a>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -38,7 +35,7 @@
                         <p>산 선택</p>
                  		<select class="mt" name="mt" id="">
 	             		<c:forEach items="${mountainList }" var="mountain" varStatus="status">
-	             			<option value="${mountain.mtIdx}">${mountain.mountainName}</option>
+	             			<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	             		</c:forEach>
 	             		</select>
                     </div>
@@ -51,7 +48,7 @@
                         <input name="memberVolume"type="number" min="2" max="6" >
                     </div>
                     <div class="calendar">등산 일정
-                        <p>Date: <input name="mtDate" type="text" id="datepicker"></p>
+                        <p>Date: <input name="mtDate" type="date" id="datepicker"></p>
                     </div>
                 </div>
             </div>

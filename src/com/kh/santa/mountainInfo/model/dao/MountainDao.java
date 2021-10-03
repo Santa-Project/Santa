@@ -19,7 +19,7 @@ public class MountainDao {
 	  Mountain mountain = null;
 	  PreparedStatement pstm = null;
 	  ResultSet rset = null;
-	  String query = "select * from mountain where mtidx = ?";
+	  String query = "select * from mountain where mt_idx = ?";
 	  
 	  try {
 		 pstm = conn.prepareStatement(query);
@@ -45,13 +45,13 @@ public class MountainDao {
 		ResultSet rset = null;
 		  
 		try {
-			String query = "select mname from mountain where mtidx = ?";
+			String query = "select mt_name from mountain where mt_idx = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, Integer.parseInt(mtIdx));
 			rset = pstm.executeQuery();
 			
 			if(rset.next()) {
-				mountainName = rset.getString("mname");
+				mountainName = rset.getString("mt_name");
 			}
 		     
 		  } catch (SQLException e) {
@@ -66,9 +66,9 @@ public class MountainDao {
    private Mountain convertRowToMountain(ResultSet rset) throws SQLException {
 	   Mountain mountain = new Mountain();
       
-	   mountain.setMtIdx(String.valueOf(rset.getInt("MTIDX")));
-	   mountain.setMountainName(rset.getString("MNAME"));
-	   mountain.setLikedMountainCnt(rset.getInt("LIKED_MOUNTAIN_CNT"));
+	   mountain.setMtIdx(String.valueOf(rset.getInt("mt_idx")));
+	   mountain.setMtName(rset.getString("mt_name"));
+	   mountain.setLikedMountainCnt(rset.getInt("liked_mountain_cnt"));
 
 	   return mountain;
    }
@@ -108,7 +108,7 @@ public class MountainDao {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, mountain.getMtIdx());
 			pstm.setString(2, memberIdx);
-			pstm.setString(3, mountain.getMountainName());
+			pstm.setString(3, mountain.getMtName());
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -142,7 +142,7 @@ public class MountainDao {
 		List<Mountain> mountainList = new ArrayList<Mountain>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String query = "select * from mountain";
+		String query = "select mt_idx, mt_name from mountain";
 	
 		try {
 			pstm = conn.prepareStatement(query);
@@ -151,8 +151,8 @@ public class MountainDao {
 			while(rset.next()) {
 				Mountain mountain = new Mountain();
 				
-				mountain.setMtIdx(String.valueOf(rset.getInt("mtidx")));
-				mountain.setMountainName(rset.getString("mname"));
+				mountain.setMtIdx(String.valueOf(rset.getInt("mt_idx")));
+				mountain.setMtName(rset.getString("mt_name"));
 				mountainList.add(mountain);
 			}
 		  
@@ -168,7 +168,7 @@ public class MountainDao {
 	public void updateMountainLike(int updatedlike, Mountain mountain, Connection conn) {
 		PreparedStatement pstm = null;
 		
-		String query = "update mountain set liked_mountain_cnt = ? where mtidx = ?";
+		String query = "update mountain set liked_mountain_cnt = ? where mt_idx = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);

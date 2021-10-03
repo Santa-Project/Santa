@@ -120,6 +120,9 @@ public class MatchingController extends HttpServlet {
 	}
 	
 	private void createMatchingBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+		
+		getNotice(request);
+		
 		List<Mountain> mountainList = mountainService.searchAllMtIdxAndMtName();
 		request.setAttribute("mountainList", mountainList);
 		request.getRequestDispatcher("/match/createMatchingBoard").forward(request, response);
@@ -132,7 +135,7 @@ public class MatchingController extends HttpServlet {
 		matchingBoard.setMemberIdx(request.getParameter("memberIdx"));
 		matchingBoard.setMtIdx(request.getParameter("mt"));
 		matchingBoard.setBrdName(request.getParameter("brdName"));
-		matchingBoard.setMemberVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		matchingBoard.setMemVolume(Integer.parseInt(request.getParameter("memberVolume")));
 		matchingBoard.setMtDate(Date.valueOf(request.getParameter("mtDate")));
 		matchingBoard.setBrdContent(request.getParameter("brdContent"));
 		
@@ -177,7 +180,7 @@ public class MatchingController extends HttpServlet {
 		String mbIdx = request.getParameter("mbIdx");
 		mb.setMbIdx(mbIdx);
 		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
-		mb.setMemberVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMemVolume(Integer.parseInt(request.getParameter("memberVolume")));
 		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
 		//waitingList와 지원자 닉네임 & 지원자 idx 받아오기
 		List<Object[]> wlList = matchingBoardService.getWlList(mbIdx);
@@ -204,10 +207,10 @@ public class MatchingController extends HttpServlet {
 		mb.setMemberIdx(leaderIdx);
 		mb.setMbIdx(request.getParameter("mbIdx"));
 		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
-		mb.setMemberVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMemVolume(Integer.parseInt(request.getParameter("memberVolume")));
 		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
 		
-		if(mb.getMatchedMemCnt() + 1 > mb.getMemberVolume()) {
+		if(mb.getMatchedMemCnt() + 1 > mb.getMemVolume()) {
 			request.setAttribute("msg", "모집인원을 초과했습니다.");
 			request.setAttribute("url", "/matching/waitingList");
 			request.getRequestDispatcher("/common/result").forward(request, response);

@@ -15,10 +15,8 @@ public class Member {
 	private String address;
 	private Date registerDatetime;
 	private String profileContent;
-	private String photo;
+	private String profilePhoto;
 	private String socialLogin;
-	private String grade;
-	
 	public String getMemberIdx() {
 		return memberIdx;
 	}
@@ -85,11 +83,11 @@ public class Member {
 	public void setProfileContent(String profileContent) {
 		this.profileContent = profileContent;
 	}
-	public String getPhoto() {
-		return photo;
+	public String getProfilePhoto() {
+		return profilePhoto;
 	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 	public String getSocialLogin() {
 		return socialLogin;
@@ -97,21 +95,15 @@ public class Member {
 	public void setSocialLogin(String socialLogin) {
 		this.socialLogin = socialLogin;
 	}
-	public String getGrade() {
-		return grade;
-	}
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
 	@Override
 	public String toString() {
-		return "Member [memberIdx=" + memberIdx + ", userId=" + userId + ", email=" + email + ", userPassword=" + userPassword
-				+ ", username=" + username + ", nickname=" + nickname + ", phone=" + phone + ", gender=" + gender
-				+ ", address=" + address + ", registerDatetime=" + registerDatetime + ", profileContent="
-				+ profileContent + ", photo=" + photo + ", socialLogin=" + socialLogin + ", grade=" + grade + "]";
+		return "Member [memberIdx=" + memberIdx + ", userId=" + userId + ", email=" + email + ", userPassword="
+				+ userPassword + ", username=" + username + ", nickname=" + nickname + ", phone=" + phone + ", gender="
+				+ gender + ", address=" + address + ", registerDatetime=" + registerDatetime + ", profileContent="
+				+ profileContent + ", profilePhoto=" + profilePhoto + ", socialLogin=" + socialLogin + "]";
 	}
 	
-
+	
 	
 	
 	

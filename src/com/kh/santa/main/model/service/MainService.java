@@ -187,4 +187,17 @@ public class MainService {
 		return foundPw;
 	}
 
+	public Member selectMemberByNickname(String nickname) {
+		Member member = null;
+		Connection conn = template.getConnection();
+		
+		try {
+			member = memberDao.selectMemberByNickname(nickname, conn);
+		} finally {
+			template.close(conn);
+		}
+		
+		return member;
+	}
+
 }

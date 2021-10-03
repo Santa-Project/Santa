@@ -13,7 +13,7 @@
 <!-- fontawesome cdn -->
 <script src="https://kit.fontawesome.com/6fd6b71dc1.js"></script>
 
-
+<!-- reset css -->
 <link rel="stylesheet" href="${contextPath}/resources/css/reset.css">
 
 <%-- <script type="text/javascript" src="${contextPath}/resources/js/webUtil.js"></script> --%>

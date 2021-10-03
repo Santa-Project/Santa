@@ -2,9 +2,7 @@ package com.kh.santa.mypage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
-import com.kh.santa.main.model.service.MainService;
 import com.kh.santa.mountainInfo.model.dto.Mountain;
 import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
 import com.kh.santa.mountainInfo.model.service.MountainService;
@@ -27,7 +24,6 @@ import com.kh.santa.mypage.model.service.MypageService;
 import com.kh.santa.common.file.FileUtil;
 import com.kh.santa.common.file.MultiPartParams;
 
-import oracle.sql.DATE;
 
 import com.kh.santa.common.file.FileDTO;
 
@@ -39,7 +35,6 @@ public class MypageController extends HttpServlet {
    private static final long serialVersionUID = 1L;
    private MyBoardService myboardService = new MyBoardService();
    private FollowingService followingService = new FollowingService();
-   private MainService mainService = new MainService();
    private MypageService mypageService = new MypageService();
    private MountainService mountainService = new MountainService();
    private List<Mountain> mountainList = mountainService.searchAllMtIdxAndMtName();
@@ -191,7 +186,7 @@ public class MypageController extends HttpServlet {
       Member member = (Member) request.getSession().getAttribute("authentication");
       MemberBoard board = new MemberBoard();
       board.setMemberIdx(member.getMemberIdx());
-      board.setMtMountain(params.getParameter("mountlist"));
+      board.setMtName(params.getParameter("mountlist"));
       board.setMtRegion(params.getParameter("region"));
       board.setBoardComment(params.getParameter("writetext"));
       
@@ -216,7 +211,7 @@ public class MypageController extends HttpServlet {
       MemberBoardComment comment = new MemberBoardComment();
       comment.setNickname(member.getNickname());
       comment.setMemberIdx(member.getMemberIdx());
-      comment.setBoardIdx(boardIdx);
+      comment.setMemBoardIdx(boardIdx);
       comment.setContent(content);
       myboardService.insertComment(comment);
       mypageBoard(request,response);

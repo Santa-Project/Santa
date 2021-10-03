@@ -155,24 +155,24 @@ $(document).ready(function() {
 		 
 		try{
 			//mhashtag에 산테이블의 mname 기본값으로 들어가야함(db에서 지우지 말 것)
-			String sql = "select  *  from MOUNTAIN a full outer join mhashtag b on a.MNAME = b.MNAME where a.MNAME=b.MNAME and a.MNAME='" + searchinput + "'"; 
+			String sql = "select  *  from MOUNTAIN a full outer join MOUNTAIN_HASHTAG b on a.MT_NAME = b.MT_NAME where a.MT_NAME=b.MT_NAME and a.MT_NAME='" + searchinput + "'"; 
 			pstmt = connection.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mname = rs.getString("MNAME");
-				mmap = rs.getString("MMAP");
-				mlevel = rs.getString("MLEVEL");	
-				mhigh = rs.getString("MHIGH");
-				info = rs.getString("INFO");	
-				dinfo = rs.getString("DETAILINFO");
-				traffic = rs.getString("TRAFFIC");	
-				trip = rs.getString("TRIP");	
-				img = rs.getString("IMG");	
-				rimg1 = rs.getString("RIMG1");
-				rimg2 = rs.getString("RIMG2");
-				rimg3 = rs.getString("RIMG3");
-				rimg4 = rs.getString("RIMG4");
+				mname = rs.getString("MT_NAME");
+				mmap = rs.getString("MT_MAP");
+				mlevel = rs.getString("MT_LEVEL");	
+				mhigh = rs.getString("MT_HIGH");
+				info = rs.getString("MT_INFO");	
+				dinfo = rs.getString("MT_DETAIL_INFO");
+				traffic = rs.getString("MT_TRAFFIC");	
+				trip = rs.getString("MT_TRIP");	
+				img = rs.getString("MT_IMG");	
+				rimg1 = rs.getString("MT_SLIDE_IMG1");
+				rimg2 = rs.getString("MT_SLIDE_IMG2");
+				rimg3 = rs.getString("MT_SLIDE_IMG3");
+				rimg4 = rs.getString("MT_SLIDE_IMG4");
 				
 				hashtagcategory[cnt] = rs.getString("HASHTAG");
 				cnt++;

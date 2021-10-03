@@ -33,7 +33,7 @@
         <div class="mypage_profile">
             <div class="my_profile_padding">
                 <div class="my_profile1">
-                        <img id="selfie" src="http://localhost:7070/file/${authentication.photo}">
+                        <img id="selfie" src="http://localhost:7070/file/${authentication.profilePhoto}">
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
                            		<div id="my_introduce_id">${authentication.nickname} (${authentication.userId})</div>
@@ -62,7 +62,7 @@
                             <ul>
                             <c:forEach items='${wishlist}' var='wishlist' varStatus="status">
                                 <li id="my_wish_mountian_list_item">
-                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mountainName}
+                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}
                                 	<form action ="/mypage/deleteMountainwish" method="post" >
                                 	<input type="hidden" name="deletewish" value="${wishlist.mtIdx}">
                                 	<button type="submit" style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button>
@@ -75,7 +75,7 @@
                          <form action ="/mypage/insertMountainwish" id="my_wish_input" method="post">
                                 <select  id='mountain_name'name="insertwish">
                                      <c:forEach items="${mountainList}" var="mountain" varStatus="status">
-	                					<option value="${mountain.mtIdx}">${mountain.mountainName}</option>
+	                					<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	               					 </c:forEach>
                                 </select >
                                 <button type="submit"id="search_button">+</button>
@@ -98,7 +98,7 @@
                             <div class="col-xs-3">
                             	<select class="form-control" id='mountain_name'name='mountlist'>
                                      <c:forEach items="${mountainList}" var="mountain" varStatus="status">
-	                					<option value="${mountain.mountainName}">${mountain.mountainName}</option>
+	                					<option value="${mountain.mtName}">${mountain.mtName}</option>
 	               					 </c:forEach>
                                 </select >
                             </div> 

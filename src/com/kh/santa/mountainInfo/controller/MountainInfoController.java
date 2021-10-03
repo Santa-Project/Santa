@@ -85,8 +85,8 @@ public class MountainInfoController extends HttpServlet {
 
 //		Mountain mountain = null;
 
-//		if(request.getParameter("mname") != null) {
-//			String mtIdx  = request.getParameter("mname");
+//		if(request.getParameter("mtIdx") != null) {
+//			String mtIdx  = request.getParameter("mtIdx");
 //			mountain = mountainService.searchMountain(mtIdx);
 //			request.getSession().setAttribute("mountain", mountain);
 //		} else {
@@ -106,9 +106,24 @@ public class MountainInfoController extends HttpServlet {
 //			};
 //
 //		}
-
+		
+		Member member = (Member)request.getSession().getAttribute("authentication");
+		if(member == null) {
+			request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
+		}
+		
+		String memberIdx = member.getMemberIdx();
+		
+		if(request.getParameter("mtIdx") != null) {
+			String mtIdx  = request.getParameter("mtIdx");
+			if(mountainService.checkMountainWishlist(memberIdx,mtIdx)) {
+				request.getSession().setAttribute("like", true);
+			} else{
+				request.getSession().setAttribute("like", false);
+			};
+		}
+		
 		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
-
 		
 	}
 	

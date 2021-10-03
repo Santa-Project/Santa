@@ -29,7 +29,7 @@
         <div class="mypage_profile">
             <div class="my_profile_padding">
                 <div class="my_profile1">
-                         <img id="selfie" src="http://localhost:7070/file/${anotherMember.photo}">
+                         <img id="selfie" src="http://localhost:7070/file/${anotherMember.profilePhoto}">
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
                             <div id="my_introduce_id">${anotherMember.nickname} (${anotherMember.userId})</div>
@@ -57,7 +57,7 @@
                         <div id="my_wish_mountian_list_items" >
                             <ul id="my_wish_mountian_list_item">
                             <c:forEach items='${wishlist}' var='wishlist' varStatus="status">
-                                <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mountainName}<button style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button></li>
+                                <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}<button style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button></li>
                             </c:forEach>
                             </ul>
                         </div>
@@ -92,14 +92,14 @@
                                  <c:if test="false">
                                     <button class="board_content_side_item1" style="color:red "><i class="far fa-heart"></i>${others[0].liked}</button>
                                  </c:if>
-                                    <div class="board_content_side_item1">${objectArr[0].uploadDatetime} ,</div>
+                                    <div class="board_content_side_item1">${objectArr[0].uploadTime} ,</div>
                                     <div class="board_content_side_item1">${objectArr[0].mtRegion} ,</div>
-                                    <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
+                                    <div class="board_content_side_item1">${objectArr[0].mtName}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
                                    <div class="input_id" style="color:green">${authentication.nickname}</div>
                                    <form action="/mypage/insertComment" method="post">
-                                       <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${others[0].boardIdx}">
+                                       <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${others[0].memBoardIdx}">
                                        <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
                                    </form>
                                 </div>
@@ -133,10 +133,6 @@
                                           </c:if>
                                        </div>
 									</c:forEach>
-<<<<<<< HEAD
-                                    
-=======
->>>>>>> branch 'main' of https://github.com/Santa-Project/Santa
                                 </div>
                             </div>
                         </div>

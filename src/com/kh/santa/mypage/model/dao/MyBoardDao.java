@@ -23,13 +23,13 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       int res =0;
       
-      String sql = "INSERT INTO member_board(board_idx, member_idx, mt_region, mt_mountain, board_comment) VALUES(sc_board_idx.nextval,?,?,?,?)";
+      String sql = "INSERT INTO member_board(mem_board_idx, member_idx, mt_region, mt_name, board_comment) VALUES(sc_mem_board_idx.nextval,?,?,?,?)";
       
          try {
             pstm =conn.prepareStatement(sql);
             pstm.setString(1, board.getMemberIdx());
             pstm.setString(2, board.getMtRegion());
-            pstm.setString(3, board.getMtMountain());   
+            pstm.setString(3, board.getMtName());   
             pstm.setString(4, board.getBoardComment());
            res =  pstm.executeUpdate(); 
          } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class MyBoardDao {
    
    //파일넣기
    public int insertFile(FileDTO fileDTO, Connection conn) {
-      String sql ="INSERT INTO FILE_INFO(fl_idx,board_idx,origin_file_name,rename_file_name,save_path) VALUES(sc_file_idx.nextval,sc_board_idx.currval,?,?,?)"; 
+      String sql ="INSERT INTO FILE_INFO(fl_idx,mem_board_idx,origin_file_name,rename_file_name,save_path) VALUES(sc_file_idx.nextval,sc_board_idx.currval,?,?,?)"; 
       
       PreparedStatement pstm = null;
       int res =0;
@@ -67,7 +67,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       
       try {
-         String query = "DELETE FROM member_board WHERE board_idx = ? "; 
+         String query = "DELETE FROM member_board WHERE mem_board_idx = ? "; 
          pstm = conn.prepareStatement(query);
          pstm.setString(1, boardIdx);
          pstm.executeUpdate();
@@ -85,7 +85,7 @@ public class MyBoardDao {
          PreparedStatement pstm = null;
          
          try {
-            String query = "DELETE FROM file_info WHERE board_idx = ? "; 
+            String query = "DELETE FROM file_info WHERE mem_board_idx = ? "; 
             pstm = conn.prepareStatement(query);
             pstm.setString(1, boardIdx);
             pstm.executeUpdate();
@@ -103,7 +103,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
          
          try {
-            String query = "DELETE FROM member_board_comment WHERE board_idx = ? "; 
+            String query = "DELETE FROM member_board_comment WHERE mem_board_idx = ? "; 
             pstm = conn.prepareStatement(query);
             pstm.setString(1, boardidx);
             pstm.executeUpdate();
@@ -136,11 +136,11 @@ public class MyBoardDao {
       
       PreparedStatement pstm = null;
          
-         String sql = "INSERT INTO member_board_comment(comment_idx, board_idx, content, nickname, member_idx) VALUES(sc_comment_idx.nextval,?,?,?,?)";
+         String sql = "INSERT INTO member_board_comment(comment_idx, mem_board_idx, content, nickname, member_idx) VALUES(sc_comment_idx.nextval,?,?,?,?)";
          
             try {
                pstm =conn.prepareStatement(sql);
-               pstm.setString(1, comment.getBoardIdx());
+               pstm.setString(1, comment.getMemBoardIdx());
                pstm.setString(2, comment.getContent());
                pstm.setString(3, comment.getNickname());
                pstm.setString(4, comment.getMemberIdx());
@@ -185,10 +185,10 @@ public class MyBoardDao {
       FileDTO file = null;
       PreparedStatement pstm = null;
       ResultSet rset =null;
-      String columns ="board_idx,save_path,rename_file_name";
+      String columns ="mem_board_idx,save_path,rename_file_name";
       
       String sql ="SELECT " +columns
-            + " FROM file_info WHERE board_idx = ? ORDER BY board_idx ASC";
+            + " FROM file_info WHERE mem_board_idx = ? ORDER BY mem_board_idx ASC";
       
       try {
          pstm =conn.prepareStatement(sql);
@@ -213,10 +213,10 @@ public class MyBoardDao {
       List<MemberBoardComment> comments = new ArrayList<MemberBoardComment>();
       PreparedStatement pstm = null;
       ResultSet rset =null;
-      String columns ="comment_idx,board_idx,member_idx,nickname,content";
+      String columns ="comment_idx,mem_board_idx,member_idx,nickname,content";
       
       String sql ="SELECT " +columns
-            + " FROM member_board_comment WHERE board_idx=? order by COMMENT_DATETIME desc"; 
+            + " FROM member_board_comment WHERE mem_board_idx=? order by COMMENT_DATETIME desc"; 
       
       try {
          pstm =conn.prepareStatement(sql);
@@ -241,12 +241,12 @@ public class MyBoardDao {
       
       MemberBoard board = new MemberBoard();
       board = new MemberBoard();
-      board.setBoardIdx(rset.getString("board_idx"));
+      board.setBoardIdx(rset.getString("mem_board_idx"));
       board.setMemberIdx(rset.getString("member_idx"));
       board.setLiked(rset.getInt("liked"));
-      board.setUploadDatetime(rset.getDate("upload_datetime"));
+      board.setUploadTime(rset.getDate("upload_datetime"));
       board.setMtRegion(rset.getString("mt_region"));
-      board.setMtMountain(rset.getString("mt_mountain"));
+      board.setMtName(rset.getString("mt_name"));
       board.setBoardComment(rset.getString("board_comment"));
       return board;
    }
@@ -259,7 +259,7 @@ public class MyBoardDao {
       column=column.trim();
        switch(column) {
        case "fl_idx": fileDTO.setFlIdx(rset.getString("fl_idx"));break;
-       case "board_idx": fileDTO.setBoardIdx(rset.getString("board_idx"));break;
+       case "mem_board_idx": fileDTO.setMemBoardIdx(rset.getString("mem_board_idx"));break;
        case "save_path": fileDTO.setSavePath(rset.getString("save_path"));break;
        case "origin_file_name": fileDTO.setOriginFileName(rset.getString("origin_file_name"));break;
        case "rename_file_name": fileDTO.setRenameFileName(rset.getString("rename_file_name"));break;
@@ -277,7 +277,7 @@ public class MyBoardDao {
       column=column.trim();
        switch(column) {
        case "comment_idx": comment.setCommentIdx(rset.getString("comment_idx"));break;
-       case "board_idx": comment.setBoardIdx(rset.getString("board_idx"));break;
+       case "mem_board_idx": comment.setMemBoardIdx(rset.getString("mem_board_idx"));break;
        case "member_idx": comment.setMemberIdx(rset.getString("member_idx"));break;
        case "content": comment.setContent(rset.getString("content"));break;
        case "comment_datetime": comment.setCommentDatetime(rset.getDate("comment_datetime"));break;

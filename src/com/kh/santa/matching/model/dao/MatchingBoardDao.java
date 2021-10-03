@@ -24,7 +24,8 @@ public class MatchingBoardDao {
 	public MatchingBoard selectMatchingBoardByIdx(String mbIdx,Connection conn) {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "MB_IDX,MEMBER_IDX,MT_IDX,MATCH_STATUS,BRD_NAME,MT_DATE,BRD_DATE,MEMBER_VOLUME,MATCHED_MEM_CNT,BRD_CONTENT";
+		String columns = "mb_idx,member_idx,mt_idx,match_status,brd_name,mt_date,brd_date,mem_volume,matched_mem_cnt,brd_content";
+
 		MatchingBoard matchingBoard = null;
 			try {
 			
@@ -50,7 +51,7 @@ public class MatchingBoardDao {
 		List<MatchingBoard> matchingBoardList = new ArrayList<MatchingBoard>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "MB_IDX,MEMBER_IDX,MT_IDX,MATCH_STATUS,BRD_NAME,MT_DATE,BRD_DATE,MEMBER_VOLUME,MATCHED_MEM_CNT,BRD_CONTENT";
+		String columns = "mb_idx,member_idx,mt_idx,match_status,brd_name,mt_date,brd_date,mem_volume,matched_mem_cnt,brd_content";
 		
 		try {
 			
@@ -102,8 +103,8 @@ public class MatchingBoardDao {
 			case "BRD_DATE":
 				matchingBoard.setBrdDate(rset.getDate("BRD_DATE"));
 				break;
-			case "MEMBER_VOLUME":
-				matchingBoard.setMemberVolume(rset.getInt("MEMBER_VOLUME"));
+			case "MEM_VOLUME":
+				matchingBoard.setMemVolume(rset.getInt("MEM_VOLUME"));
 				break;
 			case "MATCHED_MEM_CNT":
 				matchingBoard.setMatchedMemCnt(rset.getInt("MATCHED_MEM_CNT"));
@@ -122,7 +123,7 @@ public class MatchingBoardDao {
 	public void insertMatchingBoard(MatchingBoard matchingBoard, Connection conn) {
 		
 		PreparedStatement pstm = null;
-		String columns = "MB_IDX,MEMBER_IDX,MT_IDX,BRD_NAME,MT_DATE,MEMBER_VOLUME,BRD_CONTENT";
+		String columns = "MB_IDX,MEMBER_IDX,MT_IDX,BRD_NAME,MT_DATE,MEM_VOLUME,BRD_CONTENT";
 		
 		String query = "insert into matching_board ( "
 				+ columns
@@ -134,7 +135,7 @@ public class MatchingBoardDao {
 			pstm.setString(2, matchingBoard.getMtIdx());
 			pstm.setString(3, matchingBoard.getBrdName());
 			pstm.setDate(4, matchingBoard.getMtDate());
-			pstm.setInt(5, matchingBoard.getMemberVolume());
+			pstm.setInt(5, matchingBoard.getMemVolume());
 			pstm.setString(6, matchingBoard.getBrdContent());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
@@ -147,7 +148,7 @@ public class MatchingBoardDao {
 
 	public void insertNotice(String mbIdx, String msg, String memberIdx, Connection conn) {
 		PreparedStatement pstm = null;
-		String columns = "ma_idx,mb_idx,msg,sender";
+		String columns = "ma_idx,mb_idx,msg,sender_idx";
 		
 		String query = "insert into MATCHING_ALARM ( "
 				+ columns
@@ -171,7 +172,7 @@ public class MatchingBoardDao {
 		List<MatchingCompleteList> mclList = new ArrayList<MatchingCompleteList>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "list_idx,member_idx,mb_idx";
+		String columns = "mcl_idx,member_idx,mb_idx";
 		
 		try {
 			
@@ -203,8 +204,8 @@ public class MatchingBoardDao {
 		for (String column : columnsArr) {
 			
 			switch(column) {
-			case "list_idx":
-				matchingCompleteList.setListIdx(rset.getString("list_idx"));
+			case "mcl_idx":
+				matchingCompleteList.setMclIdx(rset.getString("mcl_idx"));
 				break;
 			case "member_idx":
 				matchingCompleteList.setMemberIdx(rset.getString("member_idx"));
@@ -228,7 +229,7 @@ public class MatchingBoardDao {
 		
 		String query = "insert into WAITING_LIST ( "
 				+ columns
-				+ " ) values(sc_ml_idx.nextval, ?, ?) ";
+				+ " ) values(sc_wl_idx.nextval, ?, ?) ";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -263,7 +264,7 @@ public class MatchingBoardDao {
 	public void insertMatchingCompleteList(String memberIdx, MatchingBoard mb, Connection conn) {
 		PreparedStatement pstm = null;
 		
-		String query = "insert into matching_complete_list values (sc_list_idx.nextval, ?, ?)";
+		String query = "insert into matching_complete_list values (sc_mcl_idx.nextval, ?, ?)";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -332,7 +333,7 @@ public class MatchingBoardDao {
 	public void insertMatchingAlarmReject(String memberIdx, String mbIdx, String msg, String leaderIdx, Connection conn) {
 		PreparedStatement pstm = null;
 		
-		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender, rejected_mem_idx) values (sc_ma_idx.nextval, ?, ?, ?, ?)";
+		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender_idx, rejected_mem_idx) values (sc_ma_idx.nextval, ?, ?, ?, ?)";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -351,7 +352,7 @@ public class MatchingBoardDao {
 	public void insertMatchingAlarm(String leaderIdx, String mbIdx, String msg, Connection conn) {
 		PreparedStatement pstm = null;
 		
-		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender) values (sc_ma_idx.nextval, ?, ?, ?)";
+		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender_idx) values (sc_ma_idx.nextval, ?, ?, ?)";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -371,7 +372,7 @@ public class MatchingBoardDao {
 		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "ma_idx,mb_idx,msg,send_date,sender";
+		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx";
 		String query = "select " + columns + " from MATCHING_ALARM where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
 		
 		try {
@@ -387,7 +388,7 @@ public class MatchingBoardDao {
 				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
 				matchingAlarm.setMsg(rset.getString("msg")); 
 				matchingAlarm.setSendDate(rset.getDate("send_date")); 
-				matchingAlarm.setSender(rset.getString("sender"));
+				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
 				maList.add(matchingAlarm);
 				
 			}
@@ -412,7 +413,7 @@ public class MatchingBoardDao {
 				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
 				matchingAlarm.setMsg(rset.getString("msg")); 
 				matchingAlarm.setSendDate(rset.getDate("send_date"));
-				matchingAlarm.setSender(rset.getString("sender"));
+				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
 				matchingAlarm.setRejectedMemIdx(rset.getString("rejected_mem_idx"));
 				maList.add(matchingAlarm);
 				
@@ -431,7 +432,7 @@ public class MatchingBoardDao {
 		List<MatchingCompleteList> mclList = new ArrayList<MatchingCompleteList>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "list_idx,member_idx,mb_idx";
+		String columns = "mcl_idx,member_idx,mb_idx";
 		
 		try {
 			

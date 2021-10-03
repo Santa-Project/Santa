@@ -1,16 +1,16 @@
 package com.kh.santa.mypage.model.dto;
 
-public class SocialMember {
+public class SocialLogin {
 	
-	private String socialIdx;
+	private String slIdx;
 	private String memberIdx;
 	private String kakaoId;
 	
-	public String getSocialIdx() {
-		return socialIdx;
+	public String getSlIdx() {
+		return slIdx;
 	}
-	public void setSocialIdx(String socialIdx) {
-		this.socialIdx = socialIdx;
+	public void setSlIdx(String slIdx) {
+		this.slIdx = slIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -24,9 +24,12 @@ public class SocialMember {
 	public void setKakaoId(String kakaoId) {
 		this.kakaoId = kakaoId;
 	}
+	
 	@Override
 	public String toString() {
-		return "SocialMember [socialIdx=" + socialIdx + ", memberIdx=" + memberIdx + ", kakaoId=" + kakaoId + "]";
+		return "SocialMember [slIdx=" + slIdx + ", memberIdx=" + memberIdx + ", kakaoId=" + kakaoId + "]";
 	}
+	
+	
 	
 }

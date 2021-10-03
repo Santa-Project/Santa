@@ -3,39 +3,117 @@ package com.kh.santa.mountainInfo.model.dto;
 public class Mountain {
 	
 	private String mtIdx;
-	private String mountainName;
-	private String info;
-	private String region;
+	private String mtName;
+	private String mtMap;
+	private String mtInfo;
+	private String mtDetailInfo;
+	private String mtRegion;
+	private int mtHigh;
+	private String mtLevel;
+	private String mtTripTime;
+	private String mtTraffic;
+	private String mtTrip;
+	private String mtImg;
+	private String mtSlideImg1;
+	private String mtSlideImg2;
+	private String mtSlideImg3;
+	private String mtSlideImg4;
 	private int likedMountainCnt;
-	private String level;
-	private String totalDistance;
-	private String totalTime;
-	private String traffic;
-	private String recommendRoute;
-	
 	public String getMtIdx() {
 		return mtIdx;
 	}
 	public void setMtIdx(String mtIdx) {
 		this.mtIdx = mtIdx;
 	}
-	public String getMountainName() {
-		return mountainName;
+	public String getMtName() {
+		return mtName;
 	}
-	public void setMountainName(String mountainName) {
-		this.mountainName = mountainName;
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
 	}
-	public String getInfo() {
-		return info;
+	public String getMtMap() {
+		return mtMap;
 	}
-	public void setInfo(String info) {
-		this.info = info;
+	public void setMtMap(String mtMap) {
+		this.mtMap = mtMap;
 	}
-	public String getRegion() {
-		return region;
+	public String getMtInfo() {
+		return mtInfo;
 	}
-	public void setRegion(String region) {
-		this.region = region;
+	public void setMtInfo(String mtInfo) {
+		this.mtInfo = mtInfo;
+	}
+	public String getMtDetailInfo() {
+		return mtDetailInfo;
+	}
+	public void setMtDetailInfo(String mtDetailInfo) {
+		this.mtDetailInfo = mtDetailInfo;
+	}
+	public String getMtRegion() {
+		return mtRegion;
+	}
+	public void setMtRegion(String mtRegion) {
+		this.mtRegion = mtRegion;
+	}
+	public int getMtHigh() {
+		return mtHigh;
+	}
+	public void setMtHigh(int mtHigh) {
+		this.mtHigh = mtHigh;
+	}
+	public String getMtLevel() {
+		return mtLevel;
+	}
+	public void setMtLevel(String mtLevel) {
+		this.mtLevel = mtLevel;
+	}
+	public String getMtTripTime() {
+		return mtTripTime;
+	}
+	public void setMtTripTime(String mtTripTime) {
+		this.mtTripTime = mtTripTime;
+	}
+	public String getMtTraffic() {
+		return mtTraffic;
+	}
+	public void setMtTraffic(String mtTraffic) {
+		this.mtTraffic = mtTraffic;
+	}
+	public String getMtTrip() {
+		return mtTrip;
+	}
+	public void setMtTrip(String mtTrip) {
+		this.mtTrip = mtTrip;
+	}
+	public String getMtImg() {
+		return mtImg;
+	}
+	public void setMtImg(String mtImg) {
+		this.mtImg = mtImg;
+	}
+	public String getMtSlideImg1() {
+		return mtSlideImg1;
+	}
+	public void setMtSlideImg1(String mtSlideImg1) {
+		this.mtSlideImg1 = mtSlideImg1;
+	}
+	public String getMtSlideImg2() {
+		return mtSlideImg2;
+	}
+	public void setMtSlideImg2(String mtSlideImg2) {
+		this.mtSlideImg2 = mtSlideImg2;
+	}
+	public String getMtSlideImg3() {
+		return mtSlideImg3;
+	}
+	public void setMtSlideImg3(String mtSlideImg3) {
+		this.mtSlideImg3 = mtSlideImg3;
+	}
+	public String getMtSlideImg4() {
+		return mtSlideImg4;
+	}
+	public void setMtSlideImg4(String mtSlideImg4) {
+		this.mtSlideImg4 = mtSlideImg4;
 	}
 	public int getLikedMountainCnt() {
 		return likedMountainCnt;
@@ -43,41 +121,14 @@ public class Mountain {
 	public void setLikedMountainCnt(int likedMountainCnt) {
 		this.likedMountainCnt = likedMountainCnt;
 	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	public String getTotalDistance() {
-		return totalDistance;
-	}
-	public void setTotalDistance(String totalDistance) {
-		this.totalDistance = totalDistance;
-	}
-	public String getTotalTime() {
-		return totalTime;
-	}
-	public void setTotalTime(String totalTime) {
-		this.totalTime = totalTime;
-	}
-	public String getTraffic() {
-		return traffic;
-	}
-	public void setTraffic(String traffic) {
-		this.traffic = traffic;
-	}
-	public String getRecommendRoute() {
-		return recommendRoute;
-	}
-	public void setRecommendRoute(String recommendRoute) {
-		this.recommendRoute = recommendRoute;
-	}
 	@Override
 	public String toString() {
-		return "Mountain [mtIdx=" + mtIdx + ", mountainName=" + mountainName + ", info=" + info + ", region=" + region
-				+ ", likedMountainCnt=" + likedMountainCnt + ", level=" + level + ", totalDistance=" + totalDistance
-				+ ", totalTime=" + totalTime + ", traffic=" + traffic + ", recommendRoute=" + recommendRoute + "]";
+		return "Mountain [mtIdx=" + mtIdx + ", mtName=" + mtName + ", mtMap=" + mtMap + ", mtInfo=" + mtInfo
+				+ ", mtDetailInfo=" + mtDetailInfo + ", mtRegion=" + mtRegion + ", mtHigh=" + mtHigh + ", mtLevel="
+				+ mtLevel + ", mtTripTime=" + mtTripTime + ", mtTraffic=" + mtTraffic + ", mtTrip=" + mtTrip
+				+ ", mtImg=" + mtImg + ", mtSlideImg1=" + mtSlideImg1 + ", mtSlideImg2=" + mtSlideImg2
+				+ ", mtSlideImg3=" + mtSlideImg3 + ", mtSlideImg4=" + mtSlideImg4 + ", likedMountainCnt="
+				+ likedMountainCnt + "]";
 	}
 	
 	

@@ -34,6 +34,10 @@ public class MatchingBoardService {
 			mbList = matchingBoardDao.selectMatchingBoardList(conn);
 			
 			for (MatchingBoard mb : mbList) {
+				if(mb.getMbIdx()==null) {
+					return null;
+				}
+				
 				Object[] mbListAndLeader = new Object[3];
 				mbListAndLeader[0] = mb;
 				mbListAndLeader[1] = memberDao.selectNicknameByIdx(mb.getMemberIdx(), conn);
@@ -137,7 +141,7 @@ public class MatchingBoardService {
 				Collections.sort(matchingAlarmList);
 				for (MatchingAlarm matchingAlarm : matchingAlarmList) {
 					Object[] oArr = new Object[2];
-					String leaderNickname = memberDao.selectNicknameByIdx(matchingAlarm.getSender(), conn);
+					String leaderNickname = memberDao.selectNicknameByIdx(matchingAlarm.getSenderIdx(), conn);
 					oArr[0] = matchingAlarm;
 					oArr[1] = leaderNickname;
 					maList.add(oArr);

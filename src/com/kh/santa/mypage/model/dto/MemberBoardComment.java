@@ -6,11 +6,11 @@ import java.sql.Date;
 public class MemberBoardComment {
 
 	private String commentIdx;
-	private String boardIdx;
+	private String nickname;
 	private String memberIdx;
+	private String memBoardIdx;
 	private String content;
 	private Date commentDatetime;
-	private String nickname;
 	
 	public String getCommentIdx() {
 		return commentIdx;
@@ -18,18 +18,23 @@ public class MemberBoardComment {
 	public void setCommentIdx(String commentIdx) {
 		this.commentIdx = commentIdx;
 	}
-	
-	public String getBoardIdx() {
-		return boardIdx;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setBoardIdx(String boardIdx) {
-		this.boardIdx = boardIdx;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
 	}
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
+	}
+	public String getMemBoardIdx() {
+		return memBoardIdx;
+	}
+	public void setMemBoardIdx(String memBoardIdx) {
+		this.memBoardIdx = memBoardIdx;
 	}
 	public String getContent() {
 		return content;
@@ -43,17 +48,14 @@ public class MemberBoardComment {
 	public void setCommentDatetime(Date commentDatetime) {
 		this.commentDatetime = commentDatetime;
 	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+	
 	@Override
 	public String toString() {
-		return "MemberBoardComment [commentIdx=" + commentIdx + ", boardIdx=" + boardIdx + ", memberIdx=" + memberIdx
-				+ ", content=" + content + ", commentDatetime=" + commentDatetime + ", nickname=" + nickname + "]";
+		return "MemberBoardComment [commentIdx=" + commentIdx + ", nickname=" + nickname + ", memberIdx=" + memberIdx
+				+ ", memBoardIdx=" + memBoardIdx + ", content=" + content + ", commentDatetime=" + commentDatetime
+				+ "]";
 	}
+	
 	
 	
 }
