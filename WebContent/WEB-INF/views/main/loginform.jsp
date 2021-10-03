@@ -5,6 +5,7 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/main/style_login.css">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <style>
     :root{
     --body-background-color: #fff;
@@ -82,7 +83,6 @@ function kakaoLogin() {
     
     document.body.appendChild(form);
 	
-	console.log(Kakao);
 	// 토큰 생성
 	Kakao.Auth.login({
 		scope:'profile_nickname,profile_image,account_email,gender',

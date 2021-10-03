@@ -166,8 +166,10 @@ public class MainController extends HttpServlet {
 			}
 			//카카오 프로필 사진은 url로 넘어옴
 			//프로필 사진 동의받았으면 db에 추가 아니면 '-'
-			if(request.getParameter("photo") != null) {
-				member.setProfilePhoto(request.getParameter("profile_photo")); 
+			if(request.getParameter("profile_photo") != null) {
+				System.out.println(request.getParameter("profile_photo"));
+				member.setProfilePhoto(request.getParameter("profile_photo"));
+				
 			} else {
 				member.setProfilePhoto("-"); 
 			}

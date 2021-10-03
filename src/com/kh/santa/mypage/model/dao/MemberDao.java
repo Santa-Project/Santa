@@ -131,7 +131,7 @@ public class MemberDao {
 		PreparedStatement pstm = null;
 		
 		String query = "insert into social_login "
-				+ " values(sc_sl_idx.nextval,sc_member_idx.currval,?)";
+				+ " values(sc_social_idx.nextval,sc_member_idx.currval,?)";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -178,9 +178,9 @@ public class MemberDao {
 		PreparedStatement pstm = null;
 		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,profile_photo";
 		
-		String query = "insert into member "
+		String query = "insert into member ( "
 				+ columns
-				+ " values(sc_member_idx.nextval, 'kakao' || sc_kakao_idx.nextval, "
+				+ " ) values(sc_member_idx.nextval, 'kakao' || sc_kakao_idx.nextval, "
 				+ "	?,'-',?, 'kakao' || sc_kakao_idx.currval ,'-',?,'-', ?) ";
 		
 		try {
@@ -493,7 +493,7 @@ public class MemberDao {
 	      List<MountainWishlist> mountainWishlist = new ArrayList<MountainWishlist>();
 	      PreparedStatement pstm = null;
 	      ResultSet rset =null;
-	      String columns= "MT_IDX, MEMBER_IDX, MT_NAME";
+	      String columns= "mt_idx, member_idx, mt_name";
 	      String sql ="SELECT "+columns+" FROM mountain_wishlist WHERE member_idx = ? order by mt_idx desc";
 	      
 	      try {
@@ -531,12 +531,11 @@ public class MemberDao {
 	public String selectNicknameByIdx(String memberIdx, Connection conn) {
 		String leaderNickName = "";
 		PreparedStatement pstm = null;
-		String columns = "nickname";
 		
 		ResultSet rset = null;
 		
 		try {
-			String query = " select " + columns + " from member where member_idx = ? ";
+			String query = " select nickname from member where member_idx = ? ";
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, memberIdx);

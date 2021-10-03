@@ -28,12 +28,13 @@ public class MatchingBoardService {
 	public List<Object[]> getMatchingBoardList() {
 		Connection conn = template.getConnection();
 		List<Object[]> matchingBoardList = new ArrayList<Object[]>();
-		List<MatchingBoard> mbList = new ArrayList<MatchingBoard>();
+		List<MatchingBoard> mbList = null;
 		
 		try {
 			mbList = matchingBoardDao.selectMatchingBoardList(conn);
 			
 			for (MatchingBoard mb : mbList) {
+				System.out.println(mb);
 				if(mb.getMbIdx()==null) {
 					return null;
 				}

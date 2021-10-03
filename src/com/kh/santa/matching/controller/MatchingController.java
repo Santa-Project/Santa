@@ -83,7 +83,7 @@ public class MatchingController extends HttpServlet {
 		
 		// 매칭보드리스트
 		List<Object[]> matchingBoardList = matchingBoardService.getMatchingBoardList();
-		
+		System.out.println(matchingBoardList);
 		request.getSession().setAttribute("matchingBoardList", matchingBoardList);
 		
 		request.getRequestDispatcher("/match/matching_main").forward(request, response);

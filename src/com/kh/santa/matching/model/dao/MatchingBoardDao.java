@@ -60,7 +60,7 @@ public class MatchingBoardDao {
 			pstm = conn.prepareStatement(query);
 			rset = pstm.executeQuery();
 			
-			while (rset.next()) {
+			while(rset.next()) {
 				
 				matchingBoardList.add(convertRowToMatchingBoard(columns,rset));
 				
@@ -71,10 +71,12 @@ public class MatchingBoardDao {
 		} finally {
 			template.close(rset, pstm);
 		}
+		
 		return matchingBoardList;
 	}
 
 	private MatchingBoard convertRowToMatchingBoard(String columns, ResultSet rset) throws SQLException {
+		
 		MatchingBoard matchingBoard = new MatchingBoard();
 		
 		String[] columnsArr = columns.split(",");
@@ -82,35 +84,35 @@ public class MatchingBoardDao {
 		for (String column : columnsArr) {
 			
 			switch(column) {
-			case "MB_IDX":
-				matchingBoard.setMbIdx(rset.getString("MB_IDX"));
+			case "mb_idx":
+				matchingBoard.setMbIdx(rset.getString("mb_idx"));
 				break;
-			case "MEMBER_IDX":
-				matchingBoard.setMemberIdx(rset.getString("MEMBER_IDX"));
+			case "member_idx":
+				matchingBoard.setMemberIdx(rset.getString("member_idx"));
 				break;
-			case "MT_IDX":
-				matchingBoard.setMtIdx(rset.getString("MT_IDX"));
+			case "mt_idx":
+				matchingBoard.setMtIdx(rset.getString("mt_idx"));
 				break;
-			case "MATCH_STATUS":
-				matchingBoard.setMatchStatus(rset.getString("MATCH_STATUS"));
+			case "match_status":
+				matchingBoard.setMatchStatus(rset.getString("match_status"));
 				break;
-			case "BRD_NAME":
-				matchingBoard.setBrdName(rset.getString("BRD_NAME"));
+			case "brd_name":
+				matchingBoard.setBrdName(rset.getString("brd_name"));
 				break;
-			case "MT_DATE":
-				matchingBoard.setMtDate(rset.getDate("MT_DATE"));
+			case "mt_date":
+				matchingBoard.setMtDate(rset.getDate("mt_date"));
 				break;
-			case "BRD_DATE":
-				matchingBoard.setBrdDate(rset.getDate("BRD_DATE"));
+			case "brd_date":
+				matchingBoard.setBrdDate(rset.getDate("brd_date"));
 				break;
-			case "MEM_VOLUME":
-				matchingBoard.setMemVolume(rset.getInt("MEM_VOLUME"));
+			case "mem_volume":
+				matchingBoard.setMemVolume(rset.getInt("mem_volume"));
 				break;
-			case "MATCHED_MEM_CNT":
-				matchingBoard.setMatchedMemCnt(rset.getInt("MATCHED_MEM_CNT"));
+			case "matched_mem_cnt":
+				matchingBoard.setMatchedMemCnt(rset.getInt("matched_mem_cnt"));
 				break;
-			case "BRD_CONTENT":
-				matchingBoard.setBrdContent(rset.getString("BRD_CONTENT"));
+			case "brd_content":
+				matchingBoard.setBrdContent(rset.getString("brd_content"));
 				break;
 			default: break;
 			}
@@ -123,7 +125,7 @@ public class MatchingBoardDao {
 	public void insertMatchingBoard(MatchingBoard matchingBoard, Connection conn) {
 		
 		PreparedStatement pstm = null;
-		String columns = "MB_IDX,MEMBER_IDX,MT_IDX,BRD_NAME,MT_DATE,MEM_VOLUME,BRD_CONTENT";
+		String columns = "mb_idx,member_idx,mt_idx,brd_name,mt_date,mem_volume,brd_content";
 		
 		String query = "insert into matching_board ( "
 				+ columns
@@ -247,7 +249,7 @@ public class MatchingBoardDao {
 	public void deleteWaitingListByWlIdx(String wlIdx, Connection conn) {
 		PreparedStatement pstm = null;
 		
-		String query = "delete from WAITING_LIST where wl_idx = ? ";
+		String query = "delete from waiting_list where wl_idx = ? ";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -373,7 +375,7 @@ public class MatchingBoardDao {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
 		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx";
-		String query = "select " + columns + " from MATCHING_ALARM where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
+		String query = "select " + columns + " from matching_alarm where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
 		
 		try {
 			
@@ -401,7 +403,7 @@ public class MatchingBoardDao {
 		
 		try {
 
-			query = "select " + columns + ",rejected_mem_idx from MATCHING_ALARM where rejected_mem_idx = ? and (send_date + interval '7' day) > sysdate";
+			query = "select " + columns + ",rejected_mem_idx from matching_alarm where rejected_mem_idx = ? and (send_date + interval '7' day) > sysdate";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, memberIdx);
 			rset = pstm.executeQuery();
@@ -436,7 +438,7 @@ public class MatchingBoardDao {
 		
 		try {
 			
-			String query = "select " + columns + " from MATCHING_COMPLETE_LIST where mb_idx = ? ";
+			String query = "select " + columns + " from matching_complete_list where mb_idx = ? ";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, mbIdx);
 			rset = pstm.executeQuery();
@@ -494,22 +496,22 @@ public class MatchingBoardDao {
 				findingMember.setFmIdx(rset.getString("fm_idx"));
 				break;
 			case "member_idx":
-				findingMember.setMemberIdx(rset.getString("MEMBER_IDX"));
+				findingMember.setMemberIdx(rset.getString("member_idx"));
 				break;
 			case "mt_idx":
-				findingMember.setMtIdx(rset.getString("MT_IDX"));
+				findingMember.setMtIdx(rset.getString("mt_idx"));
 				break;
 			case "matching_status":
 				findingMember.setMatchingStatus(rset.getString("matching_status"));
 				break;
 			case "brd_name":
-				findingMember.setBrdName(rset.getString("BRD_NAME"));
+				findingMember.setBrdName(rset.getString("brd_name"));
 				break;
 			case "mt_date":
-				findingMember.setMtDate(rset.getDate("MT_DATE"));
+				findingMember.setMtDate(rset.getDate("mt_date"));
 				break;
 			case "brd_date":
-				findingMember.setBrdDate(rset.getDate("BRD_DATE"));
+				findingMember.setBrdDate(rset.getDate("brd_date"));
 				break;
 			default: break;
 			}
