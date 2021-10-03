@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
-import com.kh.santa.matching.model.dto.MatchingAlarm;
 import com.kh.santa.matching.model.dto.MatchingBoard;
 import com.kh.santa.matching.model.service.MatchingBoardService;
 import com.kh.santa.mountainInfo.model.dto.Mountain;
@@ -53,8 +52,24 @@ public class MatchingController extends HttpServlet {
 		case "createMatchingBoard.do" :
 			createMatchingBoardDo(request,response);
 			break;
-		case "notice" :
+		case "create_notice" :
 			notice(request,response);
+			break;
+		case "application" :
+			application(request,response);
+			break;
+		case "managingTeam" :
+			waitingList(request,response);
+			break;
+		case "accept" :
+			confirm(request,response);
+			break;
+		case "reject" :
+			reject(request,response);
+			break;
+			
+		case "userList" :
+			userlist(request,response);
 			break;
 		default :
 			break;
@@ -63,9 +78,20 @@ public class MatchingController extends HttpServlet {
 	
 	
 	private void matching_main(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-		//MATCHING_COMPLETE_LIST(list_idx-매칭완료리스트idx,member_idx-매칭된 회원idx,mb_idx-매칭게시판idx)
 		
+		getNotice(request);
+		
+		// 매칭보드리스트
 		List<Object[]> matchingBoardList = matchingBoardService.getMatchingBoardList();
+		
+		request.getSession().setAttribute("matchingBoardList", matchingBoardList);
+		
+		request.getRequestDispatcher("/match/matching_main").forward(request, response);
+		
+	}
+	
+	
+	private void getNotice(HttpServletRequest request){
 		
 		String memberIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx();
 		
@@ -74,23 +100,21 @@ public class MatchingController extends HttpServlet {
 		if(matchingAlarmList!=null) {
 			request.setAttribute("matchingAlarmList", matchingAlarmList);
 		}
-		
-		request.setAttribute("matchingBoardList", matchingBoardList);
-		
-		request.getRequestDispatcher("/match/matching_main").forward(request, response);
-
-		
 	}
-	
-	
+
 	private void matchingBoard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+		
+		getNotice(request);
+		
 		String mbIdx = request.getParameter("mbIdx");
 		System.out.println(mbIdx);
 		System.out.println("matchingBoard가 호출되었습니다  ");
 		
 		Object[] matchingBoard = matchingBoardService.getMatchingBoard(mbIdx);
+		List<Member> memberList = matchingBoardService.getMemberList(mbIdx);
 		
 		request.setAttribute("matchingBoard", matchingBoard);
+		request.setAttribute("memberList", memberList);
 		request.getRequestDispatcher("/match/matchingBoard").forward(request, response);
 		
 	}
@@ -128,6 +152,99 @@ public class MatchingController extends HttpServlet {
 		matchingBoardService.sendNotice(mbIdx,msg,memberIdx);
 		
 		matchingBoard(request,response);
+	}
+	
+	//팀원모집 - 지원
+	private void application(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+	
+		// memberIdx
+		String memberIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx();
+		// mbIdx
+		String mbIdx = request.getParameter("mbIdx");
+		
+		matchingBoardService.applyForMatching(memberIdx,mbIdx);
+		
+		matchingBoard(request,response);
+	}
+	
+	
+	private void waitingList(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+		
+		getNotice(request);
+		
+		MatchingBoard mb = new MatchingBoard();
+		
+		String mbIdx = request.getParameter("mbIdx");
+		mb.setMbIdx(mbIdx);
+		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
+		mb.setMemberVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
+		//waitingList와 지원자 닉네임 & 지원자 idx 받아오기
+		List<Object[]> wlList = matchingBoardService.getWlList(mbIdx);
+		
+		if(wlList!=null) {
+			request.setAttribute("wlList", wlList);
+		}
+		
+		request.getRequestDispatcher("/match/managingTeam").forward(request, response);
+		
+		
+		
+		
+	}
+	
+	// 방장의 대기목록 컨펌
+	private void confirm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+		
+		//matchingBoard(mbIdx,mtDate,memberVolume,matchedMemCnt), memberIdx 받기
+		String memberIdx = request.getParameter("memberIdx"); // 지원자idx
+		String wlIdx = request.getParameter("wlIdx"); // 대기목록idx
+		MatchingBoard mb = new MatchingBoard();
+		String leaderIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx(); // 방장(sender)idx
+		mb.setMemberIdx(leaderIdx);
+		mb.setMbIdx(request.getParameter("mbIdx"));
+		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
+		mb.setMemberVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
+		
+		if(mb.getMatchedMemCnt() + 1 > mb.getMemberVolume()) {
+			request.setAttribute("msg", "모집인원을 초과했습니다.");
+			request.setAttribute("url", "/matching/waitingList");
+			request.getRequestDispatcher("/common/result").forward(request, response);
+		}
+		
+		matchingBoardService.confirmMatching(wlIdx, mb, memberIdx);
+		
+		waitingList(request,response);
+		
+	}
+	
+	// 방장의 대기목록 거절
+	private void reject(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+	
+		//wlIdx, mbIdx, memberIdx 받기
+		String wlIdx = request.getParameter("wlIdx");
+		String mbIdx = request.getParameter("mbIdx");
+		String leaderIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx(); // 방장(sender)idx
+		String memberIdx = request.getParameter("memberIdx"); // 지원자idx
+		
+		matchingBoardService.rejectMatching(wlIdx, mbIdx, memberIdx, leaderIdx);
+		
+		waitingList(request,response);
+		
+	}
+	
+	private void userlist(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		
+		getNotice(request);
+		
+		// user리스트
+		List<Object[]> userList = matchingBoardService.getUserList();
+		
+		request.getSession().setAttribute("userList", userList);
+		
+		request.getRequestDispatcher("/match/userList").forward(request, response);
+		
 	}
 	
 

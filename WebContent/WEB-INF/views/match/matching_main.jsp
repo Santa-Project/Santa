@@ -21,12 +21,9 @@
                 <div class="alarm_btn">
                     <a href="#"><i class="fas fa-bell"></i></a>
                     <div class="alarm_sub">
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
+                    <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
+                        <a href="#">${matchingAlarm[1] } ${matchingAlarm[0].msg }</a>
+                    </c:forEach>
                     </div>
                 </div>
             </div>

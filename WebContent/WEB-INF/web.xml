@@ -55,5 +55,9 @@
  	<exception-type>com.kh.santa.common.exception.HandlableException</exception-type>
  	<location>/exception-handler</location>
  	</error-page>
+ 	
+ 	<session-config>
+ 		<session-timeout>60</session-timeout>
+ 	</session-config>
   
 </web-app>

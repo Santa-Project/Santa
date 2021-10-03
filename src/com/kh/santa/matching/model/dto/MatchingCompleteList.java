@@ -1,10 +1,13 @@
 package com.kh.santa.matching.model.dto;
 
+import java.sql.Date;
+
 public class MatchingCompleteList {
 	
 	private String listIdx;
 	private String memberIdx;
 	private String mbIdx;
+	
 	public String getListIdx() {
 		return listIdx;
 	}
@@ -25,8 +28,9 @@ public class MatchingCompleteList {
 	}
 	@Override
 	public String toString() {
-		return "MatchingComplateList [listIdx=" + listIdx + ", memberIdx=" + memberIdx + ", mbIdx=" + mbIdx + "]";
+		return "MatchingCompleteList [listIdx=" + listIdx + ", memberIdx=" + memberIdx + ", mbIdx=" + mbIdx + "]";
 	}
+	
 	
 	
 	

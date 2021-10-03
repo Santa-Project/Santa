@@ -10,9 +10,11 @@ import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
+import com.kh.santa.matching.model.dto.FindingMember;
 import com.kh.santa.matching.model.dto.MatchingAlarm;
 import com.kh.santa.matching.model.dto.MatchingBoard;
 import com.kh.santa.matching.model.dto.MatchingCompleteList;
+import com.kh.santa.matching.model.dto.WaitingList;
 
 public class MatchingBoardDao {
 	
@@ -145,7 +147,7 @@ public class MatchingBoardDao {
 
 	public void insertNotice(String mbIdx, String msg, String memberIdx, Connection conn) {
 		PreparedStatement pstm = null;
-		String columns = "ma_idx,brd_idx,msg,sender";
+		String columns = "ma_idx,mb_idx,msg,sender";
 		
 		String query = "insert into MATCHING_ALARM ( "
 				+ columns
@@ -218,26 +220,103 @@ public class MatchingBoardDao {
 		return matchingCompleteList;
 	}
 
-	public MatchingAlarm selectMatchingAlarm(String mbIdx, Connection conn) {
-		MatchingAlarm matchingAlarm = null;
+	
+
+	public void insertWaitingList(String memberIdx, String mbIdx, Connection conn) {
+		PreparedStatement pstm = null;
+		String columns = "wl_idx,mb_idx,member_idx";
+		
+		String query = "insert into WAITING_LIST ( "
+				+ columns
+				+ " ) values(sc_ml_idx.nextval, ?, ?) ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			pstm.setString(2, memberIdx);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+
+	public void deleteWaitingListByWlIdx(String wlIdx, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "delete from WAITING_LIST where wl_idx = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, wlIdx);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+
+	public void insertMatchingCompleteList(String memberIdx, MatchingBoard mb, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "insert into matching_complete_list values (sc_list_idx.nextval, ?, ?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, mb.getMtIdx());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+
+	public void updateMatchingBoard(MatchingBoard mb, int matchedMemCnt, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "update matching_board set matched_mem_cnt = ? where mb_idx = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, matchedMemCnt);
+			pstm.setString(2, mb.getMbIdx());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+
+	public List<WaitingList> selectWaitingListByMbIdx(String mbIdx, Connection conn) {
+		List<WaitingList> wlList = new ArrayList<WaitingList>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "ma_idx,mb_idx,msg,sender";
 		
 		try {
 			
-			String query = "select " + columns + " from MATCHING_ALARM where mb_idx = ? ";
+			String query = "select wl_idx, mb_idx, member_idx from waiting_list where mb_idx = ? ";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, mbIdx);
 			rset = pstm.executeQuery();
 			
-			if (rset.next()) {
+			while (rset.next()) {
 				
-				matchingAlarm = new MatchingAlarm();
-				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
-				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
-				matchingAlarm.setMsg(rset.getString("msg")); 
-				matchingAlarm.setSender(rset.getString("sender")); 
+				WaitingList wl = new WaitingList();
+				
+				wl.setWlIdx(rset.getString("wl_idx"));
+				wl.setMbIdx(rset.getString("mb_idx"));
+				wl.setMemberIdx(rset.getString("member_idx"));
+				
+				wlList.add(wl);
 				
 			}
 			
@@ -247,7 +326,196 @@ public class MatchingBoardDao {
 			template.close(rset, pstm);
 		}
 		
-		return matchingAlarm;
+		return wlList;
+	}
+
+	public void insertMatchingAlarmReject(String memberIdx, String mbIdx, String msg, String leaderIdx, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender, rejected_mem_idx) values (sc_ma_idx.nextval, ?, ?, ?, ?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			pstm.setString(2, msg);
+			pstm.setString(3, leaderIdx);
+			pstm.setString(4, memberIdx);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void insertMatchingAlarm(String leaderIdx, String mbIdx, String msg, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "insert into matching_alarm (ma_idx, mb_idx, msg, sender) values (sc_ma_idx.nextval, ?, ?, ?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			pstm.setString(2, msg);
+			pstm.setString(3, leaderIdx);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
+	
+	public List<MatchingAlarm> selectMatchingAlarmList(String mbIdx, String memberIdx, Connection conn) {
+		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "ma_idx,mb_idx,msg,send_date,sender";
+		String query = "select " + columns + " from MATCHING_ALARM where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
+		
+		try {
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				MatchingAlarm matchingAlarm = new MatchingAlarm();
+				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
+				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
+				matchingAlarm.setMsg(rset.getString("msg")); 
+				matchingAlarm.setSendDate(rset.getDate("send_date")); 
+				matchingAlarm.setSender(rset.getString("sender"));
+				maList.add(matchingAlarm);
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		try {
+
+			query = "select " + columns + ",rejected_mem_idx from MATCHING_ALARM where rejected_mem_idx = ? and (send_date + interval '7' day) > sysdate";
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				MatchingAlarm matchingAlarm = new MatchingAlarm();
+				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
+				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
+				matchingAlarm.setMsg(rset.getString("msg")); 
+				matchingAlarm.setSendDate(rset.getDate("send_date"));
+				matchingAlarm.setSender(rset.getString("sender"));
+				matchingAlarm.setRejectedMemIdx(rset.getString("rejected_mem_idx"));
+				maList.add(matchingAlarm);
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return maList;
+	}
+
+	public List<MatchingCompleteList> selectMatchingCompleteListByMbIdx(String mbIdx, Connection conn) {
+		List<MatchingCompleteList> mclList = new ArrayList<MatchingCompleteList>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "list_idx,member_idx,mb_idx";
+		
+		try {
+			
+			String query = "select " + columns + " from MATCHING_COMPLETE_LIST where mb_idx = ? ";
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				mclList.add(convertRowToMatchingCompleteList(columns, rset));
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return mclList;
+	}
+
+	public List<FindingMember> selectFindingMemberList(Connection conn) {
+		List<FindingMember> findingMemberList = new ArrayList<FindingMember>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "fm_idx,member_idx,mt_idx,matching_status,brd_name,mt_date,brd_date";
+		
+		try {
+			
+			String query = "select " + columns + " from finding_member order by fm_idx desc";
+			pstm = conn.prepareStatement(query);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				findingMemberList.add(convertRowToFindingMember(columns,rset));
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return findingMemberList;
+	}
+	
+	private FindingMember convertRowToFindingMember(String columns, ResultSet rset) throws SQLException {
+		FindingMember findingMember = new FindingMember();
+		
+		String[] columnsArr = columns.split(",");
+		
+		for (String column : columnsArr) {
+			
+			switch(column) {
+			case "fm_idx":
+				findingMember.setFmIdx(rset.getString("fm_idx"));
+				break;
+			case "member_idx":
+				findingMember.setMemberIdx(rset.getString("MEMBER_IDX"));
+				break;
+			case "mt_idx":
+				findingMember.setMtIdx(rset.getString("MT_IDX"));
+				break;
+			case "matching_status":
+				findingMember.setMatchingStatus(rset.getString("matching_status"));
+				break;
+			case "brd_name":
+				findingMember.setBrdName(rset.getString("BRD_NAME"));
+				break;
+			case "mt_date":
+				findingMember.setMtDate(rset.getDate("MT_DATE"));
+				break;
+			case "brd_date":
+				findingMember.setBrdDate(rset.getDate("BRD_DATE"));
+				break;
+			default: break;
+			}
+			
+		}
+		
+		return findingMember;
 	}
 	
 }

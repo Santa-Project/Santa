@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.santa.common.code.ErrorCode;
-import com.kh.santa.common.code.member.MemberGrade;
 import com.kh.santa.common.exception.HandlableException;
 import com.kh.santa.mypage.model.dto.Member;
 
@@ -82,7 +81,7 @@ public class AuthorizationFilter implements Filter {
 		if(member == null) {
 			
 			if(uriArr[2].equals("logout")) {
-				throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
+				throw new HandlableException(ErrorCode.REDIRECT_LOGIN_PAGE);
 			}
 			
 			return;
@@ -139,8 +138,8 @@ public class AuthorizationFilter implements Filter {
 		case "collectTeam":
 			collectTeam(httpRequest, httpReponse, uriArr, member);
 			break;
-		case "findingMember":
-			findingTeam(httpRequest, httpReponse, uriArr, member);
+		case "userList":
+			userlist(httpRequest, httpReponse, uriArr, member);
 			break;
 			
 		}
@@ -152,9 +151,7 @@ public class AuthorizationFilter implements Filter {
 	
 	private void collectTeam(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr, Member member) {
 		
-		MemberGrade userGrade = MemberGrade.valueOf(member.getGrade());
-		
-		if(userGrade.DESC.equals("boardMaster")) return;
+		if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
 		
 		switch(uriArr[3]) {
 		case "modify_board_form":
@@ -177,13 +174,17 @@ public class AuthorizationFilter implements Filter {
 		
 	}
 
-	private void findingTeam(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr, Member member) {
+	private void userlist(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr, Member member) {
 		
-		MemberGrade userGrade = MemberGrade.valueOf(member.getGrade());
+		if(httpRequest.getParameter("memberIdx").equals(member.getMemberIdx())) return;
 		
-		// fmUser인 경우 findingTeam 기능들에 접근할 권한 가짐
-		if(userGrade.DESC.equals("fmUser")) return;
-		if(userGrade.DESC.equals("boardMaster&fmUser")) return;
+		
+		/*
+		 * MemberGrade userGrade = MemberGrade.valueOf(member.getGrade());
+		 * 
+		 * // fmUser인 경우 findingTeam 기능들에 접근할 권한 가짐 if(userGrade.DESC.equals("fmUser"))
+		 * return; if(userGrade.DESC.equals("boardMaster&fmUser")) return;
+		 */
 		
 		/*
 		 * findingMember 게시판 생성한 유저 

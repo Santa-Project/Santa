@@ -1,22 +1,22 @@
 package com.kh.santa.matching.model.dto;
 
-import oracle.sql.DATE;
+import java.sql.Date;
 
 public class FindingMember {
 	
-	private String mftIdx;
+	private String fmIdx;
 	private String memberIdx;
-	private String chatListIdx;
+	private String mtIdx;
 	private String matchingStatus;
 	private String brdName;
-	private DATE brdSearch;
-	private DATE brdDate;
-	private String region;
-	public String getMftIdx() {
-		return mftIdx;
+	private Date mtDate;
+	private Date brdDate;
+	
+	public String getFmIdx() {
+		return fmIdx;
 	}
-	public void setMftIdx(String mftIdx) {
-		this.mftIdx = mftIdx;
+	public void setFmIdx(String fmIdx) {
+		this.fmIdx = fmIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -24,11 +24,11 @@ public class FindingMember {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getChatListIdx() {
-		return chatListIdx;
+	public String getMtIdx() {
+		return mtIdx;
 	}
-	public void setChatListIdx(String chatListIdx) {
-		this.chatListIdx = chatListIdx;
+	public void setMtIdx(String mtIdx) {
+		this.mtIdx = mtIdx;
 	}
 	public String getMatchingStatus() {
 		return matchingStatus;
@@ -42,30 +42,25 @@ public class FindingMember {
 	public void setBrdName(String brdName) {
 		this.brdName = brdName;
 	}
-	public DATE getBrdSearch() {
-		return brdSearch;
+	public Date getMtDate() {
+		return mtDate;
 	}
-	public void setBrdSearch(DATE brdSearch) {
-		this.brdSearch = brdSearch;
+	public void setMtDate(Date mtDate) {
+		this.mtDate = mtDate;
 	}
-	public DATE getBrdDate() {
+	public Date getBrdDate() {
 		return brdDate;
 	}
-	public void setBrdDate(DATE brdDate) {
+	public void setBrdDate(Date brdDate) {
 		this.brdDate = brdDate;
-	}
-	public String getRegion() {
-		return region;
-	}
-	public void setRegion(String region) {
-		this.region = region;
 	}
 	@Override
 	public String toString() {
-		return "FindingMember [mftIdx=" + mftIdx + ", memberIdx=" + memberIdx + ", chatListIdx=" + chatListIdx
-				+ ", matchingStatus=" + matchingStatus + ", brdName=" + brdName + ", brdSearch=" + brdSearch
-				+ ", brdDate=" + brdDate + ", region=" + region + "]";
+		return "FindingMember [fmIdx=" + fmIdx + ", memberIdx=" + memberIdx + ", mtIdx=" + mtIdx + ", matchingStatus="
+				+ matchingStatus + ", brdName=" + brdName + ", mtDate=" + mtDate + ", brdDate=" + brdDate + "]";
 	}
+	
+	
 	
 	
 	

@@ -94,6 +94,8 @@
 					$("#video1").attr("src", "/resources/img/main/newmain/video-river.mp4");
 			})}
 		});
+		
+		
 	</script>
 
 </body>
