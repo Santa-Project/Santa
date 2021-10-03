@@ -35,7 +35,7 @@
                 <div class="alarm_btn"><a href="#"><i class="fas fa-bell"></i></a></div>
                 <div class="alarm_sub">
                 <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
-                	<a href="#">AAAA님이 1번방으로 초대했습니다.</a>
+                	<a href="#">방장 : ${matchingAlarm[1] }<br>${matchingAlarm[0].msg }</a>
                 </c:forEach>
                 </div>
             </div>

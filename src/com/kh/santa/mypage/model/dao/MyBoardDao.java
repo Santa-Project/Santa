@@ -159,7 +159,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       ResultSet rset =null;
       
-      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by UPLOAD_DATETIME desc";
+      String sql ="SELECT * FROM member_board WHERE member_idx = ? order by UPLOAD_TIME desc";
       
       try {
          pstm =conn.prepareStatement(sql);

@@ -33,7 +33,7 @@
                 <div class="section_left">
                     <div class="mt_choice">
                         <p>산 선택</p>
-                 		<select class="mt" name="mt" id="">
+                 		<select class="mt" name="mt" id="selectedMountain">
 	             		<c:forEach items="${mountainList }" var="mountain" varStatus="status">
 	             			<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	             		</c:forEach>
@@ -46,7 +46,7 @@
                 <div class="section_right">
                     <div class="member_count">
                     	<p>모집 인원</p>
-                        <input name="memberVolume"type="number" min="2" max="6" >
+                        <input name="memberVolume"type="number" min="2" max="6" id="memberVolume" >
                     </div>
                     <div class="calendar">
                         <p>등산 일정: </p><input name="mtDate" type="date" id="datepicker">

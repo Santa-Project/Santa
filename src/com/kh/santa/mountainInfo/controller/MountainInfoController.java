@@ -108,6 +108,7 @@ public class MountainInfoController extends HttpServlet {
 //		}
 		
 		Member member = (Member)request.getSession().getAttribute("authentication");
+		
 		if(member == null) {
 			request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
 		}
@@ -130,9 +131,17 @@ public class MountainInfoController extends HttpServlet {
 	private void like(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Member member = (Member)request.getSession().getAttribute("authentication");
 		String memberIdx = member.getMemberIdx();
-		Mountain mountain = (Mountain)request.getSession().getAttribute("mountain");
+		
+		Mountain mountain = new Mountain();
+		String mtIdx = request.getParameter("mtIdx");
+		String mtName = request.getParameter("mtName");
+		System.out.println(mtIdx);
+		System.out.println(mtName);
+		mountain.setMtIdx(mtIdx);
+		mountain.setMtName(mtName);
 
 		String like = request.getParameter("like");
+		System.out.println(like);
 
 		if(like.equals("true")) {
 			// mountain_wishlist에 추가
@@ -143,7 +152,7 @@ public class MountainInfoController extends HttpServlet {
 			request.getSession().setAttribute("like", false);
 		}
 		
-		response.sendRedirect("/mountainInfo/mtInfoDetail");
+		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
 
 		
 	}

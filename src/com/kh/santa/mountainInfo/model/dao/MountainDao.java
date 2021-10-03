@@ -106,9 +106,9 @@ public class MountainDao {
 
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, mountain.getMtIdx());
-			pstm.setString(2, memberIdx);
-			pstm.setString(3, mountain.getMtName());
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, mountain.getMtName());
+			pstm.setString(3, mountain.getMtIdx());
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {

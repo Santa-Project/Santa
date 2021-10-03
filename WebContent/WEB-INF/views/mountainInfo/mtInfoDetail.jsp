@@ -136,6 +136,7 @@ $(document).ready(function() {
 		ResultSet rs = null;   
 		PreparedStatement pstmt = null;
 		
+		String mtIdx = null;
 		String mname = null;	
 		String mmap = null;
 		String mlevel = null;
@@ -160,6 +161,7 @@ $(document).ready(function() {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				mtIdx = rs.getString("MT_IDX");
 				mname = rs.getString("MT_NAME");
 				mmap = rs.getString("MT_MAP");
 				mlevel = rs.getString("MT_LEVEL");	
@@ -314,24 +316,41 @@ $(document).ready(function() {
 	(function(){
 	
 		var form = document.createElement("form");
-		form.setAttribute("method", "post");  //get 방식
+		form.setAttribute("method", "get");  
 		document.body.appendChild(form);
-	
-		if("${not empty authentication}"){
-			document.querySelector(".like").addEventListener('click',function(){
-	
+		
+		if(${not empty authentication}){
+			document.querySelector(".like").addEventListener('click',function(e){
+				
+				let mt_idx = document.createElement("input");
+				mt_idx.name = "mtIdx";
+				mt_idx.setAttribute("value","<%=mtIdx%>");
+				mt_idx.setAttribute("type","hidden");
+				form.appendChild(mt_idx);
+				
+				let mt_name = document.createElement("input");
+				mt_name.name = "mtName";
+				mt_name.setAttribute("value","<%=mname%>");
+				mt_name.setAttribute("type","hidden");
+				form.appendChild(mt_name);
+				
+				let like = document.createElement("input");
+				like.name = "like";
+				like.setAttribute("type","hidden");
+				form.appendChild(like);
 				if("${sessionScope.like}"){
-					form.setAttribute("action", `/mountainInfo/like?like=${!sessionScope.like}`); //요청 보낼 주소
-					form.submit();
-	
+					like.setAttribute("value","${!sessionScope.like}");
+
 				} else {
-					form.setAttribute("action", `/mountainInfo/like?like=${sessionScope.like}`); //요청 보낼 주소
-					form.submit();
+					like.setAttribute("value","${sessionScope.like}");
 				}
-	
+				
+				form.setAttribute("action", "/mountainInfo/like"); //요청 보낼 주소
+				form.submit();
+		
 			})
 		}
-		})
+		
 
 	})();
 </script>
