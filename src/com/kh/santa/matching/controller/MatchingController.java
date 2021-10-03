@@ -94,7 +94,7 @@ public class MatchingController extends HttpServlet {
 	private void getNotice(HttpServletRequest request){
 		
 		String memberIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx();
-		
+		System.out.println(memberIdx);
 		//Object[0]=>MatchingAlarm object, Object[1]=>방장닉네임
 		List<Object[]> matchingAlarmList = matchingBoardService.getNotice(memberIdx);
 		if(matchingAlarmList!=null) {

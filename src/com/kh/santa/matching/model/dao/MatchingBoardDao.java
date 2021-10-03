@@ -370,65 +370,7 @@ public class MatchingBoardDao {
 		
 	}
 	
-	public List<MatchingAlarm> selectMatchingAlarmList(String mbIdx, String memberIdx, Connection conn) {
-		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
-		PreparedStatement pstm = null;
-		ResultSet rset = null;
-		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx";
-		String query = "select " + columns + " from matching_alarm where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
-		
-		try {
-			
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, mbIdx);
-			rset = pstm.executeQuery();
-			
-			while (rset.next()) {
-				
-				MatchingAlarm matchingAlarm = new MatchingAlarm();
-				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
-				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
-				matchingAlarm.setMsg(rset.getString("msg")); 
-				matchingAlarm.setSendDate(rset.getDate("send_date")); 
-				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
-				maList.add(matchingAlarm);
-				
-			}
-			
-		} catch (Exception e) {
-			throw new DataAccessException(e);
-		} finally {
-			template.close(rset, pstm);
-		}
-		
-		try {
-
-			query = "select " + columns + ",rejected_mem_idx from matching_alarm where rejected_mem_idx = ? and (send_date + interval '7' day) > sysdate";
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, memberIdx);
-			rset = pstm.executeQuery();
-			
-			while (rset.next()) {
-				
-				MatchingAlarm matchingAlarm = new MatchingAlarm();
-				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
-				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
-				matchingAlarm.setMsg(rset.getString("msg")); 
-				matchingAlarm.setSendDate(rset.getDate("send_date"));
-				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
-				matchingAlarm.setRejectedMemIdx(rset.getString("rejected_mem_idx"));
-				maList.add(matchingAlarm);
-				
-			}
-			
-		} catch (Exception e) {
-			throw new DataAccessException(e);
-		} finally {
-			template.close(rset, pstm);
-		}
-		
-		return maList;
-	}
+	
 
 	public List<MatchingCompleteList> selectMatchingCompleteListByMbIdx(String mbIdx, Connection conn) {
 		List<MatchingCompleteList> mclList = new ArrayList<MatchingCompleteList>();
@@ -519,6 +461,115 @@ public class MatchingBoardDao {
 		}
 		
 		return findingMember;
+	}
+	
+	// 매칭 성사 또는 매칭완료 게시글 알림
+	public List<MatchingAlarm> selectMatchingAlarmList(String mbIdx, Connection conn) {
+		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx,rejected_mem_idx";
+		String query = "select " + columns + " from matching_alarm "
+				+ " where mb_idx = ? and rejected_mem_idx is null and (send_date + interval '7' day) > sysdate";
+		
+		try {
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, mbIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				MatchingAlarm matchingAlarm = new MatchingAlarm();
+				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
+				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
+				matchingAlarm.setMsg(rset.getString("msg")); 
+				matchingAlarm.setSendDate(rset.getDate("send_date")); 
+				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
+				maList.add(matchingAlarm);
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return maList;
+	}
+	
+	//방장인 경우 보낸 알림 리스트
+	public List<MatchingAlarm> selectMatchingAlarmListLeader(String memberIdx, Connection conn) {
+		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx,rejected_mem_idx";
+		String query = "select " + columns + " from matching_alarm "
+				+ " where sender_idx = ? and (send_date + interval '7' day) > sysdate";
+		
+		try {
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				MatchingAlarm matchingAlarm = new MatchingAlarm();
+				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
+				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
+				matchingAlarm.setMsg(rset.getString("msg")); 
+				matchingAlarm.setSendDate(rset.getDate("send_date")); 
+				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
+				maList.add(matchingAlarm);
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return maList;
+	}
+	
+	//거절 알림 리스트
+	public List<MatchingAlarm> selectMatchingAlarmListRejected(String memberIdx, Connection conn) {
+		List<MatchingAlarm> maList = new ArrayList<MatchingAlarm>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "ma_idx,mb_idx,msg,send_date,sender_idx,rejected_mem_idx";
+		String query = "select " + columns + " from matching_alarm "
+				+ " where rejected_mem_idx = ? and (send_date + interval '7' day) > sysdate";
+		
+		try {
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				
+				MatchingAlarm matchingAlarm = new MatchingAlarm();
+				matchingAlarm.setMaIdx(rset.getString("ma_idx")); 
+				matchingAlarm.setMbIdx(rset.getString("mb_idx")); 
+				matchingAlarm.setMsg(rset.getString("msg")); 
+				matchingAlarm.setSendDate(rset.getDate("send_date")); 
+				matchingAlarm.setSenderIdx(rset.getString("sender_idx"));
+				matchingAlarm.setRejectedMemIdx(rset.getString("rejected_mem_idx"));
+				maList.add(matchingAlarm);
+				
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return maList;
 	}
 	
 }

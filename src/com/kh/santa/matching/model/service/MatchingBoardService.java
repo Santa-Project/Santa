@@ -34,7 +34,6 @@ public class MatchingBoardService {
 			mbList = matchingBoardDao.selectMatchingBoardList(conn);
 			
 			for (MatchingBoard mb : mbList) {
-				System.out.println(mb);
 				if(mb.getMbIdx()==null) {
 					return null;
 				}
@@ -122,8 +121,7 @@ public class MatchingBoardService {
 
 	public List<Object[]> getNotice(String memberIdx) {
 		List<Object[]> maList = new ArrayList<Object[]>();
-		List<MatchingAlarm> matchingAlarmList = null;
-		
+		List<MatchingAlarm> matchingAlarmList = new ArrayList<MatchingAlarm>();
 		Connection conn = template.getConnection();
 		
 		try {
@@ -135,10 +133,22 @@ public class MatchingBoardService {
 			
 			List<MatchingCompleteList> mclList = matchingBoardDao.selectMatchingCompleteListByMemberIdx(memberIdx,conn);
 			
+			// 방장인 경우 보낸 알림 리스트
+			List<MatchingAlarm> leaderMA = matchingBoardDao.selectMatchingAlarmListLeader(memberIdx, conn);
+			matchingAlarmList.addAll(leaderMA);
+			
+			// 매칭 성사 또는 매칭완료 게시글 알림
 			for (MatchingCompleteList mcl : mclList) {
-				matchingAlarmList = matchingBoardDao.selectMatchingAlarmList(mcl.getMbIdx(),memberIdx,conn);
+				List<MatchingAlarm> matchingSucess = matchingBoardDao.selectMatchingAlarmList(mcl.getMbIdx(),conn);
+				matchingAlarmList.addAll(matchingSucess);
 			}
-			if(matchingAlarmList != null) {
+			
+			// 거절 알림 리스트
+			List<MatchingAlarm> matchingRejected = matchingBoardDao.selectMatchingAlarmListRejected(memberIdx, conn);
+			matchingAlarmList.addAll(matchingRejected);
+			
+			
+			if(matchingAlarmList.size()!=0) {
 				Collections.sort(matchingAlarmList);
 				for (MatchingAlarm matchingAlarm : matchingAlarmList) {
 					Object[] oArr = new Object[2];
