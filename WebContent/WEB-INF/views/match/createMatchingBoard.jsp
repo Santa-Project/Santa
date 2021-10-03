@@ -41,14 +41,15 @@
                     </div>
                     <div class="board_master"><p>방장 이름</p> <p>${authentication.nickname }</p>
                     <input type="hidden" name="memberIdx" value="${authentication.memberIdx}"> </div>
-                    <div class="board_name">방 제목<input name="brdName" type="text" ></div>
+                    <div class="board_name"><p>방 제목</p><input name="brdName" type="text" ></div>
                 </div>
                 <div class="section_right">
-                    <div class="member_count">모집 인원
+                    <div class="member_count">
+                    	<p>모집 인원</p>
                         <input name="memberVolume"type="number" min="2" max="6" >
                     </div>
-                    <div class="calendar">등산 일정
-                        <p>Date: <input name="mtDate" type="date" id="datepicker"></p>
+                    <div class="calendar">
+                        <p>등산 일정: </p><input name="mtDate" type="date" id="datepicker">
                     </div>
                 </div>
             </div>
