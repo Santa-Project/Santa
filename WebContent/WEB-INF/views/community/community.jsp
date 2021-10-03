@@ -41,7 +41,6 @@
                                     <i class="fas fa-trophy"> ${status.count}위</i>
                                 </div>
                                 <div class="rank_card">
-                                    <%-- <img src="${member.photo}" alt=""> --%>
                                     <img src="${contextPath}/resources/img/community/rank1.jpg" alt="">
 
                                     <div class="content">
@@ -49,8 +48,7 @@
                                         <form action="/mypage/anotherBoard?anotherIdx=${member.memberIdx}"
                                             method="POST">
                                             <button><i class="fas fa-home"></i></button>
-                                        </form><!-- <i class="fas fa-home"></i> -->
-                                        <%-- <a href="/mypage/anotherBoard?anotherIdx=${member.memberidx}"><i class="fas fa-home"></i></a> --%>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -121,6 +119,14 @@
                                       
                                             </div>
                                         </div>
+                                        <div class="comment_wrap">
+                                            <div class="comment" id="1">
+                                                <c:forEach items='${objectArr[2]}' var='comment'>
+                                                
+                                                <a>${comment.nickname}</a>  ${comment.content}
+                                                </c:forEach>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,13 +135,11 @@
                     </div>
                     	<c:set var="i" value="${i + 1}"/> 
                     </c:forEach>
-                    
+
                 </div>
             </div>
             <div class="hot_user3"></div>
         </div>
-
-
 
 
         <div class="recent_board">
