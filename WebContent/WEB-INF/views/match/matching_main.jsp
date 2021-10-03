@@ -5,7 +5,7 @@
 <head>
     <%@ include file="/WEB-INF/views/include/head.jsp" %>
     <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
-    <link rel="stylesheet" href="${contextPath }/resources/css/match/matching_main.css">
+    <link rel="stylesheet" href="${contextPath }/resources/css/match/main.css">
 </head>
 
 <body>
@@ -32,7 +32,7 @@
             <div class="search_box1">
             </div>
             <div class="search_box2">
-                <input class="input" placeholder="원하는 정보를 찾아보세요">
+                <input class="input" placeholder="원하는 매칭을 찾아보세요">
                 <a href="#"><i class="fas fa-search"></i></a>
             </div>
             <div class="search_box3"></div>
