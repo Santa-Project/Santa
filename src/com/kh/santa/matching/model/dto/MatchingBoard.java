@@ -1,11 +1,10 @@
 package com.kh.santa.matching.model.dto;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 public class MatchingBoard {
 
-	private int mbIdx;
+	private String mbIdx;
 	private String memberIdx;
 	private String mtIdx;
 	private String matchStatus;
@@ -14,14 +13,15 @@ public class MatchingBoard {
 	private Date brdDate;
 	private int memberVolume;
 	private int matchedMemCnt;
+	private String brdContent;
 	
 	public MatchingBoard() {
 		// TODO Auto-generated constructor stub
 	}
-	public int getMbIdx() {
+	public String getMbIdx() {
 		return mbIdx;
 	}
-	public void setMbIdx(int mbIdx) {
+	public void setMbIdx(String mbIdx) {
 		this.mbIdx = mbIdx;
 	}
 	public String getMemberIdx() {
@@ -72,6 +72,13 @@ public class MatchingBoard {
 	public void setMatchedMemCnt(int matchedMemCnt) {
 		this.matchedMemCnt = matchedMemCnt;
 	}
+	public String getBrdContent() {
+		return brdContent;
+	}
+	public void setBrdContent(String brdContent) {
+		this.brdContent = brdContent;
+	}
+	
 	@Override
 	public String toString() {
 		return "MatchingBoard [mbIdx=" + mbIdx + ", memberIdx=" + memberIdx + ", mtIdx=" + mtIdx + ", matchStatus="

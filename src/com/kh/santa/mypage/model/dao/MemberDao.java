@@ -503,6 +503,31 @@ public class MemberDao {
 	      }
 	      return whishlist;
 	   }
+
+	public String selectNicknameByIdx(String memberIdx, Connection conn) {
+		String leaderNickName = "";
+		PreparedStatement pstm = null;
+		String columns = "nickname";
+		
+		ResultSet rset = null;
+		
+		try {
+			String query = " select " + columns + " from member where member_idx = ? ";
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			rset = pstm.executeQuery(); 
+			if(rset.next()) {
+				leaderNickName = rset.getString("nickname");
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset,pstm);
+		}
+		return leaderNickName;
+	}
 	
 	
 	
