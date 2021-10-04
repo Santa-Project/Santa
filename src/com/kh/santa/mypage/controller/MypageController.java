@@ -164,15 +164,19 @@ public class MypageController extends HttpServlet {
 
           List<MemberBoard> boardList = myboardService.selectBoardDetail(anotherIdx); //조회한 세션값으로 게시판 불러오기
           List<Object[]> others = new ArrayList<Object[]>();
-         
-          for (MemberBoard memberBoard : boardList) {
-             String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
-             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
-             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
-             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
-             others.add(ob); 
-          }
+          
+          
+        	  for (MemberBoard memberBoard : boardList) {
+                  String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
+                  FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
+                  List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
+                  Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
+                  others.add(ob); 
+               }
+          
+          
           request.setAttribute("others", others);
+          System.out.println(anotherMember.getMemberIdx());
           wishlist = mypageService.selectMountainWishlist(anotherMember.getMemberIdx());
           request.setAttribute("wishlist", wishlist);
           request.getRequestDispatcher("/mypage/anotherBoard").forward(request, response); //여기가 뭔가 이상한거같기두하구..

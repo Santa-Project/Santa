@@ -91,12 +91,12 @@
                                         <p>${objectArr[0].boardComment}</p>
                                         <button class="btn_close">&times;</button>
                                     </div>
-                                    <div class="">${objectArr[0].uploadDatetime} ,</div>
+                                    <div class="">${objectArr[0].uploadTime} ,</div>
                                     <div class="">${objectArr[0].mtRegion} ,</div>
-                                    <div class="">${objectArr[0].mtMountain}</div>
+                                    <div class="">${objectArr[0].mtName}</div>
                                     <div class="desc_content">
                                         <form action="/community/insertComment" method="post">
-                                       		<input type="text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
+                                       		<input type="text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].memBoardIdx}">
                                        		<button type="submit" >작성하기 </button>
                                    		</form>
                                         <div class="button_wrap">
@@ -175,7 +175,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -204,7 +204,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -233,7 +233,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -262,7 +262,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -293,7 +293,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -322,7 +322,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -351,7 +351,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>
@@ -380,7 +380,7 @@
                                             </div>
                                             <div class="comment_wrap">
                                                 <div class="comment" id="1">
-                                                    <div class="userID"><a href="#"> JM Yoon</a></div>
+                                                    <div class="userID"><a href="#"> aaaa </a></div>
                                                     <div class="comment_cont">GOOOOOD</div>
                                                 </div>
                                             </div>

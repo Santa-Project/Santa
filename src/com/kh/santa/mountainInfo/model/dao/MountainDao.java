@@ -23,7 +23,7 @@ public class MountainDao {
 	  
 	  try {
 		 pstm = conn.prepareStatement(query);
-		 pstm.setInt(1, Integer.parseInt(mtIdx));
+		 pstm.setString(1, mtIdx);
 		 rset = pstm.executeQuery();
 		 
 		 if(rset.next()) {

@@ -27,7 +27,6 @@ public class MypageService {
 		   Connection conn = template.getConnection();
 		      try {
 		    	  wishlist = memberDao.selectMountainWishlist(memberIdx,conn);
-		         template.commit(conn);
 		      }finally {
 		         template.close(conn);
 		      }
