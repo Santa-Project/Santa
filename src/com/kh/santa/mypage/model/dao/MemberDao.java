@@ -22,7 +22,7 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo,PROFILE_CONTENT";
 		
 		try {
 			String query = "select " + columns + " from member where user_id = ? and user_password = ? ";
@@ -75,7 +75,7 @@ public class MemberDao {
 	public Member selectMemberById(String userId, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
@@ -102,7 +102,7 @@ public class MemberDao {
 	public Member selectMemberByIdx(String memberIdx, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
@@ -202,7 +202,7 @@ public class MemberDao {
 		
 		Member[] memberArr = new Member[9];
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo";
+		String columns = "member_idx,user_id,email,user_password,username,nickname,phone,gender,address,register_datetime,social_login,profile_photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
@@ -375,7 +375,7 @@ public class MemberDao {
 	public Member selectMemberByMemberIdx(String memberIdx, Connection conn) {
 		Member member = null;
 		PreparedStatement pstm = null;
-		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,profile_photo";
+		String columns = "member_idx,user_id,email,username,nickname,phone,gender,address,register_datetime,profile_content,social_login,profile_photo,PROFILE_CONTENT";
 		
 		ResultSet rset = null;
 		
@@ -397,17 +397,17 @@ public class MemberDao {
 		return member;
 	}
 	
-	public void editMember(Member member, Connection conn) {
+	public void editMember(Member member,String nickname, Connection conn) {
 		
 		PreparedStatement pstm = null;
 		
 		String query = "UPDATE member SET " +
-						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?,  MEMBER_IDX=?"+
+						"USER_PASSWORD = ?, NICKNAME = ?, PHONE = ?, EMAIL = ?, ADDRESS =?"+
 					   " WHERE member_idx = ?";
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, member.getUserPassword());
-			pstm.setString(2, member.getNickname());
+			pstm.setString(2, nickname);
 			pstm.setString(3, member.getPhone()); 
 			pstm.setString(4, member.getEmail());
 			pstm.setString(5, member.getAddress());
@@ -422,8 +422,8 @@ public class MemberDao {
 	}
 	
 	
-	//마이페이지 수정(비번 변경안함)
-	public void editMemberExclusionPassword(Member member, Connection conn) {
+	//마이페이지 수정(비번 변경안할시)
+	public void editMemberExclusionPassword(Member member,String nickname, Connection conn) {
 		
 		PreparedStatement pstm = null;
 		
@@ -432,7 +432,7 @@ public class MemberDao {
 					   " WHERE member_idx = ?";
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, member.getNickname());
+			pstm.setString(1, nickname);
 			pstm.setString(2, member.getPhone()); 
 			pstm.setString(3, member.getEmail());
 			pstm.setString(4, member.getAddress());
@@ -468,13 +468,13 @@ public class MemberDao {
 		}	
 	}
 
-	//회원탈퇴 (sql 참조없이 삭제하는걸로 변경해야됨)
+	//회원탈퇴
 	public void leaveSanta(String memberIdx, Connection conn) {
 		
 		 PreparedStatement pstm = null;
 			
 			try {
-				String query = "DELETE FROM member WHERE member_idx = ? "; 
+				String query = "DELETE CASCADE FROM member WHERE member_idx = ? "; 
 				pstm = conn.prepareStatement(query);
 				pstm.setString(1, memberIdx);
 				pstm.executeUpdate();
@@ -577,6 +577,27 @@ public class MemberDao {
 			template.close(rset,pstm);
 		}
 		return member;
+	}
+
+	//닉네임 변경시 댓글작성한 닉네임도 업데이트
+	public void updateNicknameForComment(Member member,String newNickname, Connection conn) {
+		
+		PreparedStatement pstm = null;
+		
+		String query = "UPDATE member_board_comment SET " +
+						" NICKNAME = ?"+ 
+					   " WHERE member_idx = ?";
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, newNickname);
+			pstm.setString(2, member.getMemberIdx()); 
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}	
+		
 	}
 	
 	

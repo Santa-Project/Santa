@@ -16,6 +16,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
     <div class="mypage_header">
         <div class="my_nav_item_margin1"></div>
         <div class="my_nav_item_margin2">
@@ -31,14 +32,14 @@
  <div class="mypage_section">
         <div class="mypage_profile">
             <div class="my_profile_padding">
-                     <div class="my_profile1">
+                <div class="my_profile1">
                         <img id="selfie" src="http://localhost:7070/file/${authentication.profilePhoto}">
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
                            		<div id="my_introduce_id">${authentication.nickname} (${authentication.userId})</div>
                            		<button id="my_introduce_edit" class="my_introdue_button">edit</button>   <!-- 누르면 true  -->
                            	</div>
-                           		<div style="margin-left:13px;">
+                           	<	<div style="margin-left:13px;">
                             		<div id="my_introduce_comment">${authentication.profileContent}</div>	
                             </div>
                         </div>
@@ -75,33 +76,39 @@
             </div>
         </div>
         
-       <div class="mypage_board">
+                <div class="mypage_board">
             <div class="board_write_form">
                 <div class="board_write_title">
-                    <div id="board_write_title_item">FOLLOWER</div></div>
-                <div class="board_write_content">
-                
-                 <c:forEach items='${followerList}' var='f'>
-                    <div class="follow_padding">
-                        <div class="follow_member">
-                            <div id="follow_member_selfie"><!-- img로 변경 ,경로 urc= ${f.userId} --></div>
-                         </div>
-                         <div class="follow_member2">
-                        <div class="follow_member_id_padding">
-	                        <form id="idForm" action="/mypage/anotherBoard" method="post">
-		                         <input type="hidden" name="anotherIdx" value="${f.memberIdx}">
-		                         <button type="submit" id="follow_member_id" >${f.nickname} (${f.userId})</button> 
-	                        </form>
-                        </div>
-                       </div>
-                     </div>
-                 </c:forEach>
-                     
+                    <div id="board_write_title_item">회원정보 수정</div></div>
+                <div class="board_write_content"  style="margin-left:300px;">
+					<div class="member_edit_form">
+					<form action="/mypage/editPass" method="post" >
+                    
+                    <table >
+                            <tr>
+                               <td > 아이디 : </td>
+                                <td>${authentication.userId}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> password : </td>
+                                <td>
+                                <input placeholder="Password" type="password" name="password" id="password">
+                                </td>
+                            </tr>
+                    </table>
+						<button style="margin-left:80px;">로그인</button>
+					</form>
+					
+					</div>
+
+
                 </div>
             </div>
         </div>
          </div>
 </section>
+<script type="text/javascript" src="${contextPath}/resources/js/mypageUpload.js"></script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

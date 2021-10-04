@@ -72,7 +72,7 @@ public class MypageService {
 		   Connection conn = template.getConnection();
 		      Member member = null;
 		      try {
-		    	  member = memberDao.selectMemberByMemberIdx(memberIdx,conn);
+		    	  member = memberDao.selectMemberByIdx(memberIdx,conn);
 		         template.commit(conn);
 		      }finally {
 		         template.close(conn);
@@ -96,11 +96,12 @@ public class MypageService {
 	}
 
 	//마이페이지 수정
-	public void editMember(Member member) {
+	public void editMember(Member member,String newNickname) {
 		
 		Connection conn = template.getConnection();
 	      try {
-	    	  memberDao.editMember(member,conn);
+	    	  memberDao.editMember(member,newNickname,conn);
+	    	  memberDao.updateNicknameForComment(member, newNickname, conn);
 	         template.commit(conn);
 	      }catch (DataAccessException e) {
 	             template.rollback(conn);
@@ -112,11 +113,12 @@ public class MypageService {
 	}
 
 	//마이페이지 수정(비번변경안함)
-	public void editMemberExclusionPassword(Member member) {
+	public void editMemberExclusionPassword(Member member,String newNickname) {
 		
 		Connection conn = template.getConnection();
 	      try {
-	    	  memberDao.editMember(member,conn);
+	    	  memberDao.editMember(member,newNickname,conn);
+	    	  memberDao.updateNicknameForComment(member, newNickname, conn);
 	         template.commit(conn);
 	      }catch (DataAccessException e) {
 	             template.rollback(conn);

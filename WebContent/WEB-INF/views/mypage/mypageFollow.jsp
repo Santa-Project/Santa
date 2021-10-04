@@ -22,7 +22,7 @@
 			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
+            <div id="my_nav_item4"><a href="/mypage/mypagePassEdit">마이페이지 수정</a></div>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -39,17 +39,7 @@
                            		<button id="my_introduce_edit" class="my_introdue_button">edit</button>   <!-- 누르면 true  -->
                            	</div>
                            	<div style="margin-left:13px;">
-                            	<c:if test="true">
-                            		<form action ="/mypage/editprofile" method="post" enctype="multipart/form-data" >
-	                            		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
-	                            		<button id="my_introduce_save" class="my_introdue_button" type="submit">저장</button> <!-- post  -->
-	                            		<button id="my_introduce_cancel" class="my_introdue_button">취소</button>   <!-- 누르면 false  -->
-                            			<input type="text" name="profilecomment" value="${authentication.profileContent}">
-                            		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
-                            	</c:if>
-                            	<c:if test="false">
-                            		<div id="my_introduce_comment">${authentication.profileContent}</div>		
-                            	</c:if>
+                            		<div id="my_introduce_comment">${authentication.profileContent}</div>	
                             </div>
                         </div>
                 </div>

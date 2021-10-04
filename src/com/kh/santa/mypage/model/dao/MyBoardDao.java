@@ -10,6 +10,8 @@ import java.util.List;
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
 import com.kh.santa.common.file.FileDTO;
+import com.kh.santa.mountainInfo.model.dto.Mountain;
+import com.kh.santa.mypage.model.dto.LikedMemberBoard;
 import com.kh.santa.mypage.model.dto.MemberBoard;
 import com.kh.santa.mypage.model.dto.MemberBoardComment;
 
@@ -23,7 +25,7 @@ public class MyBoardDao {
       PreparedStatement pstm = null;
       int res =0;
       
-      String sql = "INSERT INTO member_board(mem_board_idx, member_idx, mt_region, mt_name, board_comment) VALUES(sc_mem_board_idx.nextval,?,?,?,?)";
+      String sql = "INSERT INTO member_board(mem_board_idx, member_idx, mt_region, mt_name, board_comment) VALUES(sc_board_idx.nextval,?,?,?,?)";
       
          try {
             pstm =conn.prepareStatement(sql);
@@ -97,7 +99,7 @@ public class MyBoardDao {
          }
       
    }
-   //댓글삭제 (게시판 전체삭제용) 어...이거는 게시판삭제..
+   //댓글삭제 (게시판 전체삭제용) 
    public void deleteBoardToComment(String boardidx, Connection conn) {
        
       PreparedStatement pstm = null;
@@ -235,8 +237,131 @@ public class MyBoardDao {
       return comments;
    }
    
+   //좋아요
+   public void updateBoardLike(int updatedlike, MemberBoard memberBoard, Connection conn) {
+		PreparedStatement pstm = null;
+		
+		String query = "update member_board set liked = ? where mem_board_idx = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, updatedlike);
+			pstm.setString(2, memberBoard.getMemBoardIdx());
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		
+	}
    
-     //colums가져오기
+   //mem_board_idx로 게시글찾기
+   public MemberBoard selectBoardtoIdx(String memboardIdx, Connection conn) {
+	    
+	   PreparedStatement pstm = null;
+	   MemberBoard memberboard = new MemberBoard();
+	   ResultSet rset = null;
+	   
+		String query = "select * from member_board where mem_board_idx = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memboardIdx);
+			rset= pstm.executeQuery();
+			 if(rset.next()) {
+				 memberboard = convertRowToBoard(rset);
+				}
+			 
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		return memberboard;
+   }
+   
+   
+   //좋아요리스트 추가
+	public void insertLikeBoardlist(String memberIdx, String memBoardIdx, Connection conn) {
+
+		PreparedStatement pstm = null;
+
+		String query = "insert into liked_member_board values(SC_likeboard_IDX.nextval,?,?)";
+
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, memBoardIdx);
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+
+	}
+	
+	//좋아요리스트 삭제
+	public void deleteLikeBoardlist(String memberIdx, String memBoardIdx, Connection conn) {
+
+		PreparedStatement pstm = null;
+
+		String query = "delete from liked_member_board where member_idx = ? and MEM_BOARD_IDX = ?";
+
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, memBoardIdx);
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+   
+   
+	//좋아요 리스트 있는지 반환
+	public LikedMemberBoard likeBoardlist(String memberIdx, String memBoardIdx, Connection conn) {
+
+		PreparedStatement pstm = null;
+		LikedMemberBoard likelist = new LikedMemberBoard();
+		 ResultSet rset = null;
+		   
+		String query = "delete from liked_member_board where member_idx = ? and MEM_BOARD_IDX = ?";
+
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, memBoardIdx);
+			pstm.executeUpdate();
+			rset= pstm.executeQuery();
+			 if(rset.next()) {
+				 likelist = convertRowToLikeBoard(rset);
+				}
+			 
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		return likelist;
+	}
+   
+   
+     private LikedMemberBoard convertRowToLikeBoard(ResultSet rset) throws SQLException{
+    	 LikedMemberBoard likelist = new LikedMemberBoard();
+    	 likelist.setMemBoardIdx(rset.getString("mem_board_idx"));
+    	 likelist.setMemberIdx(rset.getString("member_idx"));
+    	 likelist.setLikedBoardIdx(rset.getString("LIKED_BOARD_IDX"));
+		return likelist;
+	}
+
+	//colums가져오기
    private MemberBoard convertRowToBoard(ResultSet rset) throws SQLException{
       
       MemberBoard board = new MemberBoard();
@@ -244,7 +369,7 @@ public class MyBoardDao {
       board.setMemBoardIdx(rset.getString("mem_board_idx"));
       board.setMemberIdx(rset.getString("member_idx"));
       board.setLiked(rset.getInt("liked"));
-      board.setUploadTime(rset.getDate("upload_datetime"));
+      board.setUploadTime(rset.getDate("UPLOAD_TIME"));
       board.setMtRegion(rset.getString("mt_region"));
       board.setMtName(rset.getString("mt_name"));
       board.setBoardComment(rset.getString("board_comment"));
