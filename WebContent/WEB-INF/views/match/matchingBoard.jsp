@@ -74,7 +74,11 @@
                         <h3>진행 상태 :</h3>
                         <p>${matchingBoard[3] }</p>
                     </div>
+                    <div class="make_notice">
+                    	<button>알림 보내기</button>
+                	</div>
                 </div>
+                
             </div>
             <div class="section_bottom">
                 <h2>참가 인원</h2>
@@ -83,7 +87,7 @@
                 <div class="member">
                         <img src="" alt="">
                         <h3>${member.nickname }</h3>
-                    </div>
+                </div>
                 </c:forEach>
                 </div>
             </div>

@@ -77,8 +77,6 @@ public class CommunityController extends HttpServlet {
 		}
         request.getSession().setAttribute("res", res);
         request.getRequestDispatcher("/community/community").forward(request, response);
-        
-        
         }
 
 	
