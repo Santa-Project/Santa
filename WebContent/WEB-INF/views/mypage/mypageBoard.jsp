@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <link rel="stylesheet" href="${contextPath}/resources/css/mypage/mypage.css">
-
+<script src="${contextPath}/resources/libs/jquery-3.5.1.min.js"></script>
+<script src="${contextPath}/resources/libs/jquery.easing.1.3.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -23,7 +24,7 @@
          <div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
+            <div id="my_nav_item4"><a href="/mypage/mypagePassEdit">마이페이지 수정</a></div>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -34,25 +35,23 @@
         <div class="mypage_profile">
             <div class="my_profile_padding">
                     <div class="my_profile1">
-                        <img id="selfie" src="http://localhost:7070/file/${authentication.photo}">
+                        <img id="selfie" src="http://localhost:7070/file/${authentication.profilePhoto}">
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
                            		<div id="my_introduce_id">${authentication.nickname} (${authentication.userId})</div>
-                           		<button id="my_introduce_edit" class="my_introdue_button">edit</button>   <!-- 누르면 true  -->
+                           		<button id="my_introduce_edit" class="my_introdue_button2">edit</button>   <!-- 누르면 true  -->
                            	</div>
                            	<div style="margin-left:13px;">
-                            	<c:if test="true">
-                            		<form action ="/mypage/editprofile" method="post" enctype="multipart/form-data" >
-	                            		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
-	                            		<button id="my_introduce_save" class="my_introdue_button" type="submit">저장</button> <!-- post  -->
-	                            		<button id="my_introduce_cancel" class="my_introdue_button">취소</button>   <!-- 누르면 false  -->
-                            			<input type="text" name="profilecomment" value="${authentication.profileContent}">
-                            		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
-                            	</c:if>
-                            	<c:if test="false">
-                            		<div id="my_introduce_comment">${authentication.profileContent}</div>		
-                            	</c:if>
+                            	<form id="profileEdit"  method="post" enctype="multipart/form-data" >
+                            		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
+                            		<button id="my_introduce_save" class="my_introdue_button">저장</button> <!-- post  -->
+                            		<button id="my_introduce_cancel" class="my_introdue_button" >취소</button>   <!-- 누르면 false  -->
+                            		
+                           			<input type="text" id="inputedit" name="profilecomment" value="${authentication.profileContent}">
+                           		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
+                           			
                             </div>
+                            <div id="my_introduce_comment">${authentication.profileContent}</div>	
                         </div>
                 </div>
                 
@@ -63,7 +62,7 @@
                             <ul>
                             <c:forEach items='${wishlist}' var='wishlist' varStatus="status">
                                 <li id="my_wish_mountian_list_item">
-                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mountainName}
+                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}
                                 	<form action ="/mypage/deleteMountainwish" method="post" >
                                 	<input type="hidden" name="deletewish" value="${wishlist.mtIdx}">
                                 	<button type="submit" style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button>
@@ -76,7 +75,7 @@
                          <form action ="/mypage/insertMountainwish" id="my_wish_input" method="post">
                                 <select  id='mountain_name'name="insertwish">
                                      <c:forEach items="${mountainList}" var="mountain" varStatus="status">
-	                					<option value="${mountain.mtIdx}">${mountain.mountainName}</option>
+	                					<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	               					 </c:forEach>
                                 </select >
                                 <button type="submit"id="search_button">+</button>
@@ -106,7 +105,7 @@
                             <div class="board_content_picture">
                                 <img class="board_content_picture_item" src="http://localhost:7070/file/${objectArr[1].savePath}${objectArr[1].renameFileName}">
                                 <form action="/mypage/deleteBoard" method="post">
-                                   <input type='hidden' name='deleteboard' value="${objectArr[0].boardIdx}" >
+                                   <input type='hidden' name='deleteboard' value="${objectArr[0].memBoardIdx}" >
                                    <input type='submit' style="border-color:white; border-radius: 20%;" value='삭제'>
                                </form>
                             </div>
@@ -116,21 +115,24 @@
                                     </div>
                                 </div>
                                 <div class="board_content_side_item">
-                                
-                                <c:if test="true">
-                                <button class="board_content_side_item1" style="color:red "><i class="fas fa-heart"></i>${objectArr[0].liked}</button>
-                                   </c:if>
-                                 <c:if test="false">
-                                    <button class="board_content_side_item1" style="color:red "><i class="far fa-heart"></i>${objectArr[0].liked}</button>
+                                <span class="like">
+                                 <c:if test="${not empty authentication}">
+		                                <c:if test="${!boardlike}">
+                               				<i class="fas fa-heart" style="color:red "></i> ${objectArr[0].liked}
+	                                    </c:if>
+		                                <c:if test="${boardlike}">
+		                                    <i class="far fa-heart" style="color:red "></i> ${objectArr[0].liked}
+		                                </c:if>
                                  </c:if>
-                                    <div class="board_content_side_item1">${objectArr[0].uploadDatetime} ,</div>
+                                 </span>
+                                    <div class="board_content_side_item1">${objectArr[0].uploadTime} ,</div>
                                     <div class="board_content_side_item1">${objectArr[0].mtRegion} ,</div>
-                                    <div class="board_content_side_item1">${objectArr[0].mtMountain}</div>
+                                    <div class="board_content_side_item1">${objectArr[0].mtName}</div>
                                 </div>
                                 <div class="board_content_side_rep_input">
                                    <div class="input_id" style="color:green">${authentication.nickname}</div>
                                    <form action="/mypage/insertComment" method="post">
-                                       <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].boardIdx}">
+                                       <input type="text" id="input_text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].memBoardIdx}">
                                        <button type="submit" id="input_text_submit"> <i class="fas fa-plus"></i></button>
                                    </form>
                                 </div>
@@ -179,11 +181,78 @@
 
 <script type="text/javascript">
 
-document.querySelector("#delete").addEventListener('submit', function(e){
-   if(!confirm('댓글을 삭제하시겠습니까?')){
-      return;
-   }
+
+$("#my_introduce_edit").click(function(){
+	$('.my_introdue_button, #inputedit').addClass('active');
+	document.querySelector("#my_introduce_comment").style.display ='none';
 })
+
+/* document.querySelector("#my_introduce_edit").addEventListener('click',function(e){
+	console.dir("edit활성")
+	$('.my_introdue_button, #inputedit').addClass('active');
+}) */
+
+document.querySelector("#my_introduce_save").addEventListener('click',function(e){
+	$('#profileEdit').action("/mypage/editprofile");
+	$('#profileEdit').submit();
+	document.querySelector("#my_introduce_comment").style.display ='inline';
+})
+
+document.querySelector("#my_introduce_cancel").addEventListener('click',function(e){
+	$('.my_introdue_button').removeClass('active');
+	document.querySelector("#my_introduce_comment").style.display= 'inline';
+});
+
+
+
+
+
+
+
+/* 좋아요 */
+	(function(){
+	
+		var form = document.createElement("form"); /* <form method="post" action="/mypage/like"> */
+		form.setAttribute("method", "post");  
+		document.body.appendChild(form);
+		
+		if(${not empty authentication}) {
+			document.querySelector(".like").addEventListener('click',function(e){
+				
+				let membaordIdx = document.createElement("input");
+				membaordIdx.name = "membaordIdx";
+				membaordIdx.setAttribute("value","${objectArr[0].memBoardIdx}");
+				membaordIdx.setAttribute("type","hidden");
+				form.appendChild(membaordIdx); 
+				/* <input name="memboardIdx" value="${objectArr[0].memBoardIdx}" type="hidden"> */
+				
+				let like = document.createElement("input");
+				like.name = "boardlike";
+				like.setAttribute("type","hidden");
+				form.appendChild(like);
+				/* <input type="hidden" name="boardlike" value="${!sessionScope.boardlike}"> */
+				
+				if("${boardlike}"){
+					like.setAttribute("value","${!boardlike}");
+
+				} else {
+					like.setAttribute("value","${boardlike}");
+				}
+				
+				form.setAttribute("action", "/mypage/like"); //요청 보낼 주소
+				form.submit();
+		
+			})
+		}
+		
+
+	})();
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,6 @@
 package com.kh.santa.community.model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import java.util.List;
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
 import com.kh.santa.common.file.FileDTO;
-import com.kh.santa.mypage.model.dto.Member;
 import com.kh.santa.mypage.model.dto.MemberBoard;
 import com.kh.santa.mypage.model.dto.MemberBoardComment;
 
@@ -23,7 +21,7 @@ public class CommunityDao {
 		
 		List<MemberBoard> BoardArr = new ArrayList<MemberBoard>();
 		PreparedStatement pstm = null;
-		String columns = "board_idx,member_idx,liked,upload_datetime,mt_region,mt_mountain,board_comment";
+		String columns = "mem_board_idx,member_idx,liked,upload_time,mt_region,mt_name,board_comment";
 		
 		ResultSet rset = null;
 		
@@ -112,7 +110,7 @@ public class CommunityDao {
 	      column=column.trim();
 	       switch(column) {
 	       case "fl_idx": fileDTO.setFlIdx(rset.getString("fl_idx"));break;
-	       case "board_idx": fileDTO.setBoardIdx(rset.getString("board_idx"));break;
+	       case "mem_board_idx": fileDTO.setMemBoardIdx(rset.getString("mem_board_idx"));break;
 	       case "save_path": fileDTO.setSavePath(rset.getString("save_path"));break;
 	       case "origin_file_name": fileDTO.setOriginFileName(rset.getString("origin_file_name"));break;
 	       case "rename_file_name": fileDTO.setRenameFileName(rset.getString("rename_file_name"));break;
@@ -130,7 +128,7 @@ public class CommunityDao {
 	      column=column.trim();
 	       switch(column) {
 	       case "comment_idx": comment.setCommentIdx(rset.getString("comment_idx"));break;
-	       case "board_idx": comment.setBoardIdx(rset.getString("board_idx"));break;
+	       case "mem_board_idx": comment.setMemBoardIdx(rset.getString("mem_board_idx"));break;
 	       case "member_idx": comment.setMemberIdx(rset.getString("member_idx"));break;
 	       case "content": comment.setContent(rset.getString("content"));break;
 	       case "comment_datetime": comment.setCommentDatetime(rset.getDate("comment_datetime"));break;
@@ -151,9 +149,9 @@ public class CommunityDao {
 	      case "board_idx": board.setBoardIdx(rset.getString("board_idx"));break;
 	      case "member_idx": board.setMemberIdx(rset.getString("member_idx"));break;
 	      case "liked": board.setLiked(rset.getInt("liked"));break;
-	      case "upload_datetime": board.setUploadDatetime(rset.getDate("upload_datetime"));break;
+	      case "upload_time": board.setUploadTime(rset.getDate("upload_time"));break;
 	      case "mt_region": board.setMtRegion(rset.getString("mt_region"));break;
-	      case "mt_mountain": board.setMtMountain(rset.getString("mt_mountain"));break;
+	      case "mt_name": board.setMtName(rset.getString("mt_name"));break;
 	      case "board_comment": board.setBoardComment(rset.getString("board_comment"));break;
 	      
 	      }

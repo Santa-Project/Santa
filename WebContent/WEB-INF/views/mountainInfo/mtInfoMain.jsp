@@ -116,6 +116,7 @@
 			ResultSet rs = null;  
 			PreparedStatement pstmt = null;
 			
+			String mtIdx = null;
 			String mname = null;
 			String mregion = null;
 			String mhigh = null;
@@ -128,21 +129,22 @@
 			int cnt = 0;		
 			
 			try{
-				String sql = "select * from MOUNTAIN where MNAME='" + searchinput + "' or MLEVEL='" + melvel + "' or MTIME='" + mtime + "'";
+				String sql = "select * from MOUNTAIN where MT_NAME='" + searchinput + "' or MT_LEVEL='" + melvel + "' or MT_TRIP_TIME='" + mtime + "'";
 				pstmt = connection.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-					mname = rs.getString("MNAME");	
-					mregion = rs.getString("REGION");	
-					mhigh = rs.getString("MHIGH");
-					mlevel = rs.getString("MLEVEL");	
-					mtime = rs.getString("MTIME");	
-					img = rs.getString("IMG");	
-					mmap = rs.getString("MMAP");
+					mtIdx = rs.getString("MT_IDX");
+					mname = rs.getString("MT_NAME");	
+					mregion = rs.getString("MT_REGION");	
+					mhigh = rs.getString("MT_HIGH");
+					mlevel = rs.getString("MT_LEVEL");	
+					mtime = rs.getString("MT_TRIP_TIME");	
+					img = rs.getString("MT_IMG");	
+					mmap = rs.getString("MT_MAP");
 							
-					category[cnt] = rs.getString("MMAP");
-					categorym[cnt] = rs.getString("MNAME");
+					category[cnt] = rs.getString("MT_MAP");
+					categorym[cnt] = rs.getString("MT_NAME");
 					cnt++;
 					
 		%>
@@ -160,7 +162,7 @@
 		<script>
 		var imgname = document.querySelector(".img").name;
 		function showdetail(){
-		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname;
+		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname + '&mtIdx=' + <%=mtIdx%>;
 		}
 		</script>
 		

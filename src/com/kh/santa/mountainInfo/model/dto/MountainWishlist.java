@@ -4,7 +4,7 @@ public class MountainWishlist {
 
 	private String mtIdx;
 	private String memberIdx;
-	private String mountainName;
+	private String mtName;
 	public String getMtIdx() {
 		return mtIdx;
 	}
@@ -17,16 +17,19 @@ public class MountainWishlist {
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-	public String getMountainName() {
-		return mountainName;
+	public String getMtName() {
+		return mtName;
 	}
-	public void setMountainName(String mountainName) {
-		this.mountainName = mountainName;
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
 	}
 	@Override
 	public String toString() {
-		return "MountainWishlist [mtIdx=" + mtIdx + ", memberIdx=" + memberIdx + ", mountainName=" + mountainName + "]";
+		return "MountainWishlist [mtIdx=" + mtIdx + ", memberIdx=" + memberIdx + ", mtName=" + mtName + "]";
 	}
+	
+	
+	
 	
 	
 	

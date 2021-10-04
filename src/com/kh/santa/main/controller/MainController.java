@@ -146,15 +146,17 @@ public class MainController extends HttpServlet {
 		//회원이 아닌 경우
 		if(member == null) {
 			//회원추가 진행
-			//회원추가 시 에러 발생 코드 생성?
 			member = new Member();
-			member.setNickname(request.getParameter("nickname")); // 필수
+			//카카오 nickname -> 회원이름(username) 저장 - nickname은 고유키(unique)여서 중복 불가...
+			member.setUsername(request.getParameter("nickname")); // 필수
 			System.out.println(request.getParameter("nickname"));
+			//email 동의받았으면 db에 추가 아니면 '-' 
 			if(request.getParameter("email") != null) {
 				member.setEmail(request.getParameter("email"));
 			} else {
 				member.setEmail("-");
 			}
+			//gender 동의받았으면 db에 추가 아니면 '-'
 			if(request.getParameter("gender") != null) {
 				String gender = request.getParameter("gender").substring(0, 1).toUpperCase();
 				System.out.println(gender);
@@ -162,11 +164,16 @@ public class MainController extends HttpServlet {
 			} else {
 				member.setGender("-");
 			}
-			/* 카카오 프로필 사진은 url로 넘어옴(데이터베이스에 사진 type은 blob)
-			 * if(request.getParameter("photo") != null) {
-			 * member.setPhoto(request.getParameter("photo")); } else {
-			 * member.setPhoto("-"); }
-			 */
+			//카카오 프로필 사진은 url로 넘어옴
+			//프로필 사진 동의받았으면 db에 추가 아니면 '-'
+			if(request.getParameter("profile_photo") != null) {
+				System.out.println(request.getParameter("profile_photo"));
+				member.setProfilePhoto(request.getParameter("profile_photo"));
+				
+			} else {
+				member.setProfilePhoto("-"); 
+			}
+			
 			mainService.createMemberWithKakao(member, kakaoId);
 			//추가 후 memberDTO 받아오기
 			member = mainService.searchByKakaoId(kakaoId);

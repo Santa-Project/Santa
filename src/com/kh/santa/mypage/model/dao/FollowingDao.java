@@ -10,9 +10,7 @@ import java.util.List;
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.common.exception.DataAccessException;
 import com.kh.santa.mypage.model.dto.Follow;
-import com.kh.santa.mypage.model.dto.Follower;
 import com.kh.santa.mypage.model.dto.Member;
-import com.kh.santa.mypage.model.dto.MemberBoard;
 
 public class FollowingDao {
 
@@ -160,7 +158,6 @@ public class FollowingDao {
 		member.setProfileContent(rset.getString("profile_content"));
 		/* member.setPhoto(rset.getString("photo")); */
 		member.setSocialLogin(rset.getString("social_login"));
-		member.setGrade(rset.getString("grade"));
 		
 		return member;
 	}

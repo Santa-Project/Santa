@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/main/style_login.css">
-<meta charset="UTF-8">
-<title>Insert title here</title>	
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <style>
     :root{
     --body-background-color: #fff;
@@ -14,8 +14,6 @@
     --naver-green-border-color: #94af76;;
     }
 </style>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 
 <body>                 
@@ -54,8 +52,6 @@
 					
 					<li><button onclick='kakaoLogin();'><img src="${contextPath}/resources/img/main/kakao_login.png" width="465px" height="56px"></button></li>
 					
-					<!-- 구글 로그인 -->
-					<li><a href="#">Google</a></li>
 					
 				</ul>
 				<br>
@@ -87,12 +83,13 @@ function kakaoLogin() {
     
     document.body.appendChild(form);
 	
-	console.log(Kakao);
+	// 토큰 생성
 	Kakao.Auth.login({
 		scope:'profile_nickname,profile_image,account_email,gender',
 	    success: async function (response) {
 	    	console.log("success_login");
 	    	console.log(response);
+	    	// 회원정보 받아오기
 	    	await Kakao.API.request({
 	        	url: '/v2/user/me',
 	        	success: function (res) {
@@ -136,20 +133,21 @@ function kakaoLogin() {
 		      			form.appendChild(email);
 	      			}
 	      			
-	      			/* // 프로필 사진 url
+	      			// 프로필 사진
 	      			let kakao_photo;
 	      			if(!res.kakao_account.profile_image_needs_agreement){
 	      				kakao_photo = res.kakao_account.profile.profile_image_url;
 	      				let photo = document.createElement("input");
-	      				photo.name = "photo";
+	      				photo.name = "profile_photo";
 	      				photo.setAttribute('value',kakao_photo);
 	      				photo.setAttribute('type','hidden');
 		      			form.appendChild(photo);
-	      			} */
+	      			}
 	      			
 	        	}
 	        });	
 	    	
+	    	// 토큰 삭제
 	    	Kakao.Auth.logout(function() {
 				  console.log(Kakao.Auth.getAccessToken());
 			});

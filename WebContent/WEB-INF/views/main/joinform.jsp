@@ -182,7 +182,7 @@
 	            <span class="box_2">
 	              <select class="mt_wishlist" name="preference" size="5" multiple >
 	                <c:forEach items="${mountainList }" var="mountain" varStatus="status">
-	                	<option value="${mountain.mtIdx}">${mountain.mountainName}</option>
+	                	<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	                </c:forEach>
 	              </select>
 	            </span>

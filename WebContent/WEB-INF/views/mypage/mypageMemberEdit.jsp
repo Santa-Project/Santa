@@ -23,7 +23,7 @@
 			<div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
+            <div id="my_nav_item4"><a href="/mypage/mypagePassEdit">마이페이지 수정</a></div>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -34,24 +34,14 @@
         <div class="mypage_profile">
             <div class="my_profile_padding">
                 <div class="my_profile1">
-                        <img id="selfie" src="http://localhost:7070/file/${authentication.photo}">
+                        <img id="selfie" src="http://localhost:7070/file/${authentication.profilePhoto}">
                         <div id="my_introduce">
                             <div id="my_introduce_id_padding">
                            		<div id="my_introduce_id">${authentication.nickname} (${authentication.userId})</div>
                            		<button id="my_introduce_edit" class="my_introdue_button">edit</button>   <!-- 누르면 true  -->
                            	</div>
-                           	<div style="margin-left:13px;">
-                            	<c:if test="true">
-                            		<form action ="/mypage/editprofile" method="post" enctype="multipart/form-data" >
-	                            		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
-	                            		<button id="my_introduce_save" class="my_introdue_button" type="submit">저장</button> <!-- post  -->
-	                            		<button id="my_introduce_cancel" class="my_introdue_button">취소</button>   <!-- 누르면 false  -->
-                            			<input type="text" name="profilecomment" value="${authentication.profileContent}">
-                            		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
-                            	</c:if>
-                            	<c:if test="false">
-                            		<div id="my_introduce_comment">${authentication.profileContent}</div>		
-                            	</c:if>
+                           		<div style="margin-left:13px;">
+                            		<div id="my_introduce_comment">${authentication.profileContent}</div>	
                             </div>
                         </div>
                 </div>
@@ -63,7 +53,7 @@
                            <ul>
                             <c:forEach items='${wishlist}' var='wishlist' varStatus="status">
                                 <li id="my_wish_mountian_list_item">
-                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mountainName}
+                                	<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}
                                 	<form action ="/mypage/deleteMountainwish" method="post" >
                                 	<input type="hidden" name="deletewish" value="${wishlist.mtIdx}">
                                 	<button type="submit" style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button>
@@ -76,7 +66,7 @@
                          <form action ="/mypage/insertMountainwish" id="my_wish_input" method="post">
                                 <select  id='mountain_name'name="insertwish">
                                      <c:forEach items="${mountainList}" var="mountain" varStatus="status">
-	                					<option value="${mountain.mtIdx}">${mountain.mountainName}</option>
+	                					<option value="${mountain.mtIdx}">${mountain.mtName}</option>
 	               					 </c:forEach>
                                 </select >
                                 <button type="submit"id="search_button">+</button>
@@ -92,7 +82,7 @@
                     <div id="board_write_title_item">회원정보 수정</div></div>
                 <div class="board_write_content">
                     <div class="member_edit_form">
-                    <form class="mapage_info_edit" action="/mypage/editMember" method="post">
+                    <form class="mapage_info_edit"  id ="form" action="/mypage/editMember" method="post">
                         <table class="mypage_info_edit_form" style="table-layout:fixed">
                             <tr>
                                <td >아이디</td>
@@ -100,23 +90,23 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>현재 비밀번호</td>
-                                <td><input type="password" value="${authentication.userPassword}"></td>
-                            </tr>
-                            <tr>
                                 <td>변경할 비밀번호</td>
                                 <td><input type="password" name="editpass" >
+                                 <span id="pwCheck" class="valid-msg">
                                 	<c:if test="${not empty param.err and not empty joinValid.password}">
 	              						비밀번호는 영어, 숫자,특수문자(#?!@$ %^&*-) 조합의 8글자 이상의 문자열입니다.
 	            					</c:if>
+	            					</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>비밀번호 확인</td>
                                 <td><input type="password">
+                                <span id="vpwCheck" class="valid-msg">
                                		<c:if test="${not empty param.err and not empty joinValid.verifyPassword}">
 	              						입력하신 비밀번호와 일치하지 않습니다.
 	           						</c:if>
+	           						</span>
                                 </td>
                             </tr>
                             <tr>
@@ -132,17 +122,27 @@
                             <tr>
                                 <td>변경할 연락처</td>
                                 <td><input type="tel" name='editphone'  value="${authentication.phone}">
+                                <c:if test="${not empty param.err}">
+                						value="${joinForm.mobile}"
+                				</c:if>
+                                <span id="mobileCheck" class="valid-msg">
                                 	<c:if test="${not empty param.err and not empty joinValid.mobile}">
 	              					전화번호는 '-'을 포함하지 않은 숫자(9~11) 조합입니다.
 	           					</c:if>
+	           					</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>변경할 이메일</td>
                                 <td><input type="email"  name='editmail'  value="${authentication.email}">
-                               		<c:if test="${not empty param.err and not empty joinValid.email}">
-              						유효한 이메일을 입력해주세요.
-            						</c:if>
+                                <c:if test="${not empty param.err}">
+			                		value="${joinForm.email}"
+			                	</c:if>
+            						<span id="emailCheck" class="valid-msg">
+            						 <c:if test="${not empty param.err and not empty joinValid.email}">
+						              	유효한 이메일을 입력해주세요.
+						            </c:if>
+            						</span>
                                 </td>
                             </tr>
                             <tr >
@@ -176,7 +176,7 @@
                             </tr>
                         </table>
                         <div class="mypage_edit_button">
-                        <button type="submit"style=" width:70px;">수정하기</button>
+                        <button style=" width:70px;" id="btnEdit">수정하기</button>
                         <a id="mypage_edit_exit" style="border-color: white; background-color: lightgray; width:80px;" href="/mypage/leaveSanta"> 회원탈퇴 </a>
                         </div>
                         
@@ -201,6 +201,25 @@
 			}
 			
 			
+			
+			
+			//제출   
+			document.querySelector("#btnEdit").addEventListener('click', function(e){
+				
+				let flg = true;
+				
+				document.querySelector('#pwCheck').innerHTML = "";
+				document.querySelector('#vpwCheck').innerHTML = "";
+				document.querySelector('#mobileCheck').innerHTML = "";
+				document.querySelector('#emailCheck').innerHTML = "";
+				
+				if(!flg){
+					return;
+				}
+				
+				document.querySelector("#form").submit();
+				
+			})
 			
 			
 			

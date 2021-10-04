@@ -5,6 +5,7 @@ public class Follow {
 	private String followIdx;
 	private String memberIdx;
 	private String followId;
+	
 	public String getFollowIdx() {
 		return followIdx;
 	}

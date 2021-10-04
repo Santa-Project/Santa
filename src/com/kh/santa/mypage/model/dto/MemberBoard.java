@@ -4,37 +4,31 @@ import java.sql.Date;
 
 public class MemberBoard {
 
-	private String boardIdx;
+	private String memBoardIdx;
 	private String memberIdx;
 	private int liked;
-	private Date uploadDatetime;
+	private Date uploadTime;
 	private String mtRegion;
-	private String mtMountain;
+	private String mtName;
 	private String boardComment;
-	public String getBoardIdx() {
-		return boardIdx;
-	}
-	public void setBoardIdx(String boardIdx) {
-		this.boardIdx = boardIdx;
-	}
+	
 	public String getMemberIdx() {
 		return memberIdx;
 	}
 	public void setMemberIdx(String memberIdx) {
 		this.memberIdx = memberIdx;
 	}
-
 	public int getLiked() {
 		return liked;
 	}
 	public void setLiked(int liked) {
 		this.liked = liked;
 	}
-	public Date getUploadDatetime() {
-		return uploadDatetime;
+	public Date getUploadTime() {
+		return uploadTime;
 	}
-	public void setUploadDatetime(Date uploadDatetime) {
-		this.uploadDatetime = uploadDatetime;
+	public void setUploadTime(Date uploadTime) {
+		this.uploadTime = uploadTime;
 	}
 	public String getMtRegion() {
 		return mtRegion;
@@ -42,11 +36,11 @@ public class MemberBoard {
 	public void setMtRegion(String mtRegion) {
 		this.mtRegion = mtRegion;
 	}
-	public String getMtMountain() {
-		return mtMountain;
+	public String getMtName() {
+		return mtName;
 	}
-	public void setMtMountain(String mtMountain) {
-		this.mtMountain = mtMountain;
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
 	}
 	public String getBoardComment() {
 		return boardComment;
@@ -54,13 +48,18 @@ public class MemberBoard {
 	public void setBoardComment(String boardComment) {
 		this.boardComment = boardComment;
 	}
+	public String getMemBoardIdx() {
+		return memBoardIdx;
+	}
+	public void setMemBoardIdx(String memBoardIdx) {
+		this.memBoardIdx = memBoardIdx;
+	}
 	@Override
 	public String toString() {
-		return "MemberBoard [boardIdx=" + boardIdx + ", memberIdx=" + memberIdx + 
-				 ", liked=" + liked + ", uploadDatetime=" + uploadDatetime + ", mtRegion=" + mtRegion + ", mtMountain="
-				+ mtMountain + ", boardComment=" + boardComment + "]";
+		return "MemberBoard [memBoardIdx=" + memBoardIdx + ", memberIdx=" + memberIdx + ", liked=" + liked
+				+ ", uploadTime=" + uploadTime + ", mtRegion=" + mtRegion + ", mtName=" + mtName + ", boardComment="
+				+ boardComment + "]";
 	}
-	
 	
 	
 	

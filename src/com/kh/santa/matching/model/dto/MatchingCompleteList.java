@@ -1,15 +1,16 @@
 package com.kh.santa.matching.model.dto;
 
+
 public class MatchingCompleteList {
 	
-	private String listIdx;
+	private String mclIdx;
 	private String memberIdx;
 	private String mbIdx;
-	public String getListIdx() {
-		return listIdx;
+	public String getMclIdx() {
+		return mclIdx;
 	}
-	public void setListIdx(String listIdx) {
-		this.listIdx = listIdx;
+	public void setMclIdx(String mclIdx) {
+		this.mclIdx = mclIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -25,8 +26,9 @@ public class MatchingCompleteList {
 	}
 	@Override
 	public String toString() {
-		return "MatchingComplateList [listIdx=" + listIdx + ", memberIdx=" + memberIdx + ", mbIdx=" + mbIdx + "]";
+		return "MatchingCompleteList [mclIdx=" + mclIdx + ", memberIdx=" + memberIdx + ", mbIdx=" + mbIdx + "]";
 	}
+	
 	
 	
 	

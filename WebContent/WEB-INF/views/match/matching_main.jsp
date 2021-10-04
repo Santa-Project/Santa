@@ -5,7 +5,7 @@
 <head>
     <%@ include file="/WEB-INF/views/include/head.jsp" %>
     <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
-    <link rel="stylesheet" href="${contextPath }/resources/css/match/matching_main.css">
+    <link rel="stylesheet" href="${contextPath }/resources/css/match/main.css">
 </head>
 
 <body>
@@ -14,19 +14,16 @@
         <div class="matching_nav">
             <div class="matching_nav1"></div>
             <div class="matching_nav2">
-                <button class="matching_btn1" id="matching_btn"><a href="#">팀원모집</a></button>
-                <button class="matching_btn2" id="matching_btn"><a href="#">유저목록</a></button>
+                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam">팀원모집</a></button>
+                <button class="matching_btn2" id="matching_btn"><a href="/matching/userList">유저목록</a></button>
             </div>
             <div class="matching_nav3">
                 <div class="alarm_btn">
                     <a href="#"><i class="fas fa-bell"></i></a>
                     <div class="alarm_sub">
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
-                        <a href="#">AAAA님이 1번방으로 초대했습니다.</a>
+                    <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
+                        <a href="#">${matchingAlarm[1] } ${matchingAlarm[0].msg }</a>
+                    </c:forEach>
                     </div>
                 </div>
             </div>
@@ -35,7 +32,7 @@
             <div class="search_box1">
             </div>
             <div class="search_box2">
-                <input class="input" placeholder="원하는 정보를 찾아보세요">
+                <input class="input" placeholder="원하는 매칭을 찾아보세요">
                 <a href="#"><i class="fas fa-search"></i></a>
             </div>
             <div class="search_box3"></div>

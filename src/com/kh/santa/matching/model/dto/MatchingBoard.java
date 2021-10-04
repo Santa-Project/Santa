@@ -11,13 +11,9 @@ public class MatchingBoard {
 	private String brdName;
 	private Date mtDate;
 	private Date brdDate;
-	private int memberVolume;
+	private int memVolume;
 	private int matchedMemCnt;
 	private String brdContent;
-	
-	public MatchingBoard() {
-		// TODO Auto-generated constructor stub
-	}
 	public String getMbIdx() {
 		return mbIdx;
 	}
@@ -60,11 +56,11 @@ public class MatchingBoard {
 	public void setBrdDate(Date brdDate) {
 		this.brdDate = brdDate;
 	}
-	public int getMemberVolume() {
-		return memberVolume;
+	public int getMemVolume() {
+		return memVolume;
 	}
-	public void setMemberVolume(int memberVolume) {
-		this.memberVolume = memberVolume;
+	public void setMemVolume(int memVolume) {
+		this.memVolume = memVolume;
 	}
 	public int getMatchedMemCnt() {
 		return matchedMemCnt;
@@ -78,12 +74,11 @@ public class MatchingBoard {
 	public void setBrdContent(String brdContent) {
 		this.brdContent = brdContent;
 	}
-	
 	@Override
 	public String toString() {
 		return "MatchingBoard [mbIdx=" + mbIdx + ", memberIdx=" + memberIdx + ", mtIdx=" + mtIdx + ", matchStatus="
-				+ matchStatus + ", brdName=" + brdName + ", mtDate=" + mtDate + ", brdDate=" + brdDate
-				+ ", memberVolume=" + memberVolume + ", matchedMemCnt=" + matchedMemCnt + "]";
+				+ matchStatus + ", brdName=" + brdName + ", mtDate=" + mtDate + ", brdDate=" + brdDate + ", memVolume="
+				+ memVolume + ", matchedMemCnt=" + matchedMemCnt + ", brdContent=" + brdContent + "]";
 	}
 	
 	

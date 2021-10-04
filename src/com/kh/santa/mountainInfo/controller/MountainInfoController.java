@@ -85,8 +85,8 @@ public class MountainInfoController extends HttpServlet {
 
 //		Mountain mountain = null;
 
-//		if(request.getParameter("mname") != null) {
-//			String mtIdx  = request.getParameter("mname");
+//		if(request.getParameter("mtIdx") != null) {
+//			String mtIdx  = request.getParameter("mtIdx");
 //			mountain = mountainService.searchMountain(mtIdx);
 //			request.getSession().setAttribute("mountain", mountain);
 //		} else {
@@ -106,18 +106,42 @@ public class MountainInfoController extends HttpServlet {
 //			};
 //
 //		}
-
+		
+		Member member = (Member)request.getSession().getAttribute("authentication");
+		
+		if(member == null) {
+			request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
+		}
+		
+		String memberIdx = member.getMemberIdx();
+		
+		if(request.getParameter("mtIdx") != null) {
+			String mtIdx  = request.getParameter("mtIdx");
+			if(mountainService.checkMountainWishlist(memberIdx,mtIdx)) {
+				request.getSession().setAttribute("like", true);
+			} else{
+				request.getSession().setAttribute("like", false);
+			};
+		}
+		
 		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
-
 		
 	}
 	
 	private void like(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Member member = (Member)request.getSession().getAttribute("authentication");
 		String memberIdx = member.getMemberIdx();
-		Mountain mountain = (Mountain)request.getSession().getAttribute("mountain");
+		
+		Mountain mountain = new Mountain();
+		String mtIdx = request.getParameter("mtIdx");
+		String mtName = request.getParameter("mtName");
+		System.out.println(mtIdx);
+		System.out.println(mtName);
+		mountain.setMtIdx(mtIdx);
+		mountain.setMtName(mtName);
 
 		String like = request.getParameter("like");
+		System.out.println(like);
 
 		if(like.equals("true")) {
 			// mountain_wishlist에 추가
@@ -128,7 +152,7 @@ public class MountainInfoController extends HttpServlet {
 			request.getSession().setAttribute("like", false);
 		}
 		
-		response.sendRedirect("/mountainInfo/mtInfoDetail");
+		request.getRequestDispatcher("/mountainInfo/mtInfoDetail").forward(request, response);
 
 		
 	}

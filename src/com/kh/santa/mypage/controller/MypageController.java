@@ -2,9 +2,7 @@ package com.kh.santa.mypage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.common.wrapper.RequestWrapper;
-import com.kh.santa.main.model.service.MainService;
 import com.kh.santa.mountainInfo.model.dto.Mountain;
 import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
 import com.kh.santa.mountainInfo.model.service.MountainService;
@@ -27,7 +24,6 @@ import com.kh.santa.mypage.model.service.MypageService;
 import com.kh.santa.common.file.FileUtil;
 import com.kh.santa.common.file.MultiPartParams;
 
-import oracle.sql.DATE;
 
 import com.kh.santa.common.file.FileDTO;
 
@@ -39,7 +35,6 @@ public class MypageController extends HttpServlet {
    private static final long serialVersionUID = 1L;
    private MyBoardService myboardService = new MyBoardService();
    private FollowingService followingService = new FollowingService();
-   private MainService mainService = new MainService();
    private MypageService mypageService = new MypageService();
    private MountainService mountainService = new MountainService();
    private List<Mountain> mountainList = mountainService.searchAllMtIdxAndMtName();
@@ -73,6 +68,9 @@ public class MypageController extends HttpServlet {
       case "mypageFollower" :
          mypageFollower(request,response);
          break;
+      case "mypagePassEdit" :
+    	  mypagePassEdit(request,response);
+           break;
       case "mypageMemberEdit" :
          mypageMemberEdit(request,response);
          break;
@@ -92,12 +90,13 @@ public class MypageController extends HttpServlet {
       case "deleteComment" :
          deleteComment(request,response);
           break;
-      case "insertFollow" :
-         insertFollow(request,response);
+      case "like" :
+    	  like(request,response);
+           break; 
+          
+      case "following" :
+         following(request,response);
           break;
-      case "deleteFollow" :
-          deleteFollow(request,response);
-           break;
       case "deleteFollowTopage" :
     	  deleteFollowTopage(request,response); 
           break;
@@ -108,7 +107,10 @@ public class MypageController extends HttpServlet {
       case "deleteMountainwish" :
     	  deleteMountainwish(request,response); 
           break;
-    	  
+          
+      case "editPass" :
+    	  editPass(request,response);
+           break;
       case "editMember" :
          editMember(request,response);
           break;
@@ -128,18 +130,26 @@ public class MypageController extends HttpServlet {
    private void mypageBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
          Member member = (Member) request.getSession().getAttribute("authentication"); //세션조회
-         List<MemberBoard> boardList = myboardService.selectBoardDetail(member.getMemberIdx()); //조회한 세션값으로 게시판 불러오기
+         String memberIdx =member.getMemberIdx();
+         List<MemberBoard> boardList = myboardService.selectBoardDetail(memberIdx); //조회한 세션값으로 게시판 불러오기
          
          List<Object[]> res = new ArrayList<Object[]>();
         
          for (MemberBoard memberBoard : boardList) {
-            String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+            String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
             res.add(ob);
+            
+            if(!myboardService.likeBoardlist(memberIdx,boardIdx)) { //좋아요 기록이 없다면
+     			request.setAttribute("boardlike", true);
+     		} else {
+     			request.setAttribute("boardlike", false);
+     		}
          }
          request.getSession().setAttribute("res", res);
+         
          request.setAttribute("mountainList", mountainList);
          wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
          request.setAttribute("wishlist", wishlist);
@@ -157,7 +167,7 @@ public class MypageController extends HttpServlet {
           List<Object[]> others = new ArrayList<Object[]>();
          
           for (MemberBoard memberBoard : boardList) {
-             String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+             String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
              FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
              List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
              Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
@@ -191,7 +201,7 @@ public class MypageController extends HttpServlet {
       Member member = (Member) request.getSession().getAttribute("authentication");
       MemberBoard board = new MemberBoard();
       board.setMemberIdx(member.getMemberIdx());
-      board.setMtMountain(params.getParameter("mountlist"));
+      board.setMtName(params.getParameter("mountlist"));
       board.setMtRegion(params.getParameter("region"));
       board.setBoardComment(params.getParameter("writetext"));
       
@@ -216,7 +226,7 @@ public class MypageController extends HttpServlet {
       MemberBoardComment comment = new MemberBoardComment();
       comment.setNickname(member.getNickname());
       comment.setMemberIdx(member.getMemberIdx());
-      comment.setBoardIdx(boardIdx);
+      comment.setMemBoardIdx(boardIdx);
       comment.setContent(content);
       myboardService.insertComment(comment);
       mypageBoard(request,response);
@@ -229,6 +239,23 @@ public class MypageController extends HttpServlet {
       response.sendRedirect("/mypage/mypageBoard");
    }
    
+   //좋아요
+   private void like(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Member member = (Member)request.getSession().getAttribute("authentication");
+		String memberIdx = member.getMemberIdx();
+		String memboardIdx = request.getParameter("membaordIdx");
+		String like = request.getParameter("boardlike");
+		System.out.println(memboardIdx);
+		System.out.println(like);
+		if(like.equals("true")) {
+			myboardService.updateBoardLike(memboardIdx);
+			request.setAttribute("boardlike", true);
+		} else {
+			myboardService.removeBoardLike(memboardIdx);
+			request.setAttribute("boardlike", false);
+		}
+		response.sendRedirect("/mypage/mypageBoard");
+	}
       
    //팔로우
    private void mypageFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
@@ -257,24 +284,21 @@ public class MypageController extends HttpServlet {
    
 
    
-   //팔로우 추가(다른사람 마이페이지)
-   private void insertFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   //팔로우 추가,삭제(다른사람 마이페이지)
+   private void following(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      Member member = (Member) request.getSession().getAttribute("authentication");
+     String following= request.getParameter("follow");
      Follow follow = new Follow();
-     follow.setFollowId(request.getParameter("deletefollow"));
+     follow.setFollowId(request.getParameter("anoterIdx"));
      follow.setMemberIdx(member.getMemberIdx()); 
-     followingService.insertFollow(follow);
+     if(following.equals(following)) { //true라면 팔로우
+    	 followingService.insertFollow(follow);
+     }else{
+    	 followingService.deleteFollow(follow);
+     }
      anotherBoard(request,response);
    }
-   //팔로우 삭제(다른사람 마이페이지)
-   private void deleteFollow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      Member member = (Member) request.getSession().getAttribute("authentication");
-      Follow follow = new Follow();
-      follow.setMemberIdx(member.getMemberIdx());         
-      follow.setFollowId(request.getParameter("deletefollow"));   
-      followingService.deleteFollow(follow);
-      anotherBoard(request,response);
-   }
+   
    //팔로우 삭제
    private void deleteFollowTopage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       Member member = (Member) request.getSession().getAttribute("authentication");
@@ -285,6 +309,29 @@ public class MypageController extends HttpServlet {
       request.getRequestDispatcher("/mypage/mypageFollow").forward(request, response);
    }
    
+   //마이페이지 수정 로그인페이지
+	private void mypagePassEdit(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+	   request.setAttribute("mountainList", mountainList);
+	   request.setAttribute("wishlist", wishlist);
+	   request.getRequestDispatcher("/mypage/mypagePassEdit").forward(request, response);
+	}
+   
+
+	//마이페이지 로그인 post
+	private void editPass(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		String inputPassword= request.getParameter("password");
+		if(member.getUserPassword().equals(inputPassword)) { //입력한정보가 맞다면
+			request.getRequestDispatcher("/mypage/mypageMemberEdit").forward(request, response);
+		}else{
+			request.setAttribute("msg", "비밀번호가 틀렸습니다");
+			request.getRequestDispatcher("/mypage/mypagePassEdit").forward(request, response);
+		}
+		
+	}
+
+	
    //마이페이지 수정페이지
    private void mypageMemberEdit(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
 	   request.setAttribute("mountainList", mountainList);
@@ -298,7 +345,7 @@ public class MypageController extends HttpServlet {
    private void editMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   
       Member member = (Member) request.getSession().getAttribute("authentication");
-      member.setNickname(request.getParameter("editnickname"));
+      String newNickname = request.getParameter("editnickname");
       member.setPhone(request.getParameter("editphone"));
       member.setEmail(request.getParameter("editmail"));
       String address = "(" + request.getParameter("zipNo") + ")" + request.getParameter("roadAddrPart1") + request.getParameter("detailaddress");
@@ -306,9 +353,9 @@ public class MypageController extends HttpServlet {
       
       if(request.getParameter("editpass")==member.getUserPassword()) { //변경함 //그대로 비번 같으면
     	  member.setUserPassword(request.getParameter("editpass"));  
-    	  mypageService.editMember(member);
+    	  mypageService.editMember(member,newNickname);
       }else {//비밀번호 변경안할때
-    	  mypageService.editMemberExclusionPassword(member);
+    	  mypageService.editMemberExclusionPassword(member,newNickname);
       }
       request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
       

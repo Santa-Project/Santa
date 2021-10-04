@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.kh.santa.main.model.service.MainService;
+
 public class JoinForm {
 	
 	private String id;
@@ -21,6 +23,7 @@ public class JoinForm {
 	
 	
 	HttpServletRequest request;
+	private MainService mainService = new MainService();
 	private Map<String,String> failedValidation = new HashMap<String,String>();
 	
 	public JoinForm(HttpServletRequest request) {
@@ -53,34 +56,38 @@ public class JoinForm {
 			isFailed = true;
 		}
 		
+		// 비밀번호 일치 확인
 		if(!verifyPassword.equals(password)) {
 			
 			failedValidation.put("verifyPassword", verifyPassword);
 			isFailed = true;
 		}
 		
+		// 이름
 		if(!Pattern.matches(".*[a-zA-Z가-힣]{2,}", name)) {
 			failedValidation.put("name", name);
 			isFailed = true;
 		}
 		
-		if(!Pattern.matches(".*[a-zA-Z가-힣0-9]{1,}", nickname)) {
+		// 닉네임 중복 확인
+		if(!Pattern.matches(".*[a-zA-Z가-힣0-9]{1,}", nickname) || mainService.selectMemberByNickname(nickname) != null) {
 			failedValidation.put("nickname", nickname);
 			isFailed = true;
 		}
 		
-		
+		// 휴대폰
 		if(!Pattern.matches("\\d{9,11}", mobile)) { 
 			failedValidation.put("mobile", mobile); 
 			isFailed = true; 
 		}
 		
+		// email
 		if(!Pattern.matches("^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$", email)) { 
 			failedValidation.put("email", email); 
 			isFailed = true; 
 		}
 		
-		
+		// 데이터 입력양식에 맞지 않으면 false 반환
 		if(isFailed) {
 			request.getSession().setAttribute("joinValid", failedValidation);
 			request.getSession().setAttribute("joinForm", this);

@@ -92,7 +92,7 @@ public class CommunityController extends HttpServlet {
 	    MemberBoardComment comment = new MemberBoardComment();
 	    comment.setNickname(member.getNickname());
 	    comment.setMemberIdx(member.getMemberIdx());
-	    comment.setBoardIdx(boardIdx);
+	    comment.setMemBoardIdx(boardIdx);
 	    comment.setContent(content);
 	    myboardService.insertComment(comment);
 	    request.getRequestDispatcher("/community/community").forward(request, response);

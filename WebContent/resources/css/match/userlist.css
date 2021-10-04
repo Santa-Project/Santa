@@ -164,7 +164,7 @@ a {
 section{
     position: relative;
     width: 100%;
-    height: 800px;
+    height: 1400px;
 }
 
 .matching_nav{
@@ -234,110 +234,46 @@ section{
     display: block;
 }
 
-.make_board{
+.board{
     position: absolute;
     width: 60%;
-    height: 500px;
+    height: 1000px;
     top: 15%;
     left: 20%;
     box-shadow: 0 0 10px ;
 }
 
-.section_top{
+.userlist1{
+    position: relative;
     display: flex;
+    padding: 10px;
     width: 100%;
-    height: 50%;
+    height: 80px;
+    border: 1px solid #000;
+    justify-content: center;
+    align-content: center;
 }
 
-.section_left{
-    width: 50%;
-    height: 100%;
-    padding: 40px;
-    padding-left: 160px;
-}
-
-.mt_choice{
-    display: flex;
-    padding: 10px;
-}
-
-.mt_choice p{
-	padding: 10px;
-}
-
-.board_master{
-    display: flex;
-    padding: 10px;
-}
-
-.board_master p{
-    padding: 10px;
-}
-
-.board_name{
-    display: flex;
-    padding: 10px;
-}
-
-.board_name p{
-	padding:10px;
-}
-
-.section_right{
-    width: 50%;
-    height: 100%;
-    padding: 40px;
-}
-
-.member_count{
-    display: flex;
-    padding: 10px;
-}
-
-.member_count p{
-	padding: 10px;
-}
-
-.calendar{
-    display: flex;
-    padding: 10px;
-}
-
-.calendar p{
-	padding: 10px;
-}
-
-.section_bottom{
-    display: flex;
-    width: 100%;
-    height: 50%;
-    padding-left: 190px;
-}
-
-.content input{
-    width: 550px;
-    height: 200px;
-}
-
-#bottom_btn button{
-    width: 100px;
-    padding: 10px;
-    font-size: 18px;
-    background-color: #a1bf4d;
-    border: none;
-    outline : none;
-    cursor: pointer;
-    border-radius: 20px;
-}
-
-.yes_btn{
+.userlist1 span{
     position: absolute;
-    top: 650px;
-    left: 700px;
+    font-size: 25px;
+    padding: 20px;
+    top: 3%;
+    left: 8%;
 }
 
-.no_btn{
+.userlist1 p{
+    padding: 20px;
+}
+
+.userlist1 button{
+    width: 50px;
+    height: 30px;
+}
+
+.paging{
     position: absolute;
-    top: 650px;
-    left: 900px;
+    top: 80%;
+    left: 43%;
+    font-size: 30px;
 }
