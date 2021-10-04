@@ -33,7 +33,7 @@
 	    </c:if>
 		
 		<div class="heading">
-			<h1>산 타기 전에<br><span>산타</span> 하자!</h1>
+			<h1>산 타기 전에<br><span>산타</span> 하자!</h1><br>
 			<p>
 				산타에서 "등산의 모든 것"을 한 번에 쉽게 즐길 수 있습니다.<br>
 				등산에 필요한 정보를 얻을 수 있고,<br>
@@ -43,6 +43,7 @@
 				등산을 즐기기 전에 아래 버튼을 클릭하여<br>
 				안전사고 예방수칙, 건강한 등산 문화를 위한 약속,<br>
 				그리고 초보자 가이드를 확인해보세요!<br>
+				<br>
 			</p>
 			<a class="btn-1" href="/main/notice1">안전사고 예방</a>
 			<a class="btn-2" href="/main/notice2">등산문화</a>

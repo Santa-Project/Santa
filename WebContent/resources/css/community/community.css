@@ -691,6 +691,7 @@ section {
     padding: 20px;
 }
 
+
 .hot_photo1 {
     flex: 2;
     background: url('http://localhost:7070/file/${objectArr[1].savePath}${objectArr[1].renameFileName}') no-repeat center center;
@@ -699,7 +700,7 @@ section {
 
 .hot_photo2 {
     flex: 2;
-    background: url('/resources/img/community/mt2.jpg') no-repeat center center;
+    background: url('http://localhost:7070/file/${objectArr[0].savePath}${objectArr[0].renameFileName}') no-repeat center center;
     background-size: cover;
 }
 
@@ -714,6 +715,7 @@ section {
     background: url('/resources/img/community/mt4.jpg') no-repeat center center;
     background-size: cover;
 }
+
 
 .photo1 {
     flex: 2;

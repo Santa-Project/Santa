@@ -91,9 +91,9 @@
                                         <p>${objectArr[0].boardComment}</p>
                                         <button class="btn_close">&times;</button>
                                     </div>
-                                    <div class="">${objectArr[0].uploadTime} ,</div>
-                                    <div class="">${objectArr[0].mtRegion} ,</div>
-                                    <div class="">${objectArr[0].mtName}</div>
+                                    <div class="time">${objectArr[0].uploadTime} ,</div>
+                                    <div class="region">${objectArr[0].mtRegion} ,</div>
+                                    <div class="mtname">${objectArr[0].mtName}</div>
                                     <div class="desc_content">
                                         <form action="/community/insertComment" method="post">
                                        		<input type="text"name="content"><input type="hidden" name="boardIdx" value="${objectArr[0].memBoardIdx}">
