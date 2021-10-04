@@ -21,8 +21,8 @@
         <div class="matching_nav">
             <div class="matching_nav1"></div>
             <div class="matching_nav2">
-                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam">팀원모집</a></button>
-                <button class="matching_btn2" id="matching_btn"><a href="/matching/userList">유저목록</a></button>
+                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam/main">팀원모집</a></button>
+                <button class="matching_btn2" id="matching_btn"><a href="#">유저목록</a></button>
             </div>
             <div class="matching_nav3">
                 <div class="alarm_btn"><a href="#"><i class="fas fa-bell"></i></a></div>

@@ -20,16 +20,24 @@
 <body>
  <%@ include file="/WEB-INF/views/common/header.jsp" %> 
 
+(fetch)
 알림글 작성 : /matching/notice
 -> ${matchingBoard[0].mbIdx } mbIdx(매칭보드Idx) 값 넘김
 -> input으로 받은 msg 값 넘김
 -> ${matchingBoard[0].memberIdx } memberIdx(방장Idx) 값 넘김
+
+대기리스트 관리 페이지 이동 버튼 필요
+GET:/matching/collectTeam/waitingList
+
+(팀 멤버 지원)
+GET:/matching/collectTeam/application
+
     <section>
         <div class="matching_nav">
             <div class="matching_nav1"></div>
             <div class="matching_nav2">
-                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam">팀원모집</a></button>
-                <button class="matching_btn2" id="matching_btn"><a href="/matching/userList">유저목록</a></button>
+                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam/main">팀원모집</a></button>
+                <button class="matching_btn2" id="matching_btn"><a href="#">유저목록</a></button>
             </div>
             <div class="matching_nav3">
                 <div class="alarm_btn"><a href="#"><i class="fas fa-bell"></i></a></div>
@@ -98,8 +106,6 @@ check.click(function(){
 	$("p").toggle();
 });
 </script>
-
-    </section>
 
 
 </body>
