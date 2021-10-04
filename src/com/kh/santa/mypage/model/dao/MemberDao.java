@@ -298,7 +298,7 @@ public class MemberDao {
 			case "register_datetime":
 				member.setRegisterDatetime(rset.getDate("register_datetime"));
 				break;
-			case "PROFILE_CONTENT":
+			case "PROFILE_CONTENT"://ㄴ
 				member.setProfileContent(rset.getString("PROFILE_CONTENT"));
 				break;
 			case "profile_photo":
