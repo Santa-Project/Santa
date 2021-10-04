@@ -1,12 +1,11 @@
 @charset "UTF-8";
-section{
-	width: 100vw;
-	height: 100%;
-	min-width: 
+.section{
+	width: 1200px;
+	margin: auto;
 	}
 
 .wrap_search{
-	width: 100vw;
+	width: 1200px;
 	height: 50px;
 }
 
@@ -26,12 +25,13 @@ section{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100vw;
-	height: 10vw;
+	width: 1200px;
+	height: 10vh;
 	}
 
 .mt_name>h1{
 	font-weight: bolder;
+	font-size: large;
 }
 
 .like{
@@ -51,23 +51,38 @@ section{
 }
 
 .content_top{
-	display: flex;
-	width: 100vw;
+	width: 1200px;
+	float:left;
+	margin-bottom : 20px;
 }
 
 .text_content{
 	padding: 1.5vw 2vw 1.5vw 2vw;
-	font-size: medium;
-	width: 70vw;
+	/* font-size: medium; */
+	width: 770px;
+	float:left;
 }
+.text_content span{
+	
+	font-size: large;
+	font-weight: bold;
+	
+}
+
+.text_content p{
+	
+	font-size: medium;
+	line-height: 1.3em;
+}
+
 
 .other_content{
 	padding: 1.5vw 2vw 1.5vw 2vw;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	width: 30vw;
+	width: 400px;
 	height: 50vw;
+	float:left;
 }
 
 #mt_photo{
@@ -81,15 +96,15 @@ section{
 	position: relative;
 	top: 2vw;
 	left: 1.5vw;
-	width: 25vw;
+	width: 400px;
 }
 
 .content_bottom{
 	display: flex;
-	width: 100vw;
+	width:1200px;
 	height: 40vw;
+	margin: auto;
 }
-
 
 
 .recommended_trip{
@@ -172,15 +187,15 @@ section{
 	height: 3vw;
 }
 
-.modal{
+/* .modal{
 	position: fixed;
 	top: 25%;
 	left: 20%;
 	z-index: 1000;
 	visibility: hidden;
-}
+} */
 
-.modal>div{
+/* .modal>div{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -198,17 +213,17 @@ section{
 .modal.active{
 	visibility: visible;
 }
+ */
 
 
-
-.slide{
+ .slide{
 	display: flex;
 	justify-content: space-between;
 	width: 50vw;
 	height: 5vw;
 }
 
-.arrow-left{
+/*.arrow-left{
 	width: 5vw;
 	height: 5vw;
 }
@@ -248,6 +263,6 @@ section{
 	margin-right : 2vw;
 	font-size: 1.5em;
 }
-
+ */
 
 

@@ -6,6 +6,7 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mt_info_detail.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/imageslider.css">
 
 <meta charset="UTF-8">
 <title>산정보 상세정보</title>
@@ -31,51 +32,8 @@ $(document).ready(function() {
 
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
-<!-- 이미지 슬라이더 스타일 -->
-<style>
-.image-slider  {
-    position: relative;
-    left: 0px;
-    top: 0px;
-    width: 510px;
-    height: 360px;
-}
-.image-slider .slider-body {
-    position: relative;
-    width: 510px;
-    height: 340px;
-    margin: 10px auto;
-}
-.image-slider .slider-body .image-list {
-    position: relative;
-    left: 10px;
-    top: 10px;
-    width: 500px;
-    height: 250px;
-    overflow: hidden; 
-}
-.image-slider .slider-body .image-list img {
-    width:100%;
-    height:100%;
-    position: absolute;    
-    left: 0;
-    top: 0;
-    opacity: 0.0;  
-}
-.image-slider .slider-body ul.index-nav {
-    position: absolute;
-    right : 10px;
-    bottom: 10px;
-    width: 200px;
-    height: 30px;
-    list-style: none;
-}
-.image-slider .slider-body ul.index-nav li {
-    display: inline;
-    width: 35px;
-    height: 27px;
-    float: left;
-}
+<!-- 이미지슬라이더 css -->
+<style type="text/css">
 .image-slider .slider-body ul.index-nav li a {
     zoom : 0.7;
     float: left;
@@ -92,32 +50,13 @@ $(document).ready(function() {
     margin-top : -15px;
     background: url("../resources/img/mountaininfo/button_dot.png"") no-repeat 0 -27px;
 }
-.image-slider .slider-btn-prev {
-    zoom : 0.7;
-    position: absolute;
-    top : 150px;
-    left:  0px;
-    width: 31px;
-    height: 66px;
-    cursor: pointer;
-    padding-left: 230px;
-}
-.image-slider .slider-btn-next {
-    zoom : 0.7;
-    position: absolute;
-    top : 150px;
-    right:  0px;
-    width: 51px;
-    height: 66px;
-    cursor: pointer;
-    padding-right: 230px;
-}
 </style>
+
 </head>
 
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp"  %>
-<section>
+<div class="section">
 	<div class="wrap_search">
 		<form class="search" action="/mountainInfo/mtInfoDetail" method="get">	
 			<input type="text" placeholder="산 또는 키워드 입력입력하세요."name="searchinput">
@@ -136,7 +75,6 @@ $(document).ready(function() {
 		ResultSet rs = null;   
 		PreparedStatement pstmt = null;
 		
-		String mtIdx = null;
 		String mname = null;	
 		String mmap = null;
 		String mlevel = null;
@@ -161,7 +99,6 @@ $(document).ready(function() {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mtIdx = rs.getString("MT_IDX");
 				mname = rs.getString("MT_NAME");
 				mmap = rs.getString("MT_MAP");
 				mlevel = rs.getString("MT_LEVEL");	
@@ -217,10 +154,10 @@ $(document).ready(function() {
 	
 	<div class="content_top">
 		<div class="text_content">
-			<p><b><%=mname  %></b> :  <%=info  %></p><br>
-			<p><b><span>상세정보</span></b> :  <%=dinfo  %></p><br>
-			<p><b><span>추천 트립</span></b> : <%=trip  %></p><br>
-			<p><b><span>교통 정보</span></b> : <%=traffic  %></p>
+			<p>  <%=info  %></p><br><br>
+			<span><b>상세정보</b></span> <p>:  <%=dinfo  %></p><br><br>
+			<span><b>추천 트립</b></span> <p>: <%=trip  %></p><br><br>
+			<span><b>교통 정보</b></span> <p>: <%=traffic  %></p>
 		</div>
 		<div class="other_content">
 			<img src="${contextPath}/resources<%=img %>"/><br>
@@ -229,7 +166,8 @@ $(document).ready(function() {
 					<option  name = "mname" value = "<%=mname  %>"><%=mname %></option>
 				</select>
 				<input type="text" name="hashtag" size = '5'  placeholder="해쉬태그"/>
-				<input class = "submitname" type="submit" name="<%=mname %>" value="등록" onclick = showdetail()/>
+				<button class = "submitname" type="submit" name="<%=mname %>" onclick = showdetail()><i class="fas fa-arrow-circle-right"></i></button>
+				
 			</form>	
 			<br>
 			#<%=hashtagcategory[0]  %>&nbsp;&nbsp;#<%=hashtagcategory[1]  %>&nbsp;&nbsp;#<%=hashtagcategory[2]  %>&nbsp;&nbsp;#<%=hashtagcategory[3]  %>&nbsp;&nbsp;#<%=hashtagcategory[4]  %>&nbsp;&nbsp;
@@ -310,49 +248,34 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-</section>
+
 
 <script type="text/javascript">
 	(function(){
 	
 		var form = document.createElement("form");
-		form.setAttribute("method", "get");  
+		form.setAttribute("method", "post");  //get 방식
 		document.body.appendChild(form);
-		
-		if(${not empty authentication}){
-			document.querySelector(".like").addEventListener('click',function(e){
-				
-				let mt_idx = document.createElement("input");
-				mt_idx.name = "mtIdx";
-				mt_idx.setAttribute("value","<%=mtIdx%>");
-				mt_idx.setAttribute("type","hidden");
-				form.appendChild(mt_idx);
-				
-				let mt_name = document.createElement("input");
-				mt_name.name = "mtName";
-				mt_name.setAttribute("value","<%=mname%>");
-				mt_name.setAttribute("type","hidden");
-				form.appendChild(mt_name);
-				
-				let like = document.createElement("input");
-				like.name = "like";
-				like.setAttribute("type","hidden");
-				form.appendChild(like);
+	
+		if("${not empty authentication}"){
+			document.querySelector(".like").addEventListener('click',function(){
+	
 				if("${sessionScope.like}"){
-					like.setAttribute("value","${!sessionScope.like}");
-
+					form.setAttribute("action", `/mountainInfo/like?like=${!sessionScope.like}`); //요청 보낼 주소
+					form.submit();
+	
 				} else {
-					like.setAttribute("value","${sessionScope.like}");
+					form.setAttribute("action", `/mountainInfo/like?like=${sessionScope.like}`); //요청 보낼 주소
+					form.submit();
 				}
-				
-				form.setAttribute("action", "/mountainInfo/like"); //요청 보낼 주소
-				form.submit();
-		
+	
 			})
 		}
-		
+		})
 
 	})();
 </script>
+</div>
 </body>
+
 </html>

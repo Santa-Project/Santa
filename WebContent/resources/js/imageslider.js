@@ -29,9 +29,9 @@ function ImageSlider(selector, _options) {
 
     this._initEvent();
 
-    this.showImageAt(this._options.startIndex);  //public
+    this.showImageAt(this._options.startIndex);  
 
-    this.startAutoPlay();  //public
+    this.startAutoPlay();  
 
 }
 
@@ -99,11 +99,11 @@ ImageSlider.prototype.nextImage = function() {
 }
 
 ImageSlider.prototype.showImageAt = function(index, direction) {
-    if(index < 0) {  //인덱스가 음수라면....
-        index = this._$images.length - 1; //인덱스가 4로 만드는 코드
+    if(index < 0) {  
+        index = this._$images.length - 1; 
     }
 
-    if(index >= this._$images.length) { //인덱스가 $images의 길이이 5와 같거나 크다면...
+    if(index >= this._$images.length) { 
         index = 0;
     }
 
@@ -116,8 +116,8 @@ ImageSlider.prototype.showImageAt = function(index, direction) {
         var nextStartLeft = -this._imageWidth;
 
         if(direction == "next") {
-            currentEndLeft = -this._imageWidth;  //-780
-            nextStartLeft = this._imageWidth;    //780
+            currentEndLeft = -this._imageWidth;  
+            nextStartLeft = this._imageWidth;    
         }
         $currentImage.stop().animate({
             left : currentEndLeft,

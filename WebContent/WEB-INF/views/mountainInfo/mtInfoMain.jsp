@@ -6,69 +6,32 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/mtinfomain.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/mountainInfo/topbutton.css">
 <!-- top버튼 -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+<script src="${contextPath}/resources/js/topbutton.js"></script>
 <meta charset="UTF-8">
 <title>산정보 메인</title>
-
-<!-- top버튼 css-->
-<style type="text/css">
-#back-to-top {
-  display: inline-block;
-  background-color: yellowgreen;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  transition: background-color .3s, 
-    opacity .5s, visibility .5s;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1000;
-}
-#back-to-top::after {
-  content: "\f077";
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2em;
-  line-height: 50px;
-  color: #fff;
-}
-#back-to-top:hover {
-  cursor: pointer;
-  background-color: darkgreen;
-}
-#back-to-top:active {
-  background-color: #555;
-}
-#back-to-top.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-
-</style>
 </head>
+
 <body>
 <!-- <header> -->
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
-<a id="back-to-top"></a>
+
+
+
 <div class = "allwrap">	
 	<div class="side">
+	<a id="back-to-top"></a>
+	<!-- 모달창 -->
+			 <button class="btn-open-popup"><i class="fas fa-caret-up"></i></button><br>
 		<form action="/mountainInfo/mtInfoMain" method="get">	
 			
 			<!-- 검색창 -->
 			<div class="search">
-					<input  type="text" placeholder="산이름을 입력입력하세요."name="searchinput">
+					<input  type="text" placeholder="산이름을 입력하세요."name="searchinput">
 					<button type = "submit" ><i class="fas fa-search"></i></button>
 			</div>
-			
-	
 			<div class="wraplevel">
 				<div class="level-title">난이도</div>
 				<div class="level-list">
@@ -85,13 +48,19 @@
 	            	<input type="radio" name="mtime" value="3시간 이상">&nbsp;3시간 이상<br><br>
 	            	<input type="radio" name="mtime" value="5시간 이상">&nbsp;5시간 이상<br><br>
 	            	<input type="radio" name="mtime" value="7시간 이상">&nbsp;7시간 이상<br><br>
-				</div>
 			</div>
 		</form>
 	</div>
+ </div>		
+	
+	
 	
 <!-- 디비 접속 -->	
 <%@include file="dbconn.jsp" %>  
+
+
+
+
 <div class="contents">
 	<table>
 		<tr>
@@ -109,6 +78,8 @@
 		}
 		String melvel = request.getParameter("melvel");
 		String mtime = request.getParameter("mtime");
+		
+		String all = request.getParameter("all");
 		%>
 		
 		
@@ -116,7 +87,6 @@
 			ResultSet rs = null;  
 			PreparedStatement pstmt = null;
 			
-			String mtIdx = null;
 			String mname = null;
 			String mregion = null;
 			String mhigh = null;
@@ -134,7 +104,6 @@
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-					mtIdx = rs.getString("MT_IDX");
 					mname = rs.getString("MT_NAME");	
 					mregion = rs.getString("MT_REGION");	
 					mhigh = rs.getString("MT_HIGH");
@@ -162,7 +131,7 @@
 		<script>
 		var imgname = document.querySelector(".img").name;
 		function showdetail(){
-		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname + '&mtIdx=' + <%=mtIdx%>;
+		location.href = 'http://localhost:7070/mountainInfo/mtInfoDetail?searchinput=' + imgname;
 		}
 		</script>
 		
@@ -319,27 +288,48 @@
 	        infowindow.close();
 	    };
 	}
-	
 
-	
-	//top버튼
-	$(function(){
-		  $('#back-to-top').on('click',function(e){
-		      e.preventDefault();
-		      $('html,body').animate({scrollTop:0},600);
-		  });
-		  
-		  $(window).scroll(function() {
-		    if ($(document).scrollTop() > 100) {
-		      $('#back-to-top').addClass('show');
-		    } else {
-		      $('#back-to-top').removeClass('show');
-		    }
-		  });
-		})
-	
 </script>
 </div>
-</div>	
+
+
+<!-- 모달창 -->
+ <div class="modal">
+      <div class="modal_body">
+      	<ul>
+      		<li>개화산</li>
+			<li>관악산</li>
+			<li>구룡산</li>
+			<li>궁산</li>
+			<li>대모산</li>
+			<li>도봉산</li>
+			<li>백련산</li>
+			<li>봉제산</li>
+			<li>북악산</li>
+			<li>북한산</li>
+			<li>불암산</li>
+			<li>삼성산</li>
+			<li>수락산</li>
+			<li>아차산</li>
+			<li>안산</li>
+			<li>용마산</li>
+			<li>우장산</li>
+			<li>인왕산</li>
+			<li>증산</li>
+			<li>청계산</li>
+      	</ul>
+      </div>
+    </div>
+   
+<!-- 모달창 -->
+<script>
+
+$(function(){ $(".btn-open-popup").click(function(){ 
+	$(".modal").fadeIn(); });
+$(".modal_body").click(function(){ $(".modal").fadeOut(); }); });
+
+
+
+</script>
 </body>
 </html>

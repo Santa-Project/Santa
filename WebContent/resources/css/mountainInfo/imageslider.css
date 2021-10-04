@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+/* 이미지 슬라이더 스타일 */ 
+
+.image-slider  {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 510px;
+    height: 360px;
+}
+.image-slider .slider-body {
+    position: relative;
+    width: 510px;
+    height: 340px;
+    margin: 10px auto;
+}
+.image-slider .slider-body .image-list {
+    position: relative;
+    left: 10px;
+    top: 10px;
+    width: 500px;
+    height: 250px;
+    overflow: hidden; 
+}
+.image-slider .slider-body .image-list img {
+    width:100%;
+    height:100%;
+    position: absolute;    
+    left: 0;
+    top: 0;
+    opacity: 0.0;  
+}
+.image-slider .slider-body ul.index-nav {
+    padding-left: 60px;
+    position: absolute;
+    right : 10px;
+    bottom: 10px;
+    width: 200px;
+    height: 30px;
+    list-style: none;
+}
+.image-slider .slider-body ul.index-nav li {
+    display: inline;
+    width: 35px;
+    height: 27px;
+    float: left;
+}
+
+.image-slider .slider-btn-prev {
+    zoom : 0.7;
+    position: absolute;
+    top : 150px;
+    left:  0px;
+    width: 31px;
+    height: 66px;
+    cursor: pointer;
+    padding-left: 230px;
+}
+.image-slider .slider-btn-next {
+    zoom : 0.7;
+    position: absolute;
+    top : 150px;
+    right:  0px;
+    width: 51px;
+    height: 66px;
+    cursor: pointer;
+    padding-right: 230px;
+}

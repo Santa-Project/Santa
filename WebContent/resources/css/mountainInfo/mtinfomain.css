@@ -6,12 +6,14 @@
 	margin : auto;
 }
 
-/* leftside */
+/* leftside css*/
 .side{
+	border-radius: 20px;
 	float : left;
 	width: 25%;
-	height: 120vw;
+	height: 400vh;
 	background-color: #f8ffd7;
+	margin-right : 20px;
 }
 
 /* 검색창 */
@@ -53,7 +55,11 @@
 
 /* table */
 table {
-	margin-top : 50px;
+	margin-top : 10px;
+	border: 2px dashed yellowgreen !important;
+    border-radius: 40px !important;
+    border-spacing: 20px;
+    border-collapse: separate;
 }
 
 table td {
@@ -65,7 +71,10 @@ table td {
 
 table td img{
 	width: 10vw;
-	height: 10vw;
+	height: 10vh;
+}
+table td img:hover{
+	transform: scale(1.2);  
 }
 
 /* map */
@@ -80,5 +89,57 @@ table td img{
 	margin-top: 30px; 
 }
 
+/* 모달창 */
+       .modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal.show {
+        display: block;
+      }
+
+      .modal_body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 600px;
+        padding: 40px;
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+        transform: translateX(-50%) translateY(-50%);
+        z-index: 2;
+      }
+      
+      .modal_body ul{
+	    list-style: none;
+	    margin: 0px;
+	    padding: 0px;
+	    max-width: 250px;
+	    width: 100%;
+    }
+    
+       
+      .modal_body ul li{
+	   padding: 5px 0px 5px 5px;
+	    margin-bottom: 5px;
+	    border-bottom: 1px solid #efefef;
+	    font-size: 12px;
+    }
+  
+  	.btn-open-popup {
+  		position : absolute;
+  		margin-top : 115px;
+  	    margin-left: 67px;
+  	    
+  	}
 
 
