@@ -77,9 +77,9 @@ console.log(Kakao.isInitialized()); // sdk초기화여부판단
 function kakaoLogin() {
 	var form = document.createElement("form");
 
-    form.setAttribute("method", "Post");  //Post 방식
+    form.setAttribute("method", "post");  //Post 방식
 
-    form.setAttribute("action", "/main/kakaoLogin"); //요청 보낼 주소
+    form.setAttribute("action", "/main/kakao_login"); //요청 보낼 주소
     
     document.body.appendChild(form);
 	

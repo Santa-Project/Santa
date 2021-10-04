@@ -56,7 +56,7 @@ public class MainController extends HttpServlet {
 		case "login":
 			login(request, response);
 			break;
-		case "kakaoLogin":
+		case "kakao_login":
 			kakaoLogin(request, response);
 			break;
 		case "logout":
@@ -86,7 +86,7 @@ public class MainController extends HttpServlet {
 		case "finding_pw":
 			finding_pw(request, response);
 			break;
-		case "password_request":
+		case "pw_request":
 			password_request(request, response);
 			break;
 		case "notice1":

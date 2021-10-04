@@ -27,7 +27,7 @@
 		<section class="search-section">
 			
 		<c:if test="${empty found_pw}">
-		<form action="/main/password_request" method="post">
+		<form action="/main/pw_request" method="post">
 			<div class="search-wrap id-wrap">
 				<input placeholder="id" type="id" name="id">
 			</div>
