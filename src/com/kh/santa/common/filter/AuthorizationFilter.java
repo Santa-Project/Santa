@@ -46,6 +46,9 @@ public class AuthorizationFilter implements Filter {
 				case "main":
 					mainAuthorize(httpRequest, httpReponse, uriArr);
 					break;
+				case "mountainInfo":
+					mountainInfoAuthorize(httpRequest, httpReponse, uriArr);
+					break;
 				case "matching":
 					matchingAuthorize(httpRequest, httpReponse, uriArr);
 					break;
@@ -62,17 +65,13 @@ public class AuthorizationFilter implements Filter {
 		
 		chain.doFilter(request, response);
 	}
-	
+
 	private void mainAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr) {
 		
 		//세션 반아오기
 		HttpSession session = httpRequest.getSession();
 		
 		//세션에 저장된 "authentication" Attribute를 받아오기
-		// * login 시 controller에서 setAttribute("authentication")
-		// - 입력받은 id와 pw로 member정보가 db에 있을 경우 member dto에 정보를 받아오고 authentication value에 저장
-		// * logout 시 controller에서 removeAttribute("authentication")
-		// - authentication Attribute 삭제
 		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
 		// - authentication Attribute가 있을 경우 : 로그인 된 상태
 		Member member = (Member) session.getAttribute("authentication");
@@ -93,9 +92,13 @@ public class AuthorizationFilter implements Filter {
 			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
 		case "login":
 			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
+		case "kakaoLogin":
+			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
 		case "joinform":
 			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
 		case "join":
+			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
+		case "joinImpl":
 			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
 		case "finding_id":
 			throw new HandlableException(ErrorCode.REDIRECT_PREVIOUS_PAGE_NO_MESSAGE);
@@ -118,10 +121,6 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		
 		//세션에 저장된 "authentication" Attribute를 받아오기
-		// * login 시 controller에서 setAttribute("authentication")
-		// - 입력받은 id와 pw로 member정보가 db에 있을 경우 member dto에 정보를 받아오고 authentication value에 저장
-		// * logout 시 controller에서 removeAttribute("authentication")
-		// - authentication Attribute 삭제
 		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
 		// - authentication Attribute가 있을 경우 : 로그인 된 상태
 		Member member = (Member) session.getAttribute("authentication");
@@ -130,86 +129,40 @@ public class AuthorizationFilter implements Filter {
 			throw new HandlableException(ErrorCode.REDIRECT_LOGIN_PAGE);
 		}
 		
-		if(uriArr.length-1 == 2) {
-			return;
+		switch(uriArr[uriArr.length-1]) {
+		case "waitingList" : 
+			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
+			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
+		case "accept" :
+			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
+			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
+		case "reject" :
+			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
+			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
+		case "createNotice" :
+			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
+			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
+		case "application" :
+			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) {
+			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
+			}
 		}
-		
-		switch(uriArr[2]) {
-		case "collectTeam":
-			collectTeam(httpRequest, httpReponse, uriArr, member);
-			break;
-		case "userList":
-			userlist(httpRequest, httpReponse, uriArr, member);
-			break;
-			
-		}
-		
-		
-		
 		
 	}
 	
-	private void collectTeam(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr, Member member) {
+	private void mountainInfoAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpReponse,
+			String[] uriArr) {
+		//세션 반아오기
+		HttpSession session = httpRequest.getSession();
 		
-		if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) return;
+		//세션에 저장된 "authentication" Attribute를 받아오기
+		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
+		// - authentication Attribute가 있을 경우 : 로그인 된 상태
+		Member member = (Member) session.getAttribute("authentication");
 		
-		switch(uriArr[3]) {
-		case "modify_board_form":
+		if(member == null) {
 			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "delete_board_form":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "invite":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "managingTeam":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "accept":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "reject":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "create_notice":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		default:
-			break;
 		}
-		
-	}
-
-	private void userlist(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr, Member member) {
-		
-		if(httpRequest.getParameter("memberIdx").equals(member.getMemberIdx())) return;
-		
-		
-		/*
-		 * MemberGrade userGrade = MemberGrade.valueOf(member.getGrade());
-		 * 
-		 * // fmUser인 경우 findingTeam 기능들에 접근할 권한 가짐 if(userGrade.DESC.equals("fmUser"))
-		 * return; if(userGrade.DESC.equals("boardMaster&fmUser")) return;
-		 */
-		
-		/*
-		 * findingMember 게시판 생성한 유저 
-		 * collectTeam 게시판 생성하고 findingMember 게시판 생성한 유저
-		 */
-		
-		
-		// fmUser가 아닌 경우 findingTeam의 아래 url로 접근 시 권한 없음
-		switch(uriArr[3]) {
-		case "modify_board_form":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "delete_board_form":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "managingRequest":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "accept":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		case "reject":
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
-		default:
-			break;
-		}
-		
-		
-
 		
 	}
 
@@ -219,10 +172,6 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		
 		//세션에 저장된 "authentication" Attribute를 받아오기
-		// * login 시 controller에서 setAttribute("authentication")
-		// - 입력받은 id와 pw로 member정보가 db에 있을 경우 member dto에 정보를 받아오고 authentication value에 저장
-		// * logout 시 controller에서 removeAttribute("authentication")
-		// - authentication Attribute 삭제
 		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
 		// - authentication Attribute가 있을 경우 : 로그인 된 상태
 		Member member = (Member) session.getAttribute("authentication");
@@ -247,17 +196,13 @@ public class AuthorizationFilter implements Filter {
 
 	private void mypageAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr) {
 		
-		// showBoard는 모든 유저가 사용 가능
-		if(uriArr[2].equals("showBoard")) return;
+		// 다른사람 게시글 (anotherBoard)는 모든 유저가 사용 가능
+		if(uriArr[2].equals("anotherBoard")) return;
 		
 		//세션 반아오기
 		HttpSession session = httpRequest.getSession();
 		
 		//세션에 저장된 "authentication" Attribute를 받아오기
-		// * login 시 controller에서 setAttribute("authentication")
-		// - 입력받은 id와 pw로 member정보가 db에 있을 경우 member dto에 정보를 받아오고 authentication value에 저장
-		// * logout 시 controller에서 removeAttribute("authentication")
-		// - authentication Attribute 삭제
 		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
 		// - authentication Attribute가 있을 경우 : 로그인 된 상태
 		Member member = (Member) session.getAttribute("authentication");
@@ -266,7 +211,6 @@ public class AuthorizationFilter implements Filter {
 		if(member == null) {
 			throw new HandlableException(ErrorCode.REDIRECT_LOGIN_PAGE_NO_MESSAGE);
 		}
-				
 		
 	}
 

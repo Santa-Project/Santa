@@ -210,7 +210,7 @@ document.querySelector('#btnIdCheck').addEventListener('click', function(){
 		return;
 	}
 
-	fetch("/main/id-check?id=" + userId)
+	fetch("/main/idCheck?id=" + userId)
 	.then(function(response){
 		if(response.ok){
 			console.dir(response);

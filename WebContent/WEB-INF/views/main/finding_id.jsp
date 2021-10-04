@@ -25,7 +25,7 @@
 	
 		<section class="search-section">
 		<c:if test="${empty found_id}">
-			<form action="/main/id_request" method="post">
+			<form action="/main/idRequest" method="post">
 				<div class="search-wrap username-wrap">
 					<input placeholder="Username" type="text" name="username">
 				</div>
@@ -58,7 +58,7 @@
 			<br>
 			
 			<div id="search-wrqp">
-				<a href="/main/finding_pw">비밀번호 찾기</a>
+				<a href="/main/findingPw">비밀번호 찾기</a>
 				<c:if test="${empty found_id}">
 				 / <a href="/main/joinform">아직 회원이 아니신가요?</a> 
 				 </c:if>

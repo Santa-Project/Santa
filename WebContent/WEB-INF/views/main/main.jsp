@@ -46,7 +46,7 @@
 			</p>
 			<a class="btn-1" href="/main/notice1">안전사고 예방</a>
 			<a class="btn-2" href="/main/notice2">등산문화</a>
-			<a class="btn-2" href="/main/novice_guide">초보자 가이드</a>
+			<a class="btn-2" href="/main/noviceGuide">초보자 가이드</a>
 		</div>
 
 		<div class="trigger">
@@ -57,7 +57,7 @@
 		<div class="modal-gnb">
 			<div class="gnb">
 				<a href="/mountainInfo/mtInfoMain">등산정보</a>
-				<a href="/matching/collectTeam">등산매칭</a>
+				<a href="/matching/collectTeam/main">등산매칭</a>
 				<a href="/community/community">커뮤니티</a>
 			</div>
 		</div>

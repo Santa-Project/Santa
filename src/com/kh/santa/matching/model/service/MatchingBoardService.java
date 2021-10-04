@@ -284,36 +284,6 @@ public class MatchingBoardService {
 		return memberList;
 	}
 
-	public List<Object[]> getUserList() {
-		Connection conn = template.getConnection();
-		List<Object[]> findingMemberList = new ArrayList<Object[]>();
-		List<FindingMember> fmList = new ArrayList<FindingMember>();
-		
-		try {
-			fmList = matchingBoardDao.selectFindingMemberList(conn);
-			
-			for (FindingMember fm : fmList) {
-				Object[] oArr = new Object[3];
-				oArr[0] = fm;
-				oArr[1] = mountainDao.selectMountainBymtIdx(fm.getMtIdx(), conn);
-				oArr[2] = memberDao.selectNicknameByIdx(fm.getMemberIdx(), conn);
-				
-				if(fm.getMatchingStatus().equalsIgnoreCase("F")) {
-					oArr[3] = false;
-				} else {
-					oArr[3] = true;
-				}
-				
-				findingMemberList.add(oArr);
-			}
-			
-		}finally {
-			template.close(conn);
-		}
-		
-		return findingMemberList;
-	}
-
 	
 
 

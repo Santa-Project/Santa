@@ -14,8 +14,7 @@
         <div class="matching_nav">
             <div class="matching_nav1"></div>
             <div class="matching_nav2">
-                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam">팀원모집</a></button>
-                <button class="matching_btn2" id="matching_btn"><a href="/matching/userList">유저목록</a></button>
+                <button class="matching_btn1" id="matching_btn"><a href="/matching/collectTeam/main">팀원모집</a></button>
             </div>
             <div class="matching_nav3">
                 <div class="alarm_btn">
@@ -52,7 +51,7 @@
                 <tbody>
                 <c:forEach items="${matchingBoardList}" var="matchingBoard" varStatus="status">
                 		
-                    <form action="/matching/matchingBoard">
+                    <form action="/matching/collectTeam/matchingBoard">
                     	<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
 	                    <tr height="30">
 	                    	<td><button>게시글 순서</button></td>
@@ -67,7 +66,7 @@
                 </tbody>
             </table>
         </div>
-        <form action="/matching/createMatchingBoard">
+        <form action="/matching/collectTeam/createBoardForm">
         	<button class="create_btn">방 만들기</button>
 		</form>
 		

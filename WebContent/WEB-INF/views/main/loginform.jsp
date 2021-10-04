@@ -55,9 +55,9 @@
 					
 				</ul>
 				<br>
-	            <a href="/main/finding_id">아이디 찾기</a>
+	            <a href="/main/findingId">아이디 찾기</a>
 	            <br>
-	            <a href="/main/finding_pw">비밀번호 찾기</a>
+	            <a href="/main/findingPw">비밀번호 찾기</a>
 	            <br>
 	            <a href="/main/joinform">아직 회원이 아니신가요?</a>  
 			</section>
@@ -79,7 +79,7 @@ function kakaoLogin() {
 
     form.setAttribute("method", "post");  //Post 방식
 
-    form.setAttribute("action", "/main/kakao_login"); //요청 보낼 주소
+    form.setAttribute("action", "/main/kakaoLogin"); //요청 보낼 주소
     
     document.body.appendChild(form);
 	

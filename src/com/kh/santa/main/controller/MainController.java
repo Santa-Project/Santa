@@ -48,15 +48,13 @@ public class MainController extends HttpServlet {
 
 		switch (uriArr[uriArr.length - 1]) {
 		case "main":
-			main(request, response);
-			break;
+			request.getRequestDispatcher("/main/main").forward(request, response);
 		case "loginform":
-			loginform(request, response);
-			break;
+			request.getRequestDispatcher("/main/loginform").forward(request, response);
 		case "login":
 			login(request, response);
 			break;
-		case "kakao_login":
+		case "kakaoLogin":
 			kakaoLogin(request, response);
 			break;
 		case "logout":
@@ -65,52 +63,40 @@ public class MainController extends HttpServlet {
 		case "joinform":
 			joinform(request, response);
 			break;
-		case "id-check":
+		case "idCheck":
 			idCheck(request, response);
 			break;
 		case "address":
-			address(request, response);
-			break;
+			request.getRequestDispatcher("/main/addrPopup").forward(request, response);
 		case "join":
 			join(request, response);
 			break;
 		case "joinImpl":
 			joinImpl(request, response);
 			break;
-		case "finding_id":
+		case "findingId":
 			finding_id(request, response);
 			break;
-		case "id_request":
+		case "idRequest":
 			id_request(request, response);
 			break;
-		case "finding_pw":
+		case "findingPw":
 			finding_pw(request, response);
 			break;
-		case "pw_request":
-			password_request(request, response);
+		case "pwRequest":
+			pw_request(request, response);
 			break;
 		case "notice1":
 			request.getRequestDispatcher("/main/notice1").forward(request, response);
 		case "notice2":
 			request.getRequestDispatcher("/main/notice2").forward(request, response);
-		case "novice_guide":
+		case "noviceGuide":
 			request.getRequestDispatcher("/main/novice_guide").forward(request, response);
 
 		default:
 			break;
 
 		}
-	}
-
-	private void main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/main/main").forward(request, response);
-
-	}
-
-	private void loginform(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("/main/loginform").forward(request, response);
-
 	}
 	
 	private void login(HttpServletRequest request, HttpServletResponse response)
@@ -212,11 +198,6 @@ public class MainController extends HttpServlet {
 		}
 	}
 	
-	private void address(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("/main/addrPopup").forward(request, response);
-	}
-	
 	private void join(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -288,7 +269,6 @@ public class MainController extends HttpServlet {
 	private void finding_id(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("/main/finding_id").forward(request, response);
-
 	}
 	
 	private void id_request(HttpServletRequest request, HttpServletResponse response)
@@ -315,7 +295,7 @@ public class MainController extends HttpServlet {
 
 	}
 	
-	private void password_request(HttpServletRequest request, HttpServletResponse response)
+	private void pw_request(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		String id = request.getParameter("id");
