@@ -130,7 +130,7 @@ public class CommunityController extends HttpServlet {
 	    comment.setMemberIdx(member.getMemberIdx());
 	    comment.setMemBoardIdx(boardIdx);
 	    comment.setContent(content);
-	    myboardService.insertComment(comment);
+	    communityService.insertComment(comment);
 		
 	    
 	    mypageBoard(request,response);
