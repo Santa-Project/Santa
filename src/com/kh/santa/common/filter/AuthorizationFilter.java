@@ -46,9 +46,6 @@ public class AuthorizationFilter implements Filter {
 				case "main":
 					mainAuthorize(httpRequest, httpReponse, uriArr);
 					break;
-				case "mountainInfo":
-					mountainInfoAuthorize(httpRequest, httpReponse, uriArr);
-					break;
 				case "matching":
 					matchingAuthorize(httpRequest, httpReponse, uriArr);
 					break;
@@ -146,22 +143,6 @@ public class AuthorizationFilter implements Filter {
 			if(httpRequest.getParameter("leaderIdx").equals(member.getMemberIdx())) {
 			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
 			}
-		}
-		
-	}
-	
-	private void mountainInfoAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpReponse,
-			String[] uriArr) {
-		//세션 반아오기
-		HttpSession session = httpRequest.getSession();
-		
-		//세션에 저장된 "authentication" Attribute를 받아오기
-		// - authentication Attribute가 없을 경우 : 로그인 안된 상태
-		// - authentication Attribute가 있을 경우 : 로그인 된 상태
-		Member member = (Member) session.getAttribute("authentication");
-		
-		if(member == null) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED_PAGE);
 		}
 		
 	}
