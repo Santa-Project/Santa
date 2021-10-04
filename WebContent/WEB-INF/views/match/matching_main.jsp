@@ -22,7 +22,7 @@
                     <a href="#"><i class="fas fa-bell"></i></a>
                     <div class="alarm_sub">
                     <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
-                        <a href="#">${matchingAlarm[1] } ${matchingAlarm[0].msg }</a>
+                        <a href="#">방장 : ${matchingAlarm[1] }<br>${matchingAlarm[0].msg }</a>
                     </c:forEach>
                     </div>
                 </div>
@@ -55,8 +55,8 @@
                     <form action="/matching/collectTeam/matchingBoard">
                     	<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
 	                    <tr height="30">
-	                    	<td><button>게시글 순서</button></td>
-	                        <td><button>${matchingBoard[0].matchStatus }</button></td>
+	                    	<td><button>${status.count }</button></td>
+	                        <td><button>${matchingBoard[2]}</button></td>
 	                        <td><button>${matchingBoard[0].brdName }</button></td>
 	                        <td><button>${matchingBoard[0].mtDate }</button></td>
 	                        <td><button>${matchingBoard[1] }</button></td>

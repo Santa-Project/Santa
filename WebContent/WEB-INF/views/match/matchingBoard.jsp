@@ -20,18 +20,6 @@
 <body>
  <%@ include file="/WEB-INF/views/common/header.jsp" %> 
 
-(fetch)
-알림글 작성 : /matching/notice
--> ${matchingBoard[0].mbIdx } mbIdx(매칭보드Idx) 값 넘김
--> input으로 받은 msg 값 넘김
--> ${matchingBoard[0].memberIdx } memberIdx(방장Idx) 값 넘김
-
-대기리스트 관리 페이지 이동 버튼 필요
-GET:/matching/collectTeam/waitingList
-
-(팀 멤버 지원)
-GET:/matching/collectTeam/application
-
     <section>
         <div class="matching_nav">
             <div class="matching_nav1"></div>
@@ -82,9 +70,38 @@ GET:/matching/collectTeam/application
                         <h3>진행 상태 :</h3>
                         <p>${matchingBoard[3] }</p>
                     </div>
-                    <div class="make_notice">
+            		<div class="make_notice">
+            		<c:if test="${not empty leader }">
+            		<div>
+            		<form action="/matching/collectTeam/createNotice">
+                 		<input type="hidden" name="leaderIdx" value="${matchingBoard[0].memberIdx }">
+                 		<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
+                 		<input type="text" max="400" name="msg" width="150px" height="100px">
                     	<button>알림 보내기</button>
-                	</div>
+                    </form>
+                    </div>
+                    <div>
+                    <form action="/matching/collectTeam/waitingList">
+                 		<input type="hidden" name="leaderIdx" value="${matchingBoard[0].memberIdx }">
+                 		<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
+                 		<input type="hidden" name="mtDate" value="${matchingBoard[0].mtDate }">
+                 		<input type="hidden" name="memVolume" value="${matchingBoard[0].memVolume }">
+                 		<input type="hidden" name="matchedMemCnt" value="${matchingBoard[0].matchedMemCnt }">
+                    	<button style="position:relative;">지원자 관리</button>
+                    </form>
+                    </div>
+                    </c:if>
+                    <c:if test="${not empty matched }">
+                    	매칭성공
+                    </c:if>
+                    <c:if test="${not empty notyet and matchingBoard[3] == '진행중'}">
+                 	<form action="/matching/collectTeam/application">
+                 		<input type="hidden" name="leaderIdx" value="${matchingBoard[0].memberIdx }">
+                 		<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
+                 		<button>매칭요청</button>
+                    </form>
+                    </c:if>
+                	</div> 
                 </div>
                 
             </div>

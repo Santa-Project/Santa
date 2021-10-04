@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.kh.santa.common.db.JDBCTemplate;
 import com.kh.santa.matching.model.dao.MatchingBoardDao;
-import com.kh.santa.matching.model.dto.FindingMember;
 import com.kh.santa.matching.model.dto.MatchingAlarm;
 import com.kh.santa.matching.model.dto.MatchingBoard;
 import com.kh.santa.matching.model.dto.MatchingCompleteList;
@@ -42,10 +41,11 @@ public class MatchingBoardService {
 				mbListAndLeader[0] = mb;
 				mbListAndLeader[1] = memberDao.selectNicknameByIdx(mb.getMemberIdx(), conn);
 				
-				if(mb.getMatchStatus().equalsIgnoreCase("F")) {
-					mbListAndLeader[2] = false;
+				
+				if(mb.getMatchStatus().trim().equalsIgnoreCase("F")) {
+					mbListAndLeader[2] = "매칭중";
 				} else {
-					mbListAndLeader[2] = true;
+					mbListAndLeader[2] = "매칭완료";
 				}
 				
 				matchingBoardList.add(mbListAndLeader);
@@ -73,10 +73,10 @@ public class MatchingBoardService {
 			matchingBoard[1] = leaderNickName;
 			matchingBoard[2] = mountainName;
 			
-			if(mb.getMatchStatus().equalsIgnoreCase("F")) {
-				matchingBoard[3] = false;
+			if(mb.getMatchStatus().trim().equalsIgnoreCase("F")) {
+				matchingBoard[3] = "진행중";
 			} else {
-				matchingBoard[3] = true;
+				matchingBoard[3] = "완료";
 			}
 			
 		}finally {
@@ -84,6 +84,21 @@ public class MatchingBoardService {
 		}
 		
 		return matchingBoard;
+	}
+	
+	public MatchingBoard getMatchingBoardDTO(String mbIdx) {
+		Connection conn = template.getConnection();
+		MatchingBoard mb = new MatchingBoard();
+		
+		try {
+			
+			mb = matchingBoardDao.selectMatchingBoardByIdx(mbIdx, conn);
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return mb;
 	}
 
 	public void createMatchingBoard(MatchingBoard matchingBoard) {
@@ -282,6 +297,41 @@ public class MatchingBoardService {
 		}
 		
 		return memberList;
+	}
+
+	public String getLeaderIdx(String mbIdx) {
+		
+		String leaderIdx = null;
+		
+		Connection conn = template.getConnection();
+		
+		try {
+			
+			MatchingBoard mb = matchingBoardDao.selectMatchingBoardByIdx(mbIdx, conn);
+			leaderIdx = mb.getMemberIdx();
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return leaderIdx;
+	}
+
+	public boolean checkDuplicateApply(String memberIdx, String mbIdx) {
+		boolean flg = false;
+		
+		Connection conn = template.getConnection();
+		
+		try {
+			
+			flg = matchingBoardDao.checkMemberIdxAndMbIdx(memberIdx, mbIdx, conn);
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return flg;
+		
 	}
 
 	

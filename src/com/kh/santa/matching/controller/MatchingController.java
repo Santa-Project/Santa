@@ -97,6 +97,29 @@ public class MatchingController extends HttpServlet {
 		Object[] matchingBoard = matchingBoardService.getMatchingBoard(mbIdx);
 		List<Member> memberList = matchingBoardService.getMemberList(mbIdx);
 		
+		String memberIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx();
+		
+		//방장인 경우
+		if(matchingBoardService.getLeaderIdx(mbIdx).equals(memberIdx)) {
+			request.setAttribute("leader", "Y");
+		}
+		
+		
+		//매칭된 회원
+		for (Member member : memberList) {
+			if(member.getMemberIdx().equals(memberIdx)){
+				request.setAttribute("matched", "Y");
+				return;
+			}
+		}
+		System.out.println(request.getAttribute("matched"));
+		//매칭 안된(한) 회원
+		if(request.getAttribute("matched") == null && request.getAttribute("leader") == null) {
+			request.setAttribute("notyet", "Y");
+		}
+		
+		
+		
 		request.setAttribute("matchingBoard", matchingBoard);
 		request.setAttribute("memberList", memberList);
 		request.getRequestDispatcher("/match/matchingBoard").forward(request, response);
@@ -110,10 +133,19 @@ public class MatchingController extends HttpServlet {
 		String memberIdx = ((Member)request.getSession().getAttribute("authentication")).getMemberIdx();
 		// mbIdx
 		String mbIdx = request.getParameter("mbIdx");
+		System.out.println(matchingBoardService.checkDuplicateApply(memberIdx,mbIdx));
+		if(matchingBoardService.checkDuplicateApply(memberIdx,mbIdx)) {
+			request.setAttribute("msg", "이미 지원하셨습니다.");
+			request.setAttribute("url", "/matching/collectTeam/matchingBoard?mbIdx=" + mbIdx);
+			request.getRequestDispatcher("/common/result").forward(request, response);
+			
+		} else {
+
+			matchingBoardService.applyForMatching(memberIdx,mbIdx);
+			
+			matchingBoard(request,response);
+		}
 		
-		matchingBoardService.applyForMatching(memberIdx,mbIdx);
-		
-		matchingBoard(request,response);
 	}
 	
 	private void notice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
@@ -122,11 +154,11 @@ public class MatchingController extends HttpServlet {
 		//mbIdx(매칭보드 idx) 값 & memberIdx(방장Idx) 값  받아오기
 		String mbIdx = request.getParameter("mbIdx");
 		String msg = request.getParameter("msg");
-		String memberIdx = request.getParameter("memberIdx");
+		String memberIdx = request.getParameter("leaderIdx");
 		
 		matchingBoardService.sendNotice(mbIdx,msg,memberIdx);
 		
-		matchingBoard(request,response);
+		response.sendRedirect("/matching/collectTeam/matchingBoard?mbIdx=" + mbIdx);
 	}
 	
 	private void waitingList(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
@@ -137,8 +169,8 @@ public class MatchingController extends HttpServlet {
 		
 		String mbIdx = request.getParameter("mbIdx");
 		mb.setMbIdx(mbIdx);
-		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
-		mb.setMemVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMtDate((Date)(request.getAttribute("mtDate")));
+		mb.setMemVolume(Integer.parseInt(request.getParameter("memVolume")));
 		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
 		//waitingList와 지원자 닉네임 & 지원자 idx 받아오기
 		List<Object[]> wlList = matchingBoardService.getWlList(mbIdx);
@@ -147,7 +179,11 @@ public class MatchingController extends HttpServlet {
 			request.setAttribute("wlList", wlList);
 		}
 		
-		request.getRequestDispatcher("/match/managingTeam").forward(request, response);
+		MatchingBoard matchingBoard = matchingBoardService.getMatchingBoardDTO(mbIdx);
+		
+		request.setAttribute("matchingBoard", matchingBoard);
+		
+		request.getRequestDispatcher("/match/waitingList").forward(request, response);
 	}
 	
 	// 방장의 대기목록 컨펌

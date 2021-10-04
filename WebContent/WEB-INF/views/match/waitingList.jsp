@@ -18,9 +18,6 @@
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-	(fetch)
-	수락 거절
-	
 	<section>
         <div class="matching_nav">
             <div class="matching_nav1"></div>
@@ -32,7 +29,7 @@
                 <div class="alarm_btn"><a href="#"><i class="fas fa-bell"></i></a></div>
                 <div class="alarm_sub">
                     <c:forEach items="${matchingAlarmList }" var="matchingAlarm" varStatus="status">
-                        <a href="#">${matchingAlarm[1] } ${matchingAlarm[0].msg }</a>
+                        <a href="#">방장 : ${matchingAlarm[1] }<br>${matchingAlarm[0].msg }</a>
                     </c:forEach>
                 </div>
             </div>
@@ -42,9 +39,24 @@
             <div class="userlist_wrapper">
             <c:forEach items="${wlList }" var="waitingList" varStatus="status">
                 <div class="userlist">
-                    <span>waitingList[1].nickname</span>
-                    <button>승인</button>
-                    <button>거절</button>
+                    <span>${ waitingList[1].nickname}</span>
+                    <form action="/matching/collectTeam/accept">
+                    	<input type="hidden" name="leaderIdx" value="${matchingAlarm[0].senderIdx }">
+                 		<input type="hidden" name="memberIdx" value="${waitingList[1].memberIdx }">
+                 		<input type="hidden" name="wlIdx" value="${waitingList[0].wlIdx }">
+                 		<input type="hidden" name="mbIdx" value="${waitingList[0].mbIdx }">
+                 		<input type="hidden" name="mtDate" value="${matchingBoard.mtDate }">
+                 		<input type="hidden" name="memVolume" value="${matchingBoard.memVolume }">
+                 		<input type="hidden" name="matchedMemCnt" value="${matchingBoard.matchedMemCnt }">
+                 		<button id="accept">승인</button>
+                    </form>
+                    <form action="/matching/collectTeam/reject">
+                    	<input type="hidden" name="leaderIdx" value="${matchingAlarm[0].senderIdx }">
+                 		<input type="hidden" name="memberIdx" value="${waitingList[1].memberIdx }">
+                 		<input type="hidden" name="wlIdx" value="${waitingList[0].wlIdx }">
+                 		<input type="hidden" name="mbIdx" value="${waitingList[0].mbIdx }">
+                 		<button id="reject">거절</button>
+                    </form>
                 </div>
             </c:forEach>
                 
@@ -52,7 +64,6 @@
         </div>
 
     </section>
-
 
 </body>
 

@@ -571,5 +571,31 @@ public class MatchingBoardDao {
 		
 		return maList;
 	}
+
+	public boolean checkMemberIdxAndMbIdx(String memberIdx, String mbIdx, Connection conn) {
+		Boolean flg = false;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String columns = "wl_idx";
+			try {
+			
+			String query = "select " + columns + " from waiting_list where member_idx = ? and mb_idx = ?";
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, memberIdx);
+			pstm.setString(2, mbIdx);
+			rset = pstm.executeQuery();
+			
+			if (rset.next()) {
+				
+				flg = true;
+			}
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return flg;
+	}
 	
 }

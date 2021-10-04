@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.santa.main.validator.IdCheck;
 import com.kh.santa.main.validator.JoinForm;
+import com.kh.santa.matching.validator.CreateMatchingBoard;
 
 
 public class ValidatorFilter implements Filter {
@@ -48,6 +49,9 @@ public class ValidatorFilter implements Filter {
 				case "main":
 					redirectURI = memberValidation(httpRequest, httpReponse, uriArr);
 					break;
+				case "matching":
+					redirectURI = boardValidation(httpRequest, httpReponse, uriArr);
+					break;
 				default:
 					break;
 			}
@@ -76,6 +80,24 @@ public class ValidatorFilter implements Filter {
 				IdCheck idCheck = new IdCheck(httpRequest);
 				if(!idCheck.test()) {
 					redirectURI = "/main/joinform?err=1";
+				}
+				break;
+			default:
+				break;
+		}
+		return redirectURI;
+		
+	}
+	
+	private String boardValidation(HttpServletRequest httpRequest, HttpServletResponse httpReponse, String[] uriArr) {
+		
+		String redirectURI = null;
+		
+		switch(uriArr[uriArr.length-1]) {
+			case "createBoard":
+				CreateMatchingBoard createMatchingBoard = new CreateMatchingBoard(httpRequest);
+				if(!createMatchingBoard.test()) {
+					redirectURI = "/matching/collectTeam/createBoardForm?err=1";
 				}
 				break;
 			default:
