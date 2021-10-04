@@ -33,7 +33,7 @@
                 <div class="rank_box_top">
                     <span>명예의 전당</span>
                 </div>
-                <div class="rank_box_bottom"><!--  이부분따라서 해볼게ㅕ-->
+                <div class="rank_box_bottom">
                     <c:forEach items='${memberArr}' var='member' varStatus="status">
                         <c:if test="${status.index < 3}">
                             <div class="rank1">
