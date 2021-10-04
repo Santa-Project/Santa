@@ -40,7 +40,7 @@
                 <div class="userlist">
                     <span>waitingList[1].nickname</span>
                     <button>승인</button>
-                    <button>거절</button>
+                    <button>거절</button> 
                 </div>
             </c:forEach>
                 
