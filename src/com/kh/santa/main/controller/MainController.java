@@ -113,8 +113,10 @@ public class MainController extends HttpServlet {
 		// 2. 사용자가 잘못된 아이디나 비밀번호를 입력한 경우.
 		// 	    사용자에게 아이디나 비밀번호가 틀렸음을 알림, login-form으로 redirect
 		if(member == null) {
-			response.sendRedirect("/main/loginform?err=1");
-			return;
+			
+			request.setAttribute("msg", "아이디와 패스워드를 확인해주세요");
+			request.setAttribute("url", "/main/loginform");
+			request.getRequestDispatcher("/common/result").forward(request, response);
 		}
 		
 		request.getSession().setAttribute("authentication", member);
@@ -281,7 +283,7 @@ public class MainController extends HttpServlet {
 		String id = mainService.findingId(username,email);
 		if(id.equals("")) {
 			request.setAttribute("msg", "입력하신 회원정보와 일치하는 아이디가 존재하지 않습니다.");
-			request.setAttribute("url", "/main/finding_id");
+			request.setAttribute("url", "/main/findingId");
 			request.getRequestDispatcher("/common/result").forward(request, response);
 		}
 		request.setAttribute("found_id", id);
@@ -306,7 +308,7 @@ public class MainController extends HttpServlet {
 		String password = mainService.findingPassword(id,email);
 		if(password.equals("")) {
 			request.setAttribute("msg", "입력하신 정보와 일치하는 회원을 찾을 수 없습니다.");
-			request.setAttribute("url", "/main/finding_pw");
+			request.setAttribute("url", "/main/findingPw");
 			request.getRequestDispatcher("/common/result").forward(request, response);
 		}
 		request.setAttribute("found_pw", password);

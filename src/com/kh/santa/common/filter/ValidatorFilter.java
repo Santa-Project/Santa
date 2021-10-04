@@ -10,6 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.santa.main.validator.IdCheck;
 import com.kh.santa.main.validator.JoinForm;
 
 
@@ -68,6 +69,12 @@ public class ValidatorFilter implements Filter {
 			case "join":
 				JoinForm joinForm = new JoinForm(httpRequest);
 				if(!joinForm.test()) {
+					redirectURI = "/main/joinform?err=1";
+				}
+				break;
+			case "idCheck":
+				IdCheck idCheck = new IdCheck(httpRequest);
+				if(!idCheck.test()) {
 					redirectURI = "/main/joinform?err=1";
 				}
 				break;

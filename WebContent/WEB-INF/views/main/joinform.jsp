@@ -26,11 +26,18 @@
 	                <c:if test="${not empty param.err and empty joinValid.id}">
                 		value="${joinForm.id }"
                 	</c:if>
+                	<c:if test="${not empty param.err and empty idValid.id}">
+                		value="${idCheck.id }"
+                	</c:if>
+                	placeholder="영문 또는 숫자 조합의 문자열"
                 	required/>
 	            </span>
 	            <button type="button" id="btnIdCheck">check</button>
 	            <span id="idCheck" class="valid-msg">
 	            <c:if test="${not empty param.err and not empty joinValid.id}">
+	              	아이디는 영문 또는 숫자 조합의 문자열입니다.
+	            </c:if>
+	            <c:if test="${not empty param.err and not empty idValid.id}">
 	              	아이디는 영문 또는 숫자 조합의 문자열입니다.
 	            </c:if>
               	</span>
@@ -44,6 +51,7 @@
 	            <c:if test="${not empty param.err and empty joinValid.password}">
 	            	value="${joinForm.password}"
                 </c:if>
+                placeholder="영어, 숫자,특수문자(#?!@$ %^&*-) 조합의 8글자 이상의 문자열"
 	            required/>
 	            </span>
 	            <span id="pwCheck" class="valid-msg">
@@ -74,6 +82,7 @@
 	                <c:if test="${not empty param.err and empty joinValid.name}">
                 		value="${joinForm.name}"
                 	</c:if>
+                	placeholder="영문 또는 한글 조합"
 	                required/>
 	            </span>
 	            <span id="nameCheck" class="valid-msg">
@@ -93,6 +102,7 @@
 	                <c:if test="${not empty param.err and empty joinValid.nickname}">
                 		value="${joinForm.nickname}"
                 	</c:if>
+                	placeholder="영문이나 한글 또는 숫자 조합의 문자열"
 	                required/>
 	            </span>
 	            <span id="nicknameCheck" class="valid-msg">
@@ -123,6 +133,7 @@
 	                <c:if test="${not empty param.err}">
                 		value="${joinForm.mobile}"
                 	</c:if>
+                	placeholder="'-'을 포함하지 않은 숫자(9~11) 조합"
 	                required/>
 	            </span> 
 	            <span id="mobileCheck" class="valid-msg">

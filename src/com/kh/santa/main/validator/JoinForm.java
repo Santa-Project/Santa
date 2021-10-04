@@ -44,8 +44,8 @@ public class JoinForm {
 		
 		boolean isFailed = false;
 		
-		// 아이디가 영문 또는 숫자 조합의 문자열인지
-		if(!Pattern.matches(".*[a-zA-Z0-9]{1,}", id)) {
+		// 아이디 시작은 영문으로만, '_'를 제외한 특수문자 안되며 영문, 숫자, '_'으로만 이루어진 5 ~ 12자 이하
+		if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9]{4,11}$", id)) {
 			failedValidation.put("id",id);
 			isFailed = true;
 		}
