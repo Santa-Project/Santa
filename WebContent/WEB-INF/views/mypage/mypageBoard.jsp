@@ -41,12 +41,11 @@
                            		<div id="my_introduce_id">${authentication.nickname} (${authentication.userId})</div>
                            		<button id="my_introduce_edit" class="my_introdue_button2">edit</button>   <!-- 누르면 true  -->
                            	</div>
-                           	<div style="margin-left:13px;">
+                           	<div >
                             	<form id="profileEdit"  method="post" enctype="multipart/form-data" >
                             		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
                             		<button id="my_introduce_save" class="my_introdue_button">저장</button> <!-- post  -->
                             		<button id="my_introduce_cancel" class="my_introdue_button" >취소</button>   <!-- 누르면 false  -->
-                            		
                            			<input type="text" id="inputedit" name="profilecomment" value="${authentication.profileContent}">
                            		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
                            			
@@ -193,8 +192,9 @@ $("#my_introduce_edit").click(function(){
 }) */
 
 document.querySelector("#my_introduce_save").addEventListener('click',function(e){
-	$('#profileEdit').action("/mypage/editprofile");
+	
 	$('#profileEdit').submit();
+	$('#profileEdit').action("/mypage/editprofile");
 	document.querySelector("#my_introduce_comment").style.display ='inline';
 })
 

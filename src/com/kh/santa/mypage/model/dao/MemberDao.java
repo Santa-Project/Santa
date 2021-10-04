@@ -35,6 +35,7 @@ public class MemberDao {
 			// 5. ResultSet에 저장된 데이터를 DTO에 옮겨닮기
 			if(rset.next()) {
 				member = convertRowToMember(columns, rset);
+				System.out.println(member);
 			}
 			
 		} catch (SQLException e) {
@@ -297,8 +298,8 @@ public class MemberDao {
 			case "register_datetime":
 				member.setRegisterDatetime(rset.getDate("register_datetime"));
 				break;
-			case "profile_content":
-				member.setProfileContent(rset.getString("profile_content"));
+			case "PROFILE_CONTENT":
+				member.setProfileContent(rset.getString("PROFILE_CONTENT"));
 				break;
 			case "profile_photo":
 				member.setProfilePhoto(rset.getString("profile_photo"));
@@ -474,7 +475,7 @@ public class MemberDao {
 		 PreparedStatement pstm = null;
 			
 			try {
-				String query = "DELETE CASCADE FROM member WHERE member_idx = ? "; 
+				String query = "DELETE FROM member WHERE member_idx = ? "; 
 				pstm = conn.prepareStatement(query);
 				pstm.setString(1, memberIdx);
 				pstm.executeUpdate();

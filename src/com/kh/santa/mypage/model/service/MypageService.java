@@ -11,6 +11,7 @@ import com.kh.santa.mountainInfo.model.dto.Mountain;
 import com.kh.santa.mountainInfo.model.dto.MountainWishlist;
 import com.kh.santa.mypage.model.dao.MemberDao;
 import com.kh.santa.mypage.model.dto.Member;
+import com.kh.santa.mypage.model.dto.MemberBoard;
 import com.kh.santa.mypage.model.dto.MemberBoardComment;
 
 public class MypageService {
@@ -85,6 +86,12 @@ public class MypageService {
 
 		Connection conn = template.getConnection();
 	      try {
+	    	  MyBoardService myBoardService = new MyBoardService();
+	    	  List<MemberBoard>  boardlist =myBoardService.selectBoardDetail(memberIdx);
+	    	  for (int i = 0; i < boardlist.size(); i++) {
+	    		  String boardIdxlist=boardlist.get(i).getMemBoardIdx();
+	    		  myBoardService.deleteBoard(boardIdxlist);
+			}
 	    	  memberDao.leaveSanta(memberIdx,conn);
 	         template.commit(conn);
 	      }catch (DataAccessException e) {

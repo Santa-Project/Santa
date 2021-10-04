@@ -132,7 +132,6 @@ public class MypageController extends HttpServlet {
          Member member = (Member) request.getSession().getAttribute("authentication"); //세션조회
          String memberIdx =member.getMemberIdx();
          List<MemberBoard> boardList = myboardService.selectBoardDetail(memberIdx); //조회한 세션값으로 게시판 불러오기
-         
          List<Object[]> res = new ArrayList<Object[]>();
         
          for (MemberBoard memberBoard : boardList) {
