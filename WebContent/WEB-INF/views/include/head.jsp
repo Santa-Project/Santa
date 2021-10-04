@@ -7,7 +7,7 @@
 
 <meta charset="UTF-8">
 
-<title>Santa-등산 경험 공유 사이트</title>
+<title>Santa-등산 정보 공유 사이트</title>
 
 
 <!-- fontawesome cdn -->

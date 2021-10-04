@@ -141,7 +141,7 @@ public class MatchingController extends HttpServlet {
 		
 		matchingBoardService.createMatchingBoard(matchingBoard);
 		
-		matching_main(request, response);
+		response.sendRedirect("/matching/collectTeam");
 	}
 	
 	private void notice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {

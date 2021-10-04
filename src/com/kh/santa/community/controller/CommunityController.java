@@ -69,7 +69,7 @@ public class CommunityController extends HttpServlet {
         List<MemberBoard> boardList = communityService.selectBoardTop4();
         
         for (MemberBoard memberBoard : boardList) { 
-    	String boardIdx = memberBoard.getBoardIdx();
+    	String boardIdx = memberBoard.getMemBoardIdx();
         FileDTO file =communityService.selectFileDTOsTop4(boardIdx);
         List<MemberBoardComment> commentList = communityService.selectBoardComentTop4(boardIdx);
         Object[] ob = new Object[] {memberBoard, file,commentList};

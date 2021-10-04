@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class MemberBoard {
 
-	private String boardIdx;
+	private String memBoardIdx;
 	private String memberIdx;
 	private int liked;
 	private Date uploadTime;
@@ -12,11 +12,11 @@ public class MemberBoard {
 	private String mtName;
 	private String boardComment;
 	
-	public String getBoardIdx() {
-		return boardIdx;
+	public String getMemBoardIdx() {
+		return memBoardIdx;
 	}
-	public void setBoardIdx(String boardIdx) {
-		this.boardIdx = boardIdx;
+	public void setMemBoardIdx(String memBoardIdx) {
+		this.memBoardIdx = memBoardIdx;
 	}
 	public String getMemberIdx() {
 		return memberIdx;
@@ -56,9 +56,11 @@ public class MemberBoard {
 	}
 	@Override
 	public String toString() {
-		return "MemberBoard [boardIdx=" + boardIdx + ", memberIdx=" + memberIdx + ", liked=" + liked + ", uploadTime="
-				+ uploadTime + ", mtRegion=" + mtRegion + ", mtName=" + mtName + ", boardComment=" + boardComment + "]";
+		return "MemberBoard [memBoardIdx=" + memBoardIdx + ", memberIdx=" + memberIdx + ", liked=" + liked
+				+ ", uploadTime=" + uploadTime + ", mtRegion=" + mtRegion + ", mtName=" + mtName + ", boardComment="
+				+ boardComment + "]";
 	}
+	
 	
 	
 	

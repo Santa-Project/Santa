@@ -241,7 +241,7 @@ public class MyBoardDao {
       
       MemberBoard board = new MemberBoard();
       board = new MemberBoard();
-      board.setBoardIdx(rset.getString("mem_board_idx"));
+      board.setMemBoardIdx(rset.getString("mem_board_idx"));
       board.setMemberIdx(rset.getString("member_idx"));
       board.setLiked(rset.getInt("liked"));
       board.setUploadTime(rset.getDate("upload_datetime"));

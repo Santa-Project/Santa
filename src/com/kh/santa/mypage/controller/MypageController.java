@@ -128,7 +128,7 @@ public class MypageController extends HttpServlet {
          List<Object[]> res = new ArrayList<Object[]>();
         
          for (MemberBoard memberBoard : boardList) {
-            String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+            String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
             FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
             List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
             Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기
@@ -152,7 +152,7 @@ public class MypageController extends HttpServlet {
           List<Object[]> others = new ArrayList<Object[]>();
          
           for (MemberBoard memberBoard : boardList) {
-             String boardIdx = memberBoard.getBoardIdx(); //게시판번호 불러오기
+             String boardIdx = memberBoard.getMemBoardIdx(); //게시판번호 불러오기
              FileDTO file =  myboardService.selectBoardFile(boardIdx); //게시판번호로 파일찾기
              List<MemberBoardComment> commentList = myboardService.selectBoardComent(boardIdx); //게시판번호로 댓글찾기
              Object[] ob = new Object[] {memberBoard, file,commentList}; //객체에 담아주기

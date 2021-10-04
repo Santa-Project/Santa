@@ -41,12 +41,12 @@
                     </div>
                     <div class="board_master"><p>방장 이름</p> <p>${authentication.nickname }</p>
                     <input type="hidden" name="memberIdx" value="${authentication.memberIdx}"> </div>
-                    <div class="board_name"><p>방 제목</p><input name="brdName" type="text" ></div>
+                    <div class="board_name"><p>방 제목</p><input name="brdName" type="text" id="brdName" ></div>
                 </div>
                 <div class="section_right">
                     <div class="member_count">
                     	<p>모집 인원</p>
-                        <input name="memberVolume"type="number" min="2" max="6" id="memberVolume" >
+                        <input name="memberVolume"type="number" value="3" min="3" max="7" id="memberVolume" >
                     </div>
                     <div class="calendar">
                         <p>등산 일정: </p><input name="mtDate" type="date" id="datepicker">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="section_bottom">
-                <div class="content">내용 <input name="brdContent" type="text"></div>
+                <div class="content">내용 <input name="brdContent" type="text" id="brdContent"></div>
             </div>
         </form>
         </div>
@@ -70,17 +70,18 @@
     </section>
     <script>
         $(function () {
-            $("#datepicker").datepicker();
+            $("#datepicker").datepicker({
+            	minDate : 3
+            });
         });
         
-        document.querySelector("#createTeam").addEventListener("click",function(){
+        document.querySelector(".yes_btn").addEventListener("click",function(){
         	document.querySelector(".createBoard").action = "/matching/createMatchingBoard.do";
         	document.querySelector(".createBoard").submit();
         })
         
-        document.querySelector("#cancle").addEventListener("click",function(){
-        	document.querySelector(".createBoard").action = "/matching/collectTeam";
-        	document.querySelector(".createBoard").submit();
+        document.querySelector(".no_btn").addEventListener("click",function(){
+        	history.back();
         })
         
         

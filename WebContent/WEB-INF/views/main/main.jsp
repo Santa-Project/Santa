@@ -3,16 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/main/style_main.css">
-<meta charset="UTF-8">
 <title>SANTA</title>
-<!-- fontawesome cdn -->
-<script src="https://kit.fontawesome.com/6fd6b71dc1.js"></script>
-
-<!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 

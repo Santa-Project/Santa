@@ -51,10 +51,10 @@ public class CommunityDao {
 	      FileDTO file = null;
 	      PreparedStatement pstm = null;
 	      ResultSet rset =null;
-	      String columns ="board_idx,save_path,rename_file_name";
+	      String columns ="mem_board_idx,save_path,rename_file_name";
 	      
 	      String sql ="SELECT " +columns
-	            + " FROM file_info WHERE board_idx = ?";
+	            + " FROM file_info WHERE mem_board_idx = ?";
 	      
 	      try {
 	         pstm =conn.prepareStatement(sql);
@@ -79,10 +79,10 @@ public class CommunityDao {
 	      List<MemberBoardComment> comments = new ArrayList<MemberBoardComment>();
 	      PreparedStatement pstm = null;
 	      ResultSet rset =null;
-	      String columns ="comment_idx,board_idx,member_idx,nickname,content";
+	      String columns ="comment_idx,mem_board_idx,member_idx,nickname,content";
 	      
 	      String sql ="SELECT " +columns
-	            + " FROM member_board_comment WHERE board_idx=? "; 
+	            + " FROM member_board_comment WHERE mem_board_idx=? "; 
 	      
 	      try {
 	         pstm =conn.prepareStatement(sql);
@@ -146,7 +146,7 @@ public class CommunityDao {
 		      String column=columns[i].toLowerCase();
 		      column=column.trim();
 		 switch(column) {
-	      case "board_idx": board.setBoardIdx(rset.getString("board_idx"));break;
+	      case "mem_board_idx": board.setMemBoardIdx(rset.getString("mem_board_idx"));break;
 	      case "member_idx": board.setMemberIdx(rset.getString("member_idx"));break;
 	      case "liked": board.setLiked(rset.getInt("liked"));break;
 	      case "upload_time": board.setUploadTime(rset.getDate("upload_time"));break;
