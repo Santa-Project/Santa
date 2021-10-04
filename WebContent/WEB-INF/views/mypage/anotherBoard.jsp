@@ -34,18 +34,16 @@
                             <div id="my_introduce_id_padding">
                             <div id="my_introduce_id">${anotherMember.nickname} (${anotherMember.userId})</div>
 
-                            	<c:if test="false">
-                            		<form action ="/mypage/insertFollow" method="post">
-                            			<button style="background-color:rgb(110, 180, 110);" id='following'>follow</button>
-                            			<input type='hidden' name='insertfollow' value='${anotherMember.memberIdx}'>
+                            		<form action ="/mypage/following" method="post">
+                            			<c:if test="false">
+	                            			<button style="background-color:rgb(110, 180, 110);" name="follow" value="true" id="follow" class='following'>follow</button>
+                            			</c:if>
+                            			<c:if test="true">
+	                            			<button style="background-color:lightgrey" name="follow" value="false" id="unfollow" class='following'>unfollow</button>
+                            			</c:if>
+                            			<input type='hidden' name='anoterIdx' value='${anotherMember.memberIdx}'>
                             		</form>
-                            	</c:if>
-                            	<c:if test="true">
-		                           	<form action ="/mypage/deleteFollow" method="post">
-		                            	<button style="background-color:lightgrey"  id='following'>unfollow</button>
-		                            	<input type='hidden' name='deletefollow' value='${anotherMember.memberIdx}'>
-		                           	</form>
-                            	</c:if>
+                            		
                             </div>
                             <div id="my_introduce_comment">${anotherMember.profileContent}</div>
                         </div>
@@ -57,7 +55,7 @@
                         <div id="my_wish_mountian_list_items" >
                             <ul id="my_wish_mountian_list_item">
                             <c:forEach items='${wishlist}' var='wishlist' varStatus="status">
-                                <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}<button style="color:red; margin-left: 10px;"><i class="far fa-minus-square"></i></button></li>
+                                <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>${wishlist.mtName}</li>
                             </c:forEach>
                             </ul>
                         </div>
@@ -144,6 +142,14 @@
         </div>
          </div>
 </section>
+<script type="text/javascript">
+
+
+
+</script>
+
+
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

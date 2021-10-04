@@ -137,7 +137,34 @@ button{
   margin-left:3px;
   border-radius: 5px;
   background-color:white;
+  opacity:0;
+  display:none;
 }
+.my_introdue_button.active{
+	opacity:1;
+	  display:inline;
+}
+#inputedit{
+	opacity:0;
+display:none;
+}
+#inputedit.active{
+	opacity:1;
+	  display:inline;
+}
+
+
+.my_introdue_button2{
+  color: grey;
+  border: 1px solid grey;
+  width:30px;
+  height: 15px;
+  font-size:9px;
+  margin-left:3px;
+  border-radius: 5px;
+  background-color:white;
+}
+
 
 #my_introduce_comment{ /* comment내용 */
   margin-top:5px;
@@ -148,9 +175,10 @@ button{
   overflow:hidden;
   display:-webkit-box;
   -webkit-line-clamp:2;
+  
 }
 
-#following{
+.following{
 	color:white;
     border-radius:5px;
 	width:60px;
@@ -179,10 +207,13 @@ button{
 #my_wish_mountian_list_items{
   margin-top:10px;
   margin-left:20px; 
-  width:150px;
+  width:170px;
   height: 125px;
   font-size:17px;
   text-align:center;
+	
+  overflow-y:scroll;
+  overflow-x:hidden;
 }
 #my_wish_mountian_list_item{
 }
