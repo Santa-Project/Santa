@@ -1,6 +1,7 @@
 package com.kh.santa.mypage.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,9 +69,9 @@ public class MypageController extends HttpServlet {
       case "mypageFollower" :
          mypageFollower(request,response);
          break;
-      case "mypagePassEdit" :
-    	  mypagePassEdit(request,response);
-           break;
+      //case "mypagePassEdit" :
+    	//  mypagePassEdit(request,response);
+        //   break;
       case "mypageMemberEdit" :
          mypageMemberEdit(request,response);
          break;
@@ -328,7 +329,14 @@ public class MypageController extends HttpServlet {
 		if(member.getUserPassword().equals(inputPassword)) { //입력한정보가 맞다면
 			request.getRequestDispatcher("/mypage/mypageMemberEdit").forward(request, response);
 		}else{
-			request.setAttribute("msg", "비밀번호가 틀렸습니다");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+
+			out.println("<script language='javascript'>");
+			out.println("history.back()");
+			out.println("</script>");
+
+			out.flush();
 			request.getRequestDispatcher("/mypage/mypagePassEdit").forward(request, response);
 		}
 		
@@ -376,7 +384,8 @@ public class MypageController extends HttpServlet {
 	    
 		List<FileDTO> fileDTOs = params.getFilesInfo(); 
 		mypageService.updateprofile(member,fileDTOs);
-	    request.getRequestDispatcher("/mypage/mypageBoard").forward(request, response);
+		 mypageBoard(request,response);
+		 System.out.println(member);
 
 	}
 
@@ -415,6 +424,7 @@ public class MypageController extends HttpServlet {
       mypageService.leaveSanta(member.getMemberIdx());
       wishlist = mypageService.selectMountainWishlist(member.getMemberIdx());
       request.setAttribute("wishlist", wishlist);
+      request.getSession().removeAttribute("authentication");
        response.sendRedirect("/main/main");
    }
 

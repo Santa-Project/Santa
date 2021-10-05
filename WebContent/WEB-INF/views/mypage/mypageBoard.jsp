@@ -24,7 +24,7 @@
          <div id="my_nav_item1"><a href="/mypage/mypageBoard">게시물</a></div>
             <div id="my_nav_item2"><a href="/mypage/mypageFollow">팔로우</a></div>
             <div id="my_nav_item3"><a href="/mypage/mypageFollower">팔로워</a></div>
-            <div id="my_nav_item4"><a href="/mypage/mypagePassEdit">마이페이지 수정</a></div>
+            <div id="my_nav_item4"><a href="/mypage/mypageMemberEdit">마이페이지 수정</a></div>
         </div>
         <div class="my_nav_item_margin3"></div>
     </div>
@@ -42,10 +42,10 @@
                            		<button id="my_introduce_edit" class="my_introdue_button2">edit</button>   <!-- 누르면 true  -->
                            	</div>
                            	<div >
-                            	<form id="profileEdit"  method="post" enctype="multipart/form-data" >
+                            	<form id="profileEdit"  method="post" enctype="multipart/form-data" action ="/mypage/editprofile" >
                             		<input id="my_introduce_photo" class="my_introdue_button"  name="profilephoto" type="file"><!--사진파일 -->
-                            		<button id="my_introduce_save" class="my_introdue_button">저장</button> <!-- post  -->
-                            		<button id="my_introduce_cancel" class="my_introdue_button" >취소</button>   <!-- 누르면 false  -->
+                            		<button id="my_introduce_save" class="my_introdue_button" type="submit">저장</button> <!-- post  -->
+                            		<button id="my_introduce_cancel" class="my_introdue_button" onclick="history.back();">취소</button>   <!-- 누르면 false  -->
                            			<input type="text" id="inputedit" name="profilecomment" value="${authentication.profileContent}">
                            		</form><!--컨트롤러단에서 if(사진==null)이라면 coment만 변경, else 둘다변경  -->
                            			
@@ -178,6 +178,14 @@
          </div>
 </section>
 
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+
+
+</body>
+
+
+
 <script type="text/javascript">
 
 
@@ -258,9 +266,4 @@ document.querySelector("#my_introduce_cancel").addEventListener('click',function
 
 </script>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-
-
-
-</body>
 </html>
