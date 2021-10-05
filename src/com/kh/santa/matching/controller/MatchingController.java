@@ -197,7 +197,7 @@ public class MatchingController extends HttpServlet {
 		mb.setMemberIdx(leaderIdx);
 		mb.setMbIdx(request.getParameter("mbIdx"));
 		mb.setMtDate(Date.valueOf(request.getParameter("mtDate")));
-		mb.setMemVolume(Integer.parseInt(request.getParameter("memberVolume")));
+		mb.setMemVolume(Integer.parseInt(request.getParameter("memVolume")));
 		mb.setMatchedMemCnt(Integer.parseInt(request.getParameter("matchedMemCnt")));
 		
 		if(mb.getMatchedMemCnt() + 1 > mb.getMemVolume()) {
@@ -205,7 +205,7 @@ public class MatchingController extends HttpServlet {
 			request.setAttribute("url", "/matching/waitingList");
 			request.getRequestDispatcher("/common/result").forward(request, response);
 		}
-		
+		System.out.println(mb.getMbIdx());
 		matchingBoardService.confirmMatching(wlIdx, mb, memberIdx);
 		
 		waitingList(request,response);

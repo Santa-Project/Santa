@@ -41,7 +41,7 @@
                 <div class="userlist">
                     <span>${ waitingList[1].nickname}</span>
                     <form action="/matching/collectTeam/accept">
-                    	<input type="hidden" name="leaderIdx" value="${matchingAlarm[0].senderIdx }">
+                    	<input type="hidden" name="leaderIdx" value="${matchingBoard.memberIdx }">
                  		<input type="hidden" name="memberIdx" value="${waitingList[1].memberIdx }">
                  		<input type="hidden" name="wlIdx" value="${waitingList[0].wlIdx }">
                  		<input type="hidden" name="mbIdx" value="${waitingList[0].mbIdx }">
@@ -51,15 +51,23 @@
                  		<button id="accept">승인</button>
                     </form>
                     <form action="/matching/collectTeam/reject">
-                    	<input type="hidden" name="leaderIdx" value="${matchingAlarm[0].senderIdx }">
+                    	<input type="hidden" name="leaderIdx" value="${matchingBoard.memberIdx}">
                  		<input type="hidden" name="memberIdx" value="${waitingList[1].memberIdx }">
                  		<input type="hidden" name="wlIdx" value="${waitingList[0].wlIdx }">
                  		<input type="hidden" name="mbIdx" value="${waitingList[0].mbIdx }">
+                 		<input type="hidden" name="mtDate" value="${matchingBoard.mtDate }">
+                 		<input type="hidden" name="memVolume" value="${matchingBoard.memVolume }">
+                 		<input type="hidden" name="matchedMemCnt" value="${matchingBoard.matchedMemCnt }">
                  		<button id="reject">거절</button>
                     </form>
                 </div>
             </c:forEach>
-                
+            </div>
+            <div>
+            	<form action="/matching/collectTeam/matchingBoard">
+            	<input type="hidden" name="mbIdx" value="${matchingBoard.mbIdx }">
+            		<button id="back">방으로</button>
+            	</form>
             </div>
         </div>
 

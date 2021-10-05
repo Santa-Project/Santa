@@ -118,7 +118,6 @@ a {
 .Social-sign-in .Social-button-list li button{
 	width: 465px;
 	height: 56px;
-	border: solid 1px var(--border-gray-color);
 	text-align: left;
 	background: white;
 }

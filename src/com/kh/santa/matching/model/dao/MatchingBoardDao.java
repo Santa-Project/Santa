@@ -271,7 +271,7 @@ public class MatchingBoardDao {
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, memberIdx);
-			pstm.setString(2, mb.getMtIdx());
+			pstm.setString(2, mb.getMbIdx());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
