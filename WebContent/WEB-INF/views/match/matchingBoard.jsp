@@ -76,7 +76,7 @@
             		<form action="/matching/collectTeam/createNotice">
                  		<input type="hidden" name="leaderIdx" value="${matchingBoard[0].memberIdx }">
                  		<input type="hidden" name="mbIdx" value="${matchingBoard[0].mbIdx }">
-                 		<input type="text" max="400" name="msg" width="150px" height="100px">
+                 		<input id = "alarmtext" type="textarea" max="400" name="msg" width="150px" height="100px" rows="5" cols="40">
                     	<button id = "alarmsending">알림 보내기</button>
                     </form>
                     </div>
