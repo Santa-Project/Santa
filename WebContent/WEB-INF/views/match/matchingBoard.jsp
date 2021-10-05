@@ -87,7 +87,7 @@
                  		<input type="hidden" name="mtDate" value="${matchingBoard[0].mtDate }">
                  		<input type="hidden" name="memVolume" value="${matchingBoard[0].memVolume }">
                  		<input type="hidden" name="matchedMemCnt" value="${matchingBoard[0].matchedMemCnt }">
-                    	<button style="position:relative;">지원자 관리</button>
+                    	<button>지원자 관리</button>
                     </form>
                     </div>
                     </c:if>
